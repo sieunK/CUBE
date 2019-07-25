@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="200"
+                app:scale_base_width="1080">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="자동 로그인 설정"
+                    app:scale_left="80"
+                    app:scale_top="75"
+                    app:scale_width="600"
+                    app:scale_height="100"
+                    app:scale_textsize="50"
+                    />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/check_auto_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:scale_height="100"
+                    app:scale_left="900"
+                    app:scale_top="65"
+                    app:scale_width="100" />
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="50"
+                app:scale_base_width="1080">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/line"
+                    app:scale_left="40"
+                    app:scale_width="1000"
+                    app:scale_height="50"/>
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="200"
+                app:scale_base_width="1080">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="소리 알림"
+                    app:scale_left="80"
+                    app:scale_top="75"
+                    app:scale_width="600"
+                    app:scale_height="100"
+                    app:scale_textsize="50"
+                    />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/check_sound_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:scale_height="100"
+                    app:scale_left="900"
+                    app:scale_top="65"
+                    app:scale_width="100" />
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="50"
+                app:scale_base_width="1080">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/line"
+                    app:scale_left="40"
+                    app:scale_width="1000"
+                    app:scale_height="50"/>
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="200"
+                app:scale_base_width="1080">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="진동 알림"
+                    app:scale_left="80"
+                    app:scale_top="75"
+                    app:scale_width="600"
+                    app:scale_height="100"
+                    app:scale_textsize="50"
+                    />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/check_vibe_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:scale_height="100"
+                    app:scale_left="900"
+                    app:scale_top="65"
+                    app:scale_width="100" />
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="50"
+                app:scale_base_width="1080">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/line"
+                    app:scale_left="40"
+                    app:scale_width="1000"
+                    app:scale_height="50"/>
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="200"
+                app:scale_base_width="1080">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="리뷰쓰기 알림"
+                    app:scale_left="80"
+                    app:scale_top="75"
+                    app:scale_width="600"
+                    app:scale_height="100"
+                    app:scale_textsize="50"
+                    />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/check_write_review_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:scale_height="100"
+                    app:scale_left="900"
+                    app:scale_top="65"
+                    app:scale_width="100" />
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="50"
+                app:scale_base_width="1080">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/line"
+                    app:scale_left="40"
+                    app:scale_width="1000"
+                    app:scale_height="50"/>
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="200"
+                app:scale_base_width="1080">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="리뷰댓글 알림"
+                    app:scale_left="80"
+                    app:scale_top="75"
+                    app:scale_width="600"
+                    app:scale_height="100"
+                    app:scale_textsize="50"
+                    />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/check_comment_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:scale_height="100"
+                    app:scale_left="900"
+                    app:scale_top="65"
+                    app:scale_width="100" />
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="50"
+                app:scale_base_width="1080">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/line"
+                    app:scale_left="40"
+                    app:scale_width="1000"
+                    app:scale_height="50"/>
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="400"
+                app:scale_base_width="1080">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_save_setting_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="세팅 값 저장하기"
+                    app:scale_width="1000"
+                    app:scale_height="150"
+                    app:scale_top="0"
+                    app:scale_left="40"
+                    app:scale_textsize="50"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_set_menu_alarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="식단정보 알림 설정하기"
+                    app:scale_width="1000"
+                    app:scale_height="150"
+                    app:scale_top="150"
+                    app:scale_left="40"
+                    app:scale_textsize="50"
+                    />
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
