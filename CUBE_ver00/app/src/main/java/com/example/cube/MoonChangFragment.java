@@ -1,28 +1,35 @@
 package com.example.cube;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
-public class MoonChangActivity extends AppCompatActivity implements MoonChangPayFragment.OnFragmentInteractionListener{
+public class MoonChangFragment extends Fragment implements MoonChangPayFragment.OnFragmentInteractionListener {
 
     private MoonChangBagFragment fragmentbag;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_moonchang);
+    }
 
-        fragmentbag=new MoonChangBagFragment();
-
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_moonchang, container, false);
+        fragmentbag = new MoonChangBagFragment();
 
         //TabLayout
-        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabs = (TabLayout) view.findViewById(R.id.tabs);
         tabs.addTab(tabs.newTab().setText("결제"));
         tabs.addTab(tabs.newTab().setText("메뉴"));
         tabs.addTab(tabs.newTab().setText("리뷰"));
@@ -30,8 +37,8 @@ public class MoonChangActivity extends AppCompatActivity implements MoonChangPay
         tabs.setTabGravity(tabs.GRAVITY_FILL);
 
         //어답터설정
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        final MoonChangPagerAdapter myPagerAdapter = new MoonChangPagerAdapter(getSupportFragmentManager(), 4);
+        final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        final MoonChangPagerAdapter myPagerAdapter = new MoonChangPagerAdapter(getActivity().getSupportFragmentManager(), 4);
         viewPager.setAdapter(myPagerAdapter);
 
 /*
@@ -49,10 +56,9 @@ public class MoonChangActivity extends AppCompatActivity implements MoonChangPay
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
 
-
-
-
+        return view;
     }
+
 
     /*
         public void onFragmentChanged(int index){

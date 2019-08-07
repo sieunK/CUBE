@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -52,8 +54,18 @@ public class HomeActivity extends Fragment {
         moonChang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
-                startActivity(new Intent(getActivity().getApplicationContext(),MoonChangActivity.class));
+                //getActivity().finish();
+
+                Fragment fragment = new MoonChangFragment();
+                if(fragment!=null) {
+                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.content_layout,fragment);
+                    ft.commit();
+                }
+                //DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
+                //drawer.closeDrawer(GravityCompat.START);
+                //startActivity(new Intent(getActivity().getApplicationContext(),MoonChangActivity.class));
                 // Toast.makeText(getActivity().getApplicationContext(),"문창회관 클릭됨.",Toast.LENGTH_SHORT).show();
             }
         });

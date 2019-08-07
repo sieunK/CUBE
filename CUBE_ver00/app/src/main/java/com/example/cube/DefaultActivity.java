@@ -28,9 +28,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DefaultActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DefaultActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private FirebaseFirestore Fdb;
     private DBHelper helper;
     private static SQLiteDatabase db;
