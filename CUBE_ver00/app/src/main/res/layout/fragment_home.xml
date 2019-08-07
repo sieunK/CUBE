@@ -154,7 +154,7 @@
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:scale_base_height="100"
+                app:scale_base_height="800"
                 app:scale_base_width="1080">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -180,6 +180,18 @@
                     app:scale_height="100"
                     app:scale_textsize="35"
                     />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/notice_short"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:scale_width="1080"
+                    app:scale_height="600"
+                    app:scale_left="50"
+                    app:scale_top="110"
+                    >
+
+                </androidx.recyclerview.widget.RecyclerView>
             </com.ssomai.android.scalablelayout.ScalableLayout>
 
             <Space

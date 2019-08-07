@@ -27,6 +27,7 @@
         <activity android:name="com.example.cube.MenuAlarmSettingActivity"/>
 
         <activity android:name="com.example.cube.ProfileActivity"/>
+        <activity android:name="com.example.cube.NoticeReadActivity"/>
         <activity android:name="com.example.cube.LoginActivity" />
         <activity android:name="com.example.cube.SignUpActivity" />
         <activity android:name="com.example.cube.MainActivity">

@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this,"Please enter password", Toast.LENGTH_LONG).show();
             return ;
         }
-        progressDialog.setMessage("User Login...");
+        progressDialog.setMessage("AppUser Login...");
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(email,password)
