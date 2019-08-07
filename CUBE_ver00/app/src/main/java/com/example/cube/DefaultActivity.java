@@ -58,11 +58,13 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String t_name = document.getData().get("name").toString();
-                                String t_photo = document.getData().get("photo").toString();
+                                String t_photo = null;
+                                if(document.getData().get("photo")!=null)
+                                    t_photo = document.getData().get("photo").toString();
                                 int t_price = ((Long)document.getData().get("price")).intValue();
                                 mc_menu.put(t_name,new Pair<>(t_photo,t_price));
                                 Log.d("For Test2", t_name);
-                                Log.d("For Test3", t_photo);
+                                //Log.d("For Test3", t_photo);
                                 Log.d("For Test4", ""+mc_menu.get(t_name).second);
 
                                 // DB에 입력한 값으로 행 추가

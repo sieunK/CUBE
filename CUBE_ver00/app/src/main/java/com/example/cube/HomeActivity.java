@@ -52,7 +52,9 @@ public class HomeActivity extends Fragment {
         moonChang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),"문창회관 클릭됨.",Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+                startActivity(new Intent(getActivity().getApplicationContext(),MoonChangActivity.class));
+                // Toast.makeText(getActivity().getApplicationContext(),"문창회관 클릭됨.",Toast.LENGTH_SHORT).show();
             }
         });
         saetBul.setOnClickListener(new View.OnClickListener() {
