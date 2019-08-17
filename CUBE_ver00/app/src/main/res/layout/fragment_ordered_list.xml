@@ -5,19 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="주문리스트"
-        android:background="#00BCD4"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:layout_marginBottom="16dp"
-        android:gravity="center_horizontal"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_order"

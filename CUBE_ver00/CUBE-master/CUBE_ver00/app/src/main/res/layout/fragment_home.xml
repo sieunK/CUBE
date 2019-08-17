@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:orientation="vertical"
+    tools:context=".DefaultActivity"
+    tools:showIn="@layout/app_bar_main"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="400"
+                app:scale_base_width="1080">
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/button_moon"
+                    android:layout_width="357dp"
+                    android:layout_height="271dp"
+                    app:scale_height="400"
+                    app:scale_left="130"
+                    app:scale_top="0"
+                    app:scale_width="400"
+                    app:srcCompat="@drawable/moonchang" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/button_saet"
+                    android:layout_width="357dp"
+                    android:layout_height="271dp"
+                    app:scale_left="550"
+                    app:scale_top="0"
+                    app:scale_width="400"
+                    app:scale_height="400"
+                    app:srcCompat="@drawable/saetbul" />
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="130"
+                app:scale_base_width="1080">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="문창회관"
+                    android:textColor="#000000"
+                    app:scale_left="210"
+                    app:scale_top="0"
+                    app:scale_textsize="65"
+                    app:scale_height="100"
+                    app:scale_width="296" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="샛벌회관"
+                    android:textColor="#000000"
+                    app:scale_left="625"
+                    app:scale_top="0"
+                    app:scale_textsize="65"
+                    app:scale_height="100"
+                    app:scale_width="296" />
+
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="400"
+                app:scale_base_width="1080">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/button_hak"
+                    android:layout_width="357dp"
+                    android:layout_height="271dp"
+                    app:scale_left="130"
+                    app:scale_top="0"
+                    app:scale_width="400"
+                    app:scale_height="400"
+                    app:srcCompat="@drawable/haksaeng" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/button_geum"
+                    android:layout_width="357dp"
+                    android:layout_height="271dp"
+                    app:scale_left="550"
+                    app:scale_top="0"
+                    app:scale_width="400"
+                    app:scale_height="400"
+                    app:srcCompat="@drawable/geumjeong" />
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="100"
+                app:scale_base_width="1080">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="학생회관"
+                    android:textColor="#000000"
+                    app:scale_height="100"
+                    app:scale_left="210"
+                    app:scale_textsize="65"
+                    app:scale_top="0"
+                    app:scale_width="296" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="금정회관"
+                    android:textColor="#000000"
+                    app:scale_left="625"
+                    app:scale_top="0"
+                    app:scale_textsize="65"
+                    app:scale_height="100"
+                    app:scale_width="296"/>
+
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="100"
+                app:scale_base_width="1080">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="식당을 선택해주세요."
+                    app:scale_width="550"
+                    app:scale_height="100"
+                    app:scale_textsize="50"
+                    app:scale_left="330"
+                    app:scale_top="0"
+
+                    />
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="800"
+                app:scale_base_width="1080">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:text="공지사항"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    app:scale_height="100"
+                    app:scale_left="50"
+                    app:scale_textsize="60"
+                    app:scale_top="10"
+                    app:scale_width="296" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_more_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="더보기"
+                    app:scale_left="280"
+                    app:scale_width="180"
+                    app:scale_top="0"
+                    app:scale_height="100"
+                    app:scale_textsize="35"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/notice_short"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:scale_width="1080"
+                    app:scale_height="600"
+                    app:scale_left="50"
+                    app:scale_top="110"
+                    >
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="159dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

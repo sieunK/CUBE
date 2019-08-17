@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-tools:context=".MoonChang.MoonChangReviewFragment">
-
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/view_reviewList"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MoonChangReviewFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="hello_blank_fragment" />
+    </RelativeLayout>
+    <!-- TODO: Update blank fragment layout -->
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/review_write"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom|end"
-    android:layout_margin="20dp"
-    android:src="@drawable/circle_plus"
-    app:backgroundTint="#FFFFFF" />
 </FrameLayout>

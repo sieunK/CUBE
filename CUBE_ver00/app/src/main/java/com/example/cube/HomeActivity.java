@@ -1,5 +1,6 @@
 package com.example.cube;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +12,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cube.Components.NoticeData;
-import com.example.cube.MoonChang.MoonChangFragment;
-import com.example.cube.Notice.NoticeActivity;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,8 +42,7 @@ public class HomeActivity extends Fragment {
     MainAdapter adapter;
     ArrayList<NoticeData> noticeList;
 
-    public HomeActivity() {
-    }
+    public HomeActivity() {}
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,12 +55,12 @@ public class HomeActivity extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         mStore = FirebaseFirestore.getInstance();
-        notice_more = (Button) view.findViewById(R.id.button_more_notice);
-        moonChang = (ImageView) view.findViewById(R.id.button_moon);
-        saetBul = (ImageView) view.findViewById(R.id.button_saet);
-        geumJeong = (ImageView) view.findViewById(R.id.button_geum);
-        hakSaeng = (ImageView) view.findViewById(R.id.button_hak);
-        notice_shortView = (RecyclerView) view.findViewById(R.id.notice_short);
+        notice_more = (Button)view.findViewById(R.id.button_more_notice);
+        moonChang = (ImageView)view.findViewById(R.id.button_moon);
+        saetBul = (ImageView)view.findViewById(R.id.button_saet);
+        geumJeong = (ImageView)view.findViewById(R.id.button_geum);
+        hakSaeng = (ImageView)view.findViewById(R.id.button_hak);
+        notice_shortView = (RecyclerView)view.findViewById(R.id.notice_short);
         notice_shortView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         notice_more.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +68,7 @@ public class HomeActivity extends Fragment {
             public void onClick(View v) {
                 Fragment fragment = new NoticeActivity();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.content_layout, fragment);
+                ft.replace(R.id.content_layout,fragment);
                 ft.addToBackStack(null);
                 ft.commit();
             }
@@ -81,10 +80,10 @@ public class HomeActivity extends Fragment {
                 //getActivity().finish();
 
                 Fragment fragment = new MoonChangFragment();
-                if (fragment != null) {
+                if(fragment!=null) {
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.addToBackStack(null);
-                    ft.replace(R.id.content_layout, fragment);
+                    ft.replace(R.id.content_layout,fragment);
                     ft.commit();
                 }
                 //DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
@@ -96,36 +95,37 @@ public class HomeActivity extends Fragment {
         saetBul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "샛벌회관 클릭됨.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(),"샛벌회관 클릭됨.",Toast.LENGTH_SHORT).show();
             }
         });
         geumJeong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "금정회관 클릭됨.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(),"금정회관 클릭됨.",Toast.LENGTH_SHORT).show();
             }
         });
         hakSaeng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "학생회관 클릭됨.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(),"학생회관 클릭됨.",Toast.LENGTH_SHORT).show();
             }
         });
         return view;
     }
-
     @Override
     public void onStart() {
         super.onStart();
         noticeList = new ArrayList<>();
         String collectionPath = "foodcourt/moonchang/board";
         Query noticeQuery = mStore.collection(collectionPath)
-                .orderBy("date", Query.Direction.DESCENDING).limit(4);
+                .orderBy("date", Query.Direction.DESCENDING);
         noticeQuery.
                 addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        int i=0;
                         for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
+                            if(i>=4) break;
                             NoticeData data = dc.getDocument().toObject(NoticeData.class);
                             //String id = (String) dc.getDocument().getData().get("id");
                             //String title = (String) dc.getDocument().getData().get("title");
@@ -136,6 +136,7 @@ public class HomeActivity extends Fragment {
                             //if(numClicks == null) data = new Board(id, title, content, name, 0, date);
                             //else data = new Board(id, title, content, name, numClicks , date);
                             noticeList.add(data);
+                            i++;
                         }
                         adapter = new MainAdapter(noticeList);
                         notice_shortView.setAdapter(adapter);
@@ -143,7 +144,7 @@ public class HomeActivity extends Fragment {
                 });
         MainAdapter adapter = new MainAdapter(noticeList);
         notice_shortView.setAdapter(adapter);
-        notice_shortView.addItemDecoration(new DividerItemDecoration(notice_shortView.getContext(), 1));
+        notice_shortView.addItemDecoration(new DividerItemDecoration(notice_shortView.getContext(),1));
 
     }
 
@@ -153,11 +154,10 @@ public class HomeActivity extends Fragment {
         public MainAdapter(List<NoticeData> noticeList) {
             this.noticeList = noticeList;
         }
-
         @NonNull
         @Override
         public MainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-            return new MainViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.notice_item_short, parent, false));
+            return new MainViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.notice_item_short,parent,false));
         }
 
         @Override
@@ -176,12 +176,10 @@ public class HomeActivity extends Fragment {
         public void cleanupListener() {
 
         }
-
         class MainViewHolder extends RecyclerView.ViewHolder {
             private TextView mTitleTextView;
             private TextView mDateTextView;
             private TextView mNewTagView;
-
             public MainViewHolder(@NonNull View itemView) {
                 super(itemView);
                 mTitleTextView = itemView.findViewById(R.id.board_item_title_short);

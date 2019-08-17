@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="홈" />
+        <item
+            android:id="@+id/nav_notice"
+            android:icon="@drawable/ic_lightbulb_outline_black_24dp"
+            android:title="공지사항" />
+        <item
+            android:id="@+id/nav_mypage"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="마이페이지" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="환경설정" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_keyboard_return_black_24dp"
+            android:title="로그아웃" />
+
+    </group>
+</menu>
