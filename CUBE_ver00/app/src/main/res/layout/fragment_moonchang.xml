@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/parentView"
-    tools:context=".MoonChangActivity">
+    tools:context=".MoonChang.MoonChangFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

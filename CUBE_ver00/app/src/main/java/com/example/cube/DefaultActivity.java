@@ -21,21 +21,28 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.cube.MyPage.MyPageActivity;
+import com.example.cube.Notice.NoticeActivity;
+import com.example.cube.Setting.SettingActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DefaultActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class DefaultActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseFirestore Fdb;
     private DBHelper helper;
     private static SQLiteDatabase db;
-    final static HashMap<String, Pair<String,Integer>> mc_menu = new HashMap<>();
+    final static HashMap<String, Pair<String, Integer>> mc_menu = new HashMap<>();
+
+    private CurrentApplication currentUserInfo;
+    private String getUserEmail;
+    private String getUserNickName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +52,9 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         /* DB 작업 */
-        helper = new DBHelper(this, "MC_MENU.db", null,1);
+        helper = new DBHelper(this, "MC_MENU.db", null, 1);
         db = helper.getWritableDatabase();
         helper.onCreate(db);
         Fdb = FirebaseFirestore.getInstance();
@@ -60,13 +68,13 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String t_name = document.getData().get("name").toString();
                                 String t_photo = null;
-                                if(document.getData().get("photo")!=null)
+                                if (document.getData().get("photo") != null)
                                     t_photo = document.getData().get("photo").toString();
-                                int t_price = ((Long)document.getData().get("price")).intValue();
-                                mc_menu.put(t_name,new Pair<>(t_photo,t_price));
+                                int t_price = ((Long) document.getData().get("price")).intValue();
+                                mc_menu.put(t_name, new Pair<>(t_photo, t_price));
                                 Log.d("For Test2", t_name);
                                 //Log.d("For Test3", t_photo);
-                                Log.d("For Test4", ""+mc_menu.get(t_name).second);
+                                Log.d("For Test4", "" + mc_menu.get(t_name).second);
 
                                 // DB에 입력한 값으로 행 추가
                                 db.execSQL("INSERT INTO MC_MENU VALUES('" + t_name + "', '" + t_photo + "', " + t_price + ");");
@@ -79,20 +87,48 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
 
 
+        /* 로그인 후 앱에서 계속 사용할 수 있도록 닉네임과 이메일을 저장 */
+        currentUserInfo = (CurrentApplication) getApplication();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        getUserEmail = mAuth.getCurrentUser().getEmail();
+        Fdb.collection("users").whereEqualTo("email", getUserEmail).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot dc : task.getResult()) {
+                                getUserNickName = dc.getData().get("username").toString();
+                                if (getUserNickName == null) {
+                                    Log.d("nullName", "null");
+                                    Toast.makeText(getApplicationContext(), "사용자를 찾을 수 없습니다", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "사용자 확인", Toast.LENGTH_SHORT).show();
+                                    currentUserInfo.setEmail(getUserEmail);
+                                    currentUserInfo.setNickname(getUserNickName);
+                                }
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "사용자를 찾을 수 없습니다", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+
         /* 세팅된 닉네임 가져와서 드로어 레이아웃 프로필에 적음 */
-        Intent intent = getIntent();
-        String nickname = intent.getStringExtra("nickname");
+      //  Intent intent = getIntent();
+      //  String nickname = intent.getStringExtra("nickname");
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View nav_header_view = navigationView.getHeaderView(0);
         TextView nav_header_id_text = (TextView) nav_header_view.findViewById(R.id.show_nickname);
-        nav_header_id_text.setText(nickname);
+        nav_header_id_text.setText(getUserNickName);
 
         DBHelper dbHelper = new DBHelper(getApplicationContext(), "NOTICE.db", null, 1);
 
         /* 초기화면을 HomePage로 설정함 */
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.content_layout,new HomeActivity());
+        fragmentTransaction.replace(R.id.content_layout, new HomeActivity());
         fragmentTransaction.commit();
 
         /* 이건 아마 옆에 드로어 레이아웃 설정 */
@@ -143,7 +179,6 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         int id = item.getItemId();
 
         Fragment fragment = null;
-
         if (id == R.id.nav_home) {
             fragment = new HomeActivity();
         } else if (id == R.id.nav_notice) {
@@ -153,17 +188,17 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         } else if (id == R.id.nav_settings) {
             fragment = new SettingActivity();
         } else if (id == R.id.nav_logout) {
-            Toast.makeText(getApplicationContext(),"로그아웃 되었습니다.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
             /* 수정필요 */
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
         }
 
-        if(fragment!=null) {
+        if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.addToBackStack(null);
-            ft.replace(R.id.content_layout,fragment);
+            ft.replace(R.id.content_layout, fragment);
             ft.commit();
         }
 
