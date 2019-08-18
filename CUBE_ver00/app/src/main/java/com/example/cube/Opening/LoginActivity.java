@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button buttonSignIn;
+    private Button findPassword;
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewSignUp;
@@ -54,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextPassword = (EditText) findViewById(R.id.password);
         buttonSignIn = (Button) findViewById(R.id.signIn);
         textViewSignUp = (TextView) findViewById(R.id.textViewSignUp);
+        findPassword = (Button) findViewById(R.id.findpassword);
 
         setting = getSharedPreferences("setting",0);
         editor = setting.edit();
@@ -66,31 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         buttonSignIn.setOnClickListener(this);
         textViewSignUp.setOnClickListener(this);
-        checkAutoLogin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    String email = editTextEmail.getText().toString();
-                    String password = editTextPassword.getText().toString();
-
-                    if(email.isEmpty() || password.isEmpty()) {
-                        Toast.makeText(LoginActivity.this,"Please Fill the Email and Password", Toast.LENGTH_LONG).show();
-                        checkAutoLogin.setChecked(false);
-                        return;
-                    }
-                    editor.putString("email", email);
-                    editor.putString("password", password);
-                    editor.putBoolean("autoLogin", true);
-                    editor.commit();
-                } else {
-                    editor.remove("email");
-                    editor.remove("password");
-                    editor.remove("autoLogin");
-                    editor.clear();
-                    editor.commit();
-                }
-            }
-        });
+        findPassword.setOnClickListener(this);
     }
 
     private void userLogin() {
@@ -105,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this,"Please enter password", Toast.LENGTH_LONG).show();
             return ;
         }
-        progressDialog.setMessage("AppUser Login...");
+        progressDialog.setMessage("로그인 중입니다...");
         progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(email,password)
@@ -114,11 +92,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //progressDialog.dismiss();
                         if(task.isSuccessful()) {
+                            if(checkAutoLogin.isChecked()) {
+                                String email = editTextEmail.getText().toString();
+                                String password = editTextPassword.getText().toString();
+
+                                editor.putString("email", email);
+                                editor.putString("password", password);
+                                editor.putBoolean("autoLogin", true);
+                                editor.commit();
+                            }
                             finish();
                             startActivity(new Intent(getApplicationContext(), DefaultActivity.class));
                         } else {
                             Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
+                            editor.remove("email");
+                            editor.remove("password");
+                            editor.remove("autoLogin");
+                            editor.clear();
+                            editor.commit();
+                            checkAutoLogin.setChecked(false);
                         }
+                        progressDialog.dismiss();
                     }
                 });
     }
@@ -130,6 +124,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(v == textViewSignUp) {
             finish();
             startActivity(new Intent(this, SignUpActivity.class));
+        }
+        if(v == findPassword) {
+            finish();
+            startActivity(new Intent(this, PasswordActivity.class));
         }
     }
 }

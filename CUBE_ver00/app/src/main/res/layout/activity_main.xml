@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/imageViewStart"
-        android:scaleType="fitXY"
         android:layout_width="match_parent"
+        android:scaleType="centerCrop"
         android:layout_height="match_parent" />
 
 </LinearLayout>

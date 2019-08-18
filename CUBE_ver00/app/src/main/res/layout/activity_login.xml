@@ -9,163 +9,207 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-        <Button
-            android:id="@+id/findpassword"
-            android:layout_width="100dp"
-            android:layout_height="33dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_gravity="right"
-            android:fontFamily="@font/font_family"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/ic_orangebutton"
-            android:text="비밀번호 찾기"  />
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="226dp"
-            android:layout_height="213dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_logo" />
-        <LinearLayout
-            android:layout_marginTop="40dp"
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
-            <ImageView
+            app:scale_base_width="1080"
+            app:scale_base_height="700">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/findpassword"
+                android:layout_width="100dp"
+                android:layout_height="33dp"
+                app:scale_width="300"
+                app:scale_height="100"
+                app:scale_left="730"
+                app:scale_top="20"
+                app:scale_textsize="45"
+                android:background="@drawable/ic_orangebutton"
+                android:fontFamily="@font/font_family"
+                android:text="비밀번호 찾기"
+                android:textColor="#FFFFFF" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageView"
+                android:layout_width="226dp"
+                android:layout_height="213dp"
+                app:scale_width="600"
+                app:scale_height="600"
+                app:scale_left="240"
+                app:scale_top="150"
+                app:srcCompat="@drawable/ic_logo" />
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+
+
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:scale_base_width="1080"
+            app:scale_base_height="450">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="30dp"
                 android:layout_height="60dp"
-                android:src="@drawable/ic_spoon" />
+                app:scale_height="150"
+                app:scale_left="100"
+                app:scale_top="80"
+                app:scale_width="70"
+                app:srcCompat="@drawable/ic_spoon" />
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="300dp"
                 android:layout_height="50dp"
+                app:scale_height="130"
+                app:scale_width="800"
+                app:scale_left="170"
+                app:scale_top="80"
+                app:scale_base_width="800"
+                app:scale_base_height="130"
                 android:background="@drawable/ic_input">
-                <TextView
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_family"
-                    android:textColor="#FFA500"
-                    android:layout_marginLeft="25dp"
+                    android:text="이메일"
+                    android:layout_marginLeft="20dp"
                     android:layout_gravity="center_vertical"
-                    android:text="이메일"/>
+                    android:textColor="#FFA500" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/email"
-                    android:layout_width="210dp"
+                    android:layout_width="190dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="2dp"
                     android:fontFamily="@font/font_family"
                     android:hint="이메일을 입력해 주세요"
                     android:inputType="textEmailAddress"
                     android:textColor="#6B5341" />
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-            <ImageView
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="30dp"
                 android:layout_height="60dp"
-                android:src="@drawable/ic_fork" />
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="50dp"
+                app:scale_height="150"
+                app:scale_left="100"
+                app:scale_top="280"
+                app:scale_width="70"
+                app:srcCompat="@drawable/ic_fork" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_height="130"
+                app:scale_width="800"
+                app:scale_left="170"
+                app:scale_top="280"
+                app:scale_base_width="800"
+                app:scale_base_height="130"
                 android:background="@drawable/ic_input">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="25dp"
                     android:fontFamily="@font/font_family"
                     android:text="비밀번호"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
                     android:textColor="#FFA500" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/password"
-                    android:layout_width="210dp"
+                    android:layout_width="190dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="10dp"
                     android:fontFamily="@font/font_family"
+                    android:layout_gravity="center_vertical"
                     android:hint="비밀번호를 입력해 주세요"
                     android:inputType="textPassword"
                     android:textColor="#6B5341" />
-            </LinearLayout>
-        </LinearLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </com.ssomai.android.scalablelayout.ScalableLayout>
 
 
-
-
-        <LinearLayout
-            android:layout_marginTop="40dp"
+        <com.ssomai.android.scalablelayout.ScalableLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
-            <CheckBox
+            app:scale_base_width="1080"
+            app:scale_base_height="500">
+
+            <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/checkAutoLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:scale_left="400"
+                app:scale_top="0"
+                app:scale_width="300"
+                app:scale_height="100"
+                app:scale_textsize="45"
+                android:button="@drawable/check_button"
                 android:checked="false"
                 android:fontFamily="@font/font_family"
-
                 android:text="자동 로그인"
-                android:textStyle="bold"
                 android:textColor="#FFA500"
-                android:button="@drawable/check_button" />
-
-        </LinearLayout>
+                android:textStyle="bold" />
 
 
-        <Button
-            android:id="@+id/signIn"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/font_family"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/ic_orangebutton"
-            android:text="로그인 하기" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/signIn"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                app:scale_left="340"
+                app:scale_top="150"
+                app:scale_width="400"
+                app:scale_height="130"
+                app:scale_textsize="45"
+                android:background="@drawable/ic_orangebutton"
+                android:fontFamily="@font/font_family"
+                android:text="로그인 하기"
+                android:textColor="#FFFFFF" />
 
-        <TextView
-            android:id="@+id/nonuserlogin"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/nonuserlogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_left="253"
+                app:scale_top="300"
+                app:scale_width="574"
+                app:scale_height="80"
+                app:scale_textsize="45"
+                android:button="@drawable/check_button"
+                android:checked="false"
+                android:fontFamily="@font/font_family"
+                android:text="비회원으로 로그인 하시겠습니까?"
+                android:textColor="#FFA500"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_left="414"
+                app:scale_top="390"
+                app:scale_width="252"
+                app:scale_height="80"
+                app:scale_textsize="50"
+                android:fontFamily="@font/font_family"
+                android:onClick="onClick"
+                android:text="회원가입하기"
+                android:textColor="#FFA500"
+                android:textSize="17dp" />
+        </com.ssomai.android.scalablelayout.ScalableLayout>
+        <com.ssomai.android.scalablelayout.ScalableLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="비회원으로 로그인 하시겠습니까?"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/font_family"
-            android:textStyle="bold"
-            android:textColor="#FFA500"
-            android:button="@drawable/check_button" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textViewSignUp"
-            android:onClick="onClick"
-            android:fontFamily="@font/font_family"
-            android:textColor="#FFA500"
-            android:layout_marginTop="25dp"
-            android:textSize="17dp"
-            android:layout_gravity="center_horizontal"
-            android:text="회원가입하기"/>
+            app:scale_base_width="1080"
+            app:scale_base_height="100">
+        </com.ssomai.android.scalablelayout.ScalableLayout>
     </LinearLayout>
 </RelativeLayout>

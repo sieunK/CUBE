@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cube.R;
+import com.ssomai.android.scalablelayout.ScalableLayout;
 
 public class MenuAlarmSettingActivity extends AppCompatActivity {
     CheckBox geumJeong;
@@ -33,6 +34,15 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
     CheckBox MC_dinner;
     CheckBox SB_dinner;
     CheckBox HS_dinner;
+
+    ScalableLayout GJ_line;
+    ScalableLayout GJ_option;
+    ScalableLayout MC_line;
+    ScalableLayout MC_option;
+    ScalableLayout SB_line;
+    ScalableLayout SB_option;
+    ScalableLayout HS_line;
+    ScalableLayout HS_option;
 
     Button saveState;
 
@@ -121,6 +131,15 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
         SB_dinner = (CheckBox)findViewById(R.id.checkbox_saetbul_dinner);
         HS_dinner = (CheckBox)findViewById(R.id.checkbox_haksaeng_dinner);
 
+        GJ_line = (ScalableLayout)findViewById(R.id.geumjeong_line);
+        GJ_option = (ScalableLayout)findViewById(R.id.geumjeong_option);
+        MC_line = (ScalableLayout)findViewById(R.id.moonchang_line);
+        MC_option = (ScalableLayout)findViewById(R.id.moonchang_option);
+        SB_line = (ScalableLayout)findViewById(R.id.saetbul_line);
+        SB_option = (ScalableLayout)findViewById(R.id.saetbul_option);
+        HS_line = (ScalableLayout)findViewById(R.id.haksaeng_line);
+        HS_option = (ScalableLayout)findViewById(R.id.haksaeng_option);
+
         Boolean GJ = sf.getBoolean("GJ",false);
         Boolean GJ_m = sf.getBoolean("GJ_m",false);
         Boolean GJ_l = sf.getBoolean("GJ_l",false);
@@ -154,6 +173,35 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
         MC_dinner.setChecked(MC_d);
         SB_dinner.setChecked(SB_d);
         HS_dinner.setChecked(HS_d);
+
+        if(!geumJeong.isChecked()) {
+            GJ_line.setVisibility(View.GONE);
+            GJ_option.setVisibility(View.GONE);
+        } else {
+            GJ_line.setVisibility(View.VISIBLE);
+            GJ_option.setVisibility(View.VISIBLE);
+        }
+        if(!moonChang.isChecked()) {
+            MC_line.setVisibility(View.GONE);
+            MC_option.setVisibility(View.GONE);
+        } else {
+            MC_line.setVisibility(View.VISIBLE);
+            MC_option.setVisibility(View.VISIBLE);
+        }
+        if(!saetBul.isChecked()) {
+            SB_line.setVisibility(View.GONE);
+            SB_option.setVisibility(View.GONE);
+        } else {
+            SB_line.setVisibility(View.VISIBLE);
+            SB_option.setVisibility(View.VISIBLE);
+        }
+        if(!hakSaeng.isChecked()) {
+            HS_line.setVisibility(View.GONE);
+            HS_option.setVisibility(View.GONE);
+        } else {
+            HS_line.setVisibility(View.VISIBLE);
+            HS_option.setVisibility(View.VISIBLE);
+        }
     }
     public void setButtonListener() {
         geumJeong = (CheckBox)findViewById(R.id.checkbox_geumjeong);
@@ -182,12 +230,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     GJ_morning.setChecked(true);
                     GJ_lunch.setChecked(true);
                     GJ_dinner.setChecked(true);
-                    Toast.makeText(getApplicationContext(),"금정회관 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
+                    GJ_line.setVisibility(View.VISIBLE);
+                    GJ_option.setVisibility(View.VISIBLE);
                 } else {
                     GJ_morning.setChecked(false);
                     GJ_lunch.setChecked(false);
                     GJ_dinner.setChecked(false);
-                    Toast.makeText(getApplicationContext(),"금정회관 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
+                    GJ_line.setVisibility(View.GONE);
+                    GJ_option.setVisibility(View.GONE);
                 }
             }
         });
@@ -198,12 +248,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     MC_morning.setChecked(true);
                     MC_lunch.setChecked(true);
                     MC_dinner.setChecked(true);
-                    Toast.makeText(getApplicationContext(),"문창회관 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
+                    MC_line.setVisibility(View.VISIBLE);
+                    MC_option.setVisibility(View.VISIBLE);
                 } else {
                     MC_morning.setChecked(false);
                     MC_lunch.setChecked(false);
                     MC_dinner.setChecked(false);
-                    Toast.makeText(getApplicationContext(),"문창회관 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
+                    MC_line.setVisibility(View.GONE);
+                    MC_option.setVisibility(View.GONE);
                 }
             }
         });
@@ -214,12 +266,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     SB_morning.setChecked(true);
                     SB_lunch.setChecked(true);
                     SB_dinner.setChecked(true);
-                    Toast.makeText(getApplicationContext(),"샛벌회관 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
+                    SB_line.setVisibility(View.VISIBLE);
+                    SB_option.setVisibility(View.VISIBLE);
                 } else {
                     SB_morning.setChecked(false);
                     SB_lunch.setChecked(false);
                     SB_dinner.setChecked(false);
-                    Toast.makeText(getApplicationContext(),"샛벌회관 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
+                    SB_line.setVisibility(View.GONE);
+                    SB_option.setVisibility(View.GONE);
                 }
             }
         });
@@ -230,12 +284,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     HS_morning.setChecked(true);
                     HS_lunch.setChecked(true);
                     HS_dinner.setChecked(true);
-                    Toast.makeText(getApplicationContext(),"학생회관 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
+                    HS_line.setVisibility(View.VISIBLE);
+                    HS_option.setVisibility(View.VISIBLE);
                 } else {
                     HS_morning.setChecked(false);
                     HS_lunch.setChecked(false);
                     HS_dinner.setChecked(false);
-                    Toast.makeText(getApplicationContext(),"학생회관 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
+                    HS_line.setVisibility(View.GONE);
+                    HS_option.setVisibility(View.GONE);
                 }
             }
         });
@@ -246,14 +302,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!geumJeong.isChecked()) {
                         geumJeong.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"금정회관 조식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!GJ_morning.isChecked() && !GJ_lunch.isChecked() && !GJ_dinner.isChecked()) {
                         if(geumJeong.isChecked()) {
                             geumJeong.setChecked(false);
+                            GJ_line.setVisibility(View.GONE);
+                            GJ_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"금정회관 조식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -264,14 +320,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!moonChang.isChecked()) {
                         moonChang.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"문창회관 조식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!MC_morning.isChecked() && !MC_lunch.isChecked() && !MC_dinner.isChecked()) {
                         if(moonChang.isChecked()) {
                             moonChang.setChecked(false);
+                            MC_line.setVisibility(View.GONE);
+                            MC_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"문창회관 조식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -282,14 +338,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!saetBul.isChecked()) {
                         saetBul.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"샛벌회관 조식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!SB_morning.isChecked() && !SB_lunch.isChecked() && !SB_dinner.isChecked()) {
                         if(saetBul.isChecked()) {
                             saetBul.setChecked(false);
+                            SB_line.setVisibility(View.GONE);
+                            SB_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"샛벌회관 조식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -300,14 +356,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!hakSaeng.isChecked()) {
                         hakSaeng.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"학생회관 조식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!HS_morning.isChecked() && !HS_lunch.isChecked() && !HS_dinner.isChecked()) {
                         if(hakSaeng.isChecked()) {
                             hakSaeng.setChecked(false);
+                            HS_line.setVisibility(View.GONE);
+                            HS_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"학생회관 조식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -318,14 +374,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!geumJeong.isChecked()) {
                         geumJeong.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"금정회관 중식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!GJ_morning.isChecked() && !GJ_lunch.isChecked() && !GJ_dinner.isChecked()) {
                         if(geumJeong.isChecked()) {
                             geumJeong.setChecked(false);
+                            GJ_line.setVisibility(View.GONE);
+                            GJ_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"금정회관 중식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -336,14 +392,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!moonChang.isChecked()) {
                         moonChang.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"문창회관 중식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!MC_morning.isChecked() && !MC_lunch.isChecked() && !MC_dinner.isChecked()) {
                         if(moonChang.isChecked()) {
                             moonChang.setChecked(false);
+                            MC_line.setVisibility(View.GONE);
+                            MC_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"문창회관 중식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -354,14 +410,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!saetBul.isChecked()) {
                         saetBul.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"샛벌회관 중식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!SB_morning.isChecked() && !SB_lunch.isChecked() && !SB_dinner.isChecked()) {
                         if(saetBul.isChecked()) {
                             saetBul.setChecked(false);
+                            SB_line.setVisibility(View.GONE);
+                            SB_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"샛벌회관 중식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -372,14 +428,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!hakSaeng.isChecked()) {
                         hakSaeng.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"학생회관 중식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!HS_morning.isChecked() && !HS_lunch.isChecked() && !HS_dinner.isChecked()) {
                         if(hakSaeng.isChecked()) {
                             hakSaeng.setChecked(false);
+                            HS_line.setVisibility(View.GONE);
+                            HS_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"학생회관 중식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -390,14 +446,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!geumJeong.isChecked()) {
                         geumJeong.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"금정회관 석식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!GJ_morning.isChecked() && !GJ_lunch.isChecked() && !GJ_dinner.isChecked()) {
                         if(geumJeong.isChecked()) {
                             geumJeong.setChecked(false);
+                            GJ_line.setVisibility(View.GONE);
+                            GJ_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"금정회관 석식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -408,14 +464,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!moonChang.isChecked()) {
                         moonChang.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"문창회관 석식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!MC_morning.isChecked() && !MC_lunch.isChecked() && !MC_dinner.isChecked()) {
                         if(moonChang.isChecked()) {
                             moonChang.setChecked(false);
+                            MC_line.setVisibility(View.GONE);
+                            MC_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"문창회관 석식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -426,14 +482,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!saetBul.isChecked()) {
                         saetBul.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"샛벌회관 석식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!SB_morning.isChecked() && !SB_lunch.isChecked() && !SB_dinner.isChecked()) {
                         if(saetBul.isChecked()) {
                             saetBul.setChecked(false);
+                            SB_line.setVisibility(View.GONE);
+                            SB_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"샛벌회관 석식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -444,14 +500,14 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                     if(!hakSaeng.isChecked()) {
                         hakSaeng.setChecked(true);
                     }
-                    Toast.makeText(getApplicationContext(),"학생회관 석식 식단알림 설정됨.",Toast.LENGTH_SHORT).show();
                 } else {
                     if(!HS_morning.isChecked() && !HS_lunch.isChecked() && !HS_dinner.isChecked()) {
                         if(hakSaeng.isChecked()) {
                             hakSaeng.setChecked(false);
+                            HS_line.setVisibility(View.GONE);
+                            HS_option.setVisibility(View.GONE);
                         }
                     }
-                    Toast.makeText(getApplicationContext(),"학생회관 석식 식단알림 설정해제됨.",Toast.LENGTH_SHORT).show();
                 }
             }
         });

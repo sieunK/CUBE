@@ -18,7 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
         /* 이름은 MONEYBOOK이고, 자동으로 값이 증가하는 _id 정수형 기본키 컬럼과
         item 문자열 컬럼, price 정수형 컬럼, create_at 문자열 컬럼으로 구성된 테이블을 생성. */
         db.execSQL("CREATE TABLE IF NOT EXISTS NOTICE (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, contents TEXT, date TEXT);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS MC_MENU (name TEXT, photo TEXT, price INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS MC_MENU (name TEXT, photo BLOB, price INTEGER);");
         db.execSQL("CREATE TABLE IF NOT EXISTS BASKET (name TEXT , num INTEGER, price INTEGER);");
     }
 

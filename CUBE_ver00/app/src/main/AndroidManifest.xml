@@ -37,6 +37,7 @@
         <activity android:name=".Opening.ProfileActivity" />
         <activity android:name=".Notice.NoticeReadActivity" />
         <activity android:name=".Opening.LoginActivity" />
+        <activity android:name=".Opening.PasswordActivity"/>
         <activity android:name=".Opening.SignUpActivity" />
         <activity android:name=".Opening.MainActivity">
             <intent-filter>
