@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cube.MyPage.MyPageActivity;
 import com.example.cube.Notice.NoticeActivity;
+import com.example.cube.Opening.LoginActivity;
 import com.example.cube.Setting.SettingActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -191,7 +192,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
             Toast.makeText(getApplicationContext(), "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
             finish();
             /* 수정필요 */
-            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(intent);
         }
 

@@ -130,7 +130,7 @@
                     android:fontFamily="@font/font_family"
                     android:layout_gravity="center_vertical"
                     android:hint="비밀번호를 입력해 주세요"
-                    android:inputType="textPassword"
+                    android:inputType="textVisiblePassword"
                     android:textColor="#6B5341" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>

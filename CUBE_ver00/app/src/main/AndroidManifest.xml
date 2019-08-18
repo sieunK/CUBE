@@ -28,7 +28,6 @@
         <activity
             android:name=".DefaultActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBrat7g7BfqlQoSYX85B1K2dYRRq_3ANxE" />

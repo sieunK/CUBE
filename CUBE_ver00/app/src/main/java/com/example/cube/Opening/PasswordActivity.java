@@ -22,8 +22,8 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
 
     private EditText userEmail;
     private Button submitButton;
+    private Button loginButton;
     private FirebaseAuth firebaseAuth;
-    private ProgressDialog progressDialog;
 
 
     @Override
@@ -32,9 +32,11 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_password);
 
         userEmail = (EditText)findViewById(R.id.userEmail);
+        loginButton = (Button)findViewById(R.id.login);
         submitButton = (Button)findViewById(R.id.submit);
         firebaseAuth = FirebaseAuth.getInstance();
         submitButton.setOnClickListener(this);
+        loginButton.setOnClickListener(this);
     }
 
     private void findPassword() {
@@ -57,6 +59,10 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         if(v == submitButton) {
             findPassword();
+        }
+        if(v == loginButton) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
         }
     }
 }
