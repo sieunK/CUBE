@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
         item 문자열 컬럼, price 정수형 컬럼, create_at 문자열 컬럼으로 구성된 테이블을 생성. */
         db.execSQL("CREATE TABLE IF NOT EXISTS NOTICE (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, contents TEXT, date TEXT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS MC_MENU (name TEXT, photo BLOB, price INTEGER);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS BASKET (name TEXT , num INTEGER, price INTEGER);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS BASKET (name TEXT , num INTEGER, price INTEGER, photo TEXT);");
     }
 
     // DB 업그레이드를 위해 버전이 변경될 때 호출되는 함수

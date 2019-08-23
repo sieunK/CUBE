@@ -3,15 +3,18 @@ package com.example.cube.Notice;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,11 +24,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cube.Components.AppUser;
+import com.bumptech.glide.Glide;
+
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.example.cube.Components.Comments;
 import com.example.cube.Components.NoticeData;
 import com.example.cube.DeleteDialogFragment;
@@ -46,6 +56,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,101 +67,132 @@ import javax.annotation.Nullable;
 
 public class NoticeReadActivity extends AppCompatActivity {
     private static final String TAG = "NoticeReadActivity";
-
-    // private ActionBar actionBar;
+    Context context;
+    // FIREBASE 연동
     private FirebaseFirestore mStore;
+    private StorageReference mStorageRef;
     private FirebaseStorage mStorage;
     private FirebaseAuth mAuth;
     private String collectionPath;
     private String DocumentID;
     private DocumentReference DocumentRef;
 
-    private CommentAdapter mAdapter;
-    private EditText mCommentField;
-    private Button mCommentButton;
-    private RecyclerView mCommentsRecycler;
-
+    // 글 구성
     private TextView ReadPostTitle;
     private TextView ReadPostContent;
     private TextView ReadPostDate;
     private TextView ReadPostNumClicks;
+
+    // 댓글 구성
+    private CommentAdapter mAdapter;
+    private EditText mCommentField;
+    private Button mCommentButton;
+    private long ReadPostNumComments;
+    private RecyclerView mCommentsRecycler;
+
+    // 이미지 구성
+    private int photoNum;
     private LinearLayout mPictures;
     private LayoutInflater mInflater;
+
+    // 입력 시 키보드 컨트롤
+    private InputMethodManager imm;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_notice);
-        // actionBar = getSupportActionBar();
-        // actionBar.setTitle(" ");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.read_notice_toolbar);
+        setSupportActionBar(toolbar);
+        context = getApplicationContext();
 
+        // FIREBASE
         mStore = FirebaseFirestore.getInstance();
-        mStorage = FirebaseStorage.getInstance();
-        mAuth = FirebaseAuth.getInstance();
         collectionPath = "foodcourt/moonchang/board";
+
         Intent preIntent = getIntent();
         DocumentID = preIntent.getStringExtra("id");
         DocumentRef = mStore.collection(collectionPath).document(DocumentID);
 
+        mStorage = FirebaseStorage.getInstance();
+        mStorageRef = mStorage.getReferenceFromUrl("gs://bobnu-47135.appspot.com").
+                child(DocumentID + "_images");
+        ;
+        mAuth = FirebaseAuth.getInstance();
+
+
+        // 글 구성
         ReadPostTitle = findViewById(R.id.read_title);
         ReadPostContent = findViewById(R.id.read_content);
         ReadPostDate = findViewById(R.id.read_date);
         ReadPostNumClicks = findViewById(R.id.read_numclicks);
 
+        // 이미지 구성
+        photoNum = 0;
         mPictures = (LinearLayout) findViewById(R.id.read_pictures);
         mInflater = LayoutInflater.from(this);
 
+        // 댓글 구성
         mCommentButton = (Button) findViewById(R.id.comment_button);
         mCommentField = findViewById(R.id.comment_field);
         mCommentsRecycler = findViewById(R.id.comment_list);
         mCommentsRecycler.setLayoutManager(new LinearLayoutManager(this));
+
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
+        // 로딩 중..
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("loading...");
         progressDialog.show();
 
+        // 게시글 가져오기 + FIREBASE STORAGE 에서 현재 게시글에 해당하는 폴더의 이미지 가져오기
         DocumentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                StorageReference storageRef = mStorage.getReferenceFromUrl("gs://bobnu-47135.appspot.com").
-                        child(DocumentID + "_images");
+
                 DocumentSnapshot ds = task.getResult();
                 NoticeData post = ds.toObject(NoticeData.class);
+
                 if (post == null) {
                     Toast.makeText(getApplicationContext(), "존재하지 않는 게시물입니다", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
+
+                    //게시글 구성
                     ReadPostTitle.setText(post.getTitle());
                     ReadPostContent.setText(post.getContent());
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm (E)");
                     ReadPostDate.setText(simpleDateFormat.format(post.getDate().getTime()));
                     ReadPostNumClicks.setText(Integer.toString(post.getNumClicks()));
-                    final int photoNum = (int) (long) ds.get("filenum");
+                    ReadPostNumComments = (long) post.getNumComments();
+
+                    photoNum = (int) (long) ds.get("filenum");
                     Log.d("number of photo is", Integer.toString(photoNum));
 
-                    if(photoNum==0) progressDialog.dismiss();
+                    // 이미지 가져오기
+                    if (photoNum == 0) progressDialog.dismiss();
                     for (int i = 0; i < photoNum; i++) {
-                        final long FILE_SIZE = 1024 * 1024 * 5;
-                        final int photonum = i;
-                        String filename = i + ".png";
-                        storageRef.child("/" + filename).getBytes(FILE_SIZE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        final long unit = 1024 * 1024 * 4;
+                        final String filename = i + ".png";
+                        mStorageRef.child("/" + filename).getBytes(unit).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                             @Override
                             public void onSuccess(byte[] bytes) {
-                                Log.d("read bytes", "success");
+                                Log.e("image search success", "조회 성공 " + filename);
+
                                 addView(bytes);
-                                if (photonum == photoNum - 1)
-                                    progressDialog.dismiss();
+                                if (mPictures.getChildCount() == photoNum) progressDialog.dismiss();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "조회 실패!");
+                                Log.e("image search fail", "조회 실패" + filename);
+                                Toast.makeText(getApplicationContext(), "이미지 불러오기 실패!", Toast.LENGTH_SHORT).show();
                                 progressDialog.dismiss();
                                 finish();
                             }
@@ -161,7 +203,7 @@ public class NoticeReadActivity extends AppCompatActivity {
         });
 
 
-        // Listen for comments
+        // 댓글 구성
         mAdapter = new CommentAdapter(DocumentRef.collection("comments").
                 orderBy("date", Query.Direction.ASCENDING));
         mCommentsRecycler.setAdapter(mAdapter);
@@ -178,7 +220,7 @@ public class NoticeReadActivity extends AppCompatActivity {
                                 Log.d(this.getClass().getName(), "long push");
                                 String userId = mAdapter.mComments.get(position).getUid();
                                 String commentId = mAdapter.mCommentIds.get(position).toString();
-                                DeleteComment(userId,commentId);
+                                DeleteComment(userId, commentId);
                             }
                         }));
 
@@ -201,52 +243,67 @@ public class NoticeReadActivity extends AppCompatActivity {
         }
     }
 
+    public void hideKeyBoard() {
+        imm.hideSoftInputFromWindow(mCommentField.getWindowToken(), 0);
+    }
+
+    public RequestListener<Drawable> requestListener = new RequestListener<Drawable>() {
+
+
+        @Override
+        public boolean onLoadFailed(@androidx.annotation.Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+            return false;
+        }
+
+        @Override
+        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+
+            return false;
+        }
+    };
+
+
     private void addView(byte[] bytes) {
-        //   for (int i = 0; i < mImgIds.size(); i++)
-        //  {
+
         View view = mInflater.inflate(R.layout.picture_item,
                 mPictures, false);
-        ImageView img = (ImageView) view
-                .findViewById(R.id.id_index_picture_item);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length); // 갤러리앱에서 넘어온 파일경로를 줘서 옵션제공, 비트맵생성.
+        ImageView img = view.findViewById(R.id.index_picture_item);
 
-        img.setImageBitmap(bitmap);
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.placeholder(R.drawable.ic_logo);
+        Glide.with(this).load(bytes)
+                .apply(requestOptions).listener(requestListener).into(img);
         mPictures.addView(view);
-        // }
     }
 
     private void postComment() {
+        hideKeyBoard();
+
         final String uEmail = mAuth.getCurrentUser().getEmail();
         final String uid = mAuth.getCurrentUser().getUid();
-        final String id = DocumentRef.getId();
 
-        Query userquery = FirebaseFirestore.getInstance().collection("users").whereEqualTo("email", uEmail);
-        userquery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        Query userQuery = mStore.collection("users").whereEqualTo("email", uEmail);
+        userQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
 
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
-                    AppUser AppUser = dc.getDocument().toObject(AppUser.class);
-                    if (AppUser == null) {
-                        Log.e(TAG, "AppUser " + uEmail + " is unexpectedly null");
-                        Toast.makeText(getApplicationContext(),
-                                "사용자를 정의할 수 없습니다",
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        String adminName = dc.getDocument().get("username").toString();
-                        Comments comment = new Comments(uid, adminName, mCommentField.getText().toString(), new Date());
-                        DocumentRef.collection("comments").document().set(comment);
-                        DocumentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                int num = (int)(long)task.getResult().get("numComments");
-                                Log.e("comment num", Integer.toString(num));
-                                DocumentRef.update("numComments", ++num);
-                            }
-                        });
-                        mCommentField.setText(null);
-                    }
-                }
+                DocumentSnapshot foundUser = queryDocumentSnapshots.getDocumentChanges().get(0)
+                        .getDocument();
+
+                String adminName = foundUser.get("username").toString();
+
+                Comments comment = new Comments(uid, adminName, mCommentField.getText().toString(), new Date());
+                DocumentRef.collection("comments").document().set(comment);
+                DocumentRef.update("numComments", ++ReadPostNumComments);
+                mCommentField.setText(null);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e(TAG, "AppUser " + uEmail + " is unexpectedly null");
+                Toast.makeText(getApplicationContext(),
+                        "사용자를 정의할 수 없습니다",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -255,29 +312,31 @@ public class NoticeReadActivity extends AppCompatActivity {
     private void DeleteComment(String userId, String commentId) {
         final String cid = commentId;
         final String uid = mAuth.getCurrentUser().getUid();
-        if(userId.equals(uid)) {
-            Toast.makeText(this, "비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
+        if (userId.equals(uid)) {
+            Toast.makeText(this, "비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
             DeleteDialogFragment ddf =
                     DeleteDialogFragment.newInstance(new DeleteDialogFragment.DeleteCommentListener() {
                         @Override
                         public void DeleteOrNot(int IsDeleted) {
-                            if(IsDeleted==1) {
+                            if (IsDeleted == 1) {
                                 Log.d(TAG, "comment delete");
                                 DocumentRef.collection("comments").document(cid).delete();
-                                Toast.makeText(getApplicationContext(), "Comment Deleted", Toast.LENGTH_SHORT).show();                            }
-                            else Log.d(TAG, "IsDeleted==0");
+                                Toast.makeText(getApplicationContext(), "댓글이 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                            } else Log.d(TAG, "IsDeleted==0");
 
                         }
                     });
             ddf.show(getSupportFragmentManager(), DeleteDialogFragment.TAG);
-        }
-        else Toast.makeText(getApplicationContext(), "글쓴이가 아닙니다", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(getApplicationContext(), "글쓴이가 아닙니다", Toast.LENGTH_SHORT).show();
     }
+
+
     private static class CommentViewHolder extends RecyclerView.ViewHolder {
 
         public TextView authorView;
         public TextView bodyView;
         public TextView dateView;
+
         CommentViewHolder(View itemView) {
             super(itemView);
             authorView = itemView.findViewById(R.id.comment_author_text);
@@ -298,7 +357,9 @@ public class NoticeReadActivity extends AppCompatActivity {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot snapshots,
                                     @Nullable FirebaseFirestoreException e) {
-                    if (e != null) {return;}
+                    if (e != null) {
+                        return;
+                    }
                     String commentKey;
                     int commentIndex;
                     Comments comment;
@@ -309,8 +370,8 @@ public class NoticeReadActivity extends AppCompatActivity {
                                 // A new comment has been added, add it to the displayed list
                                 comment = dc.getDocument().toObject(Comments.class);
                                 // Update RecyclerView
-                                mCommentIds.add(0,dc.getDocument().getId());
-                                mComments.add(0,comment);
+                                mCommentIds.add(0, dc.getDocument().getId());
+                                mComments.add(0, comment);
                                 notifyItemInserted(0);
                                 break;
                             case MODIFIED:
@@ -381,10 +442,11 @@ public class NoticeReadActivity extends AppCompatActivity {
     }
 
 
-    private static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener{
+    private static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
         public interface OnItemClickListener {
             void onLongItemClick(View view, int position);
         }
+
         private NoticeReadActivity.RecyclerItemClickListener.OnItemClickListener mListener;
         private GestureDetector mGestureDetector;
 
@@ -395,6 +457,7 @@ public class NoticeReadActivity extends AppCompatActivity {
                 public boolean onSingleTapUp(MotionEvent e) {
                     return false;
                 }
+
                 @Override
                 public void onLongPress(MotionEvent e) {
                     View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
@@ -405,6 +468,7 @@ public class NoticeReadActivity extends AppCompatActivity {
                 }
             });
         }
+
         @Override
         public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
             View childView = view.findChildViewUnder(e.getX(), e.getY());
@@ -414,22 +478,137 @@ public class NoticeReadActivity extends AppCompatActivity {
             }
             return false;
         }
+
         @Override
         public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
         }
+
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean b) {
         }
     }
-    public static String timeGapCheck(Date postDate){
+
+    public static String timeGapCheck(Date postDate) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm (E)");
         long timeGap = new Date().getTime() - postDate.getTime();
         long min = timeGap / 60000;  // 분
         String postStatus;
-        if(min == 0 ) postStatus = "방금";
-        else if(0< min && min< 60) postStatus = min + "분 전";
-        else if(60<=min && min<60*24) postStatus = min/60 +"시간 전";
+        if (min == 0) postStatus = "방금";
+        else if (0 < min && min < 60) postStatus = min + "분 전";
+        else if (60 <= min && min < 60 * 24) postStatus = min / 60 + "시간 전";
         else postStatus = simpleDateFormat.format(postDate);
         return postStatus;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.read_notice, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // 게시글 수정은 추후에 만들기로
+
+
+            // 게시글 삭제
+            case R.id.delete_post: {
+                DeleteDialogFragment ddf =
+                        DeleteDialogFragment.newInstance(new DeleteDialogFragment.DeletePostListener() {
+                            @Override
+                            public void DeleteOrNot(int IsDeleted) {
+                                if (IsDeleted == 1) {
+                                    final ProgressDialog progressDialog = new ProgressDialog(NoticeReadActivity.this);
+                                    progressDialog.setTitle("삭제중입니다");
+                                    progressDialog.show();
+
+                                    // STORAGE에서 해당폴더삭제
+                                    if (photoNum > 0) {
+                                        StorageReference storageRef = mStorage.getReferenceFromUrl("gs://bobnu-47135.appspot.com").
+                                                child(DocumentID + "_images");
+                                        for (int i = 0; i < photoNum; i++) {
+                                            final String filename = i + ".png";
+                                            storageRef.child("/" + filename).delete().addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.d(TAG, filename + "을 찾지 못함");
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    //댓글 컬렉션 삭제 ( 많을 시 메모리부담이 있거나 느릴 수 있음)
+                                    DocumentRef.collection("comments").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (DocumentSnapshot ds : task.getResult()) {
+                                                    DocumentRef.collection("comments").document(ds.getId()).delete();
+                                                }
+                                            } else return;
+                                        }
+                                    });
+                                    DocumentRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            progressDialog.dismiss();
+                                            finish();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    progressDialog.dismiss();
+                                                                    finish();
+                                                                }
+                                                            }
+                                    );  // FIRESTORE 에서 게시글 문서 삭제
+                                }
+                            }
+                        });
+                ddf.show(getSupportFragmentManager(), DeleteDialogFragment.TAG);
+
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // If there's an upload in progress, save the reference so you can query it later
+        if (mStorageRef != null) {
+            outState.putString("reference", mStorageRef.toString());
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // If there was an upload in progress, get its reference and create a new StorageReference
+        final String stringRef = savedInstanceState.getString("reference");
+        if (stringRef == null) {
+            return;
+        }
+        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(stringRef);
+
+        // Find all UploadTasks under this StorageReference (in this example, there should be one)
+        List<UploadTask> tasks = mStorageRef.getActiveUploadTasks();
+        if (tasks.size() > 0) {
+            // Get the task monitoring the upload
+            UploadTask task = tasks.get(0);
+
+            // Add new listeners to the task using an Activity scope
+            task.addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot state) {
+                    // Success!
+                    // ...
+                }
+            });
+        }
+    }
+
 }

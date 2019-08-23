@@ -23,6 +23,9 @@ public class SetCountPopUp extends Activity {
     Button countDown;
     Button countUp;
     String foodName;
+    String foodPhoto;
+    Button addToBagLayout;
+
     int foodPrice;
     private DBHelper helper;
     private static SQLiteDatabase db;
@@ -38,10 +41,15 @@ public class SetCountPopUp extends Activity {
         Intent intent = getIntent();
         foodName = intent.getStringExtra("name");
         foodPrice = intent.getIntExtra("price",0);
+        foodPhoto = intent.getStringExtra("photo");
+
         helper = new DBHelper(this, "BASKET.db", null,1);
         db = helper.getWritableDatabase();
 
         //UI 객체생성
+        addToBagLayout = findViewById(R.id.add_to_bag);
+        addToBagLayout.setClickable(false);
+
         count = (EditText) findViewById(R.id.textview_setcount);
         countDown = (Button) findViewById(R.id.button_countdown);
         countUp = (Button) findViewById(R.id.button_countup);
@@ -51,13 +59,14 @@ public class SetCountPopUp extends Activity {
             public void onClick(View v) {
                 int num=0;
                 num = Integer.parseInt(count.getText().toString());
-                if(num!=0) {
-                    --num;
-                } else {
 
-                }
+                if(num!=0)
+                    --num;
+
                 count.setText(String.valueOf(num));
                 returnValue = num;
+                if(returnValue==0)
+                    addToBagLayout.setClickable(false);
             }
         });
         countUp.setOnClickListener(new View.OnClickListener() {
@@ -66,29 +75,32 @@ public class SetCountPopUp extends Activity {
                 int num=0;
                 num = Integer.parseInt(count.getText().toString());
                 ++num;
+                if(returnValue==0)
+                    addToBagLayout.setClickable(true);
 
                 count.setText(String.valueOf(num));
                 returnValue = num;
+
+
             }
         });
-
     }
 
     //확인 버튼 클릭
     public void mOnClose(View v){
-        //데이터 전달하기
 
+        //데이터 전달하기
         Cursor checking = db.rawQuery("SELECT name FROM BASKET WHERE name='"+foodName+"';", null);
         Toast.makeText(v.getContext(), foodName + " 장바구니에 " + returnValue + "개 추가됨.", Toast.LENGTH_SHORT).show();
-            if (checking.getCount()==0) {   // 있으면 무조건 getCount 는 1 일 것
-                db.execSQL("INSERT INTO BASKET VALUES('" + foodName + "', '" + returnValue + "', " + foodPrice + ");");
-                finish();
-            } else {
-                db.execSQL("UPDATE BASKET SET num = num+ " + returnValue);
-                finish();
-            }
-
+        if (checking.getCount()==0) {   // 있으면 무조건 getCount 는 1 일 것
+            db.execSQL("INSERT INTO BASKET VALUES('" + foodName + "', '" + returnValue + "', '" + foodPrice+ "', '" + foodPhoto + "');");
+            finish();
+        } else {
+            db.execSQL("UPDATE BASKET SET num = num+ " + returnValue);
+            finish();
+        }
     }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

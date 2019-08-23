@@ -2,6 +2,8 @@ package com.example.cube.MoonChang;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -22,6 +24,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.cube.Components.PayMenuData;
+import com.example.cube.DBHelper;
 import com.example.cube.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -33,6 +36,11 @@ public class MoonChangPayFragment extends Fragment {
 
     PayItemAdapter adapter;
     FloatingActionButton payBag;
+
+    //db추가부분
+    private DBHelper helper;
+    private static SQLiteDatabase db;
+    private ArrayList<PayMenuData> menuData;
 
     private OnFragmentInteractionListener mListener1;
     private OnFragmentInteractionListener mListener2;
@@ -53,7 +61,25 @@ public class MoonChangPayFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new PayItemAdapter();
+
+        //db추가부분 + 어댑터
+        helper = new DBHelper(getContext(), "MC_MENU.db", null, 1);
+        db = helper.getWritableDatabase();
+        menuData = new ArrayList<>();
+
+        Cursor c = db.rawQuery("SELECT name, photo, price FROM MC_MENU", null);
+        while(c.moveToNext()){
+            PayMenuData data = new PayMenuData();
+            data.setName(c.getString(0));
+            data.setPhoto(c.getString(1));
+            data.setPrice(c.getInt(2));
+            menuData.add(data);
+        }
+
+        adapter = new PayItemAdapter(menuData);
+        // 까지
+
+
         recyclerView.setAdapter(adapter);
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
@@ -71,7 +97,7 @@ public class MoonChangPayFragment extends Fragment {
 
             }
         });
-        getData();
+        //getData();
 
 
         //장바구니로가기
@@ -136,7 +162,7 @@ public class MoonChangPayFragment extends Fragment {
 
 
     }
-
+/*
     private void getData() {
         // 임의의 데이터입니다.
         List<String> listImage = Arrays.asList(
@@ -182,5 +208,5 @@ public class MoonChangPayFragment extends Fragment {
         // adapter의 값이 변경되었다는 것을 알려줍니다.
         adapter.notifyDataSetChanged();
     }
-
+*/
 }

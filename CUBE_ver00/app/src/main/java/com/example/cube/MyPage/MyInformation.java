@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,18 +18,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cube.Components.Order;
+import com.example.cube.CurrentApplication;
 import com.example.cube.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -43,6 +62,11 @@ public class MyInformation extends Fragment {
     ImageView profilePicture;
     private Uri mImageCaptureUri;
     private String absolutePath;
+
+    RecyclerView myCurrentOrderView;
+    ArrayList<Order> myCurrentOrderList;
+    CurrentOrderAdapter adapter;
+    FirebaseFirestore mStore;
 
     public MyInformation() {}
 
@@ -91,6 +115,37 @@ public class MyInformation extends Fragment {
                         .setPositiveButton("앨범선택", albumListener)
                         .setNegativeButton("취소", cancelListener)
                         .show();
+            }
+        });
+
+        CurrentApplication currentUserInfo = (CurrentApplication) (getActivity().getApplication());
+        String UserNickName = currentUserInfo.getNickname();
+        myCurrentOrderView = view.findViewById(R.id.recycler_my_order_current);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+        myCurrentOrderView.setLayoutManager(linearLayoutManager);
+        myCurrentOrderView.setHasFixedSize(true);
+        myCurrentOrderView.addItemDecoration(new DividerItemDecoration(myCurrentOrderView.getContext(),1));
+
+
+        myCurrentOrderList = new ArrayList<>();
+        FragmentManager fm = getFragmentManager();
+
+        mStore = FirebaseFirestore.getInstance();
+        mStore.collection("foodcourt/moonchang/order").whereEqualTo("user", UserNickName).whereEqualTo("standby",true)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot ds : task.getResult()) {
+                        Order order = ds.toObject(Order.class);
+                        myCurrentOrderList.add(order);
+                    }
+                    FragmentManager fm = getFragmentManager();
+                    adapter = new CurrentOrderAdapter(myCurrentOrderList, fm);
+                    myCurrentOrderView.setAdapter(adapter);
+                } else {
+                    Toast.makeText(getContext(), "불러오기 실패!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;
@@ -190,5 +245,104 @@ public class MyInformation extends Fragment {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapter.ItemViewHolder> {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+        private FragmentManager fm;
+
+        // adapter에 들어갈 list 입니다.
+        private ArrayList<Order> listData ;
+
+        public CurrentOrderAdapter(ArrayList<Order> orderList,FragmentManager fragmentManager){
+            listData = orderList;
+            fm = fragmentManager;
+        }
+
+
+        @NonNull
+        @Override
+        public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            // LayoutInflater를 이용하여 전 단계에서 만들었던 item.xml을 inflate 시킵니다.
+            // return 인자는 ViewHolder 입니다.
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_current_order, parent, false);
+            return new ItemViewHolder(view);
+        }
+
+        // RecyclerView의 핵심인 ViewHolder 입니다.
+        // 여기서 subView를 setting 해줍니다.
+        class ItemViewHolder extends RecyclerView.ViewHolder {
+
+            private TextView curOrderInfo;
+            private TextView curOrderList;
+            private TextView curOrderState;
+            private LinearLayout Item;
+            private int pos;
+
+
+            ItemViewHolder(View itemView) {
+                super(itemView);
+
+                curOrderInfo = itemView.findViewById(R.id.cur_order_info);
+                curOrderList = itemView.findViewById(R.id.cur_order_food);
+                curOrderState = itemView.findViewById(R.id.cur_order_state);
+                Item = itemView.findViewById(R.id.cur_order_itemView);
+
+            }
+
+            void onBind(Order data, int position) {
+
+                pos = position;
+
+                // order collection은 식당별로 있기도하고 일단 문창만 주문을 했을 때 리뷰를 쓰는 것으로 하였음.
+                String orderInfoStr ="";
+                orderInfoStr += (data.getOrder_num() + " / 문창 / ");
+                orderInfoStr += simpleDateFormat.format(data.getOrder_time());
+
+                List<Map<String, Object>> orderedList = data.getOrder_list();
+                String orderDetailStr = "";
+                Map<String, Object> _map = orderedList.get(0);
+                orderDetailStr += (_map.get("name") + "X" + _map.get("num") + "외" + (orderedList.size()-1)+"개");
+
+                curOrderInfo.setText(orderInfoStr);
+                curOrderList.setText(orderDetailStr);
+                if(data.isCalled()){
+                    curOrderState.setBackgroundColor(Color.GREEN);
+                    curOrderState.setText("호출됨");
+                }
+
+                Item.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(v.getContext(),"상세보기", Toast.LENGTH_SHORT).show();
+                        Order order = listData.get(pos);
+                        OrderDetailDialogFragment oddf
+                                = new OrderDetailDialogFragment(order);
+                        oddf.show(fm, OrderDetailDialogFragment.TAG);
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+            // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
+
+            holder.onBind(listData.get(position), position);
+        }
+
+        @Override
+        public int getItemCount() {
+            // RecyclerView의 총 개수 입니다.
+            return listData.size();
+        }
+
+        void addItem(Order data) {
+            // 외부에서 item을 추가시킬 함수입니다.
+            listData.add(data);
+        }
+
+
     }
 }

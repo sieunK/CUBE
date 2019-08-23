@@ -3,6 +3,7 @@
     package="com.example.cube">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -35,6 +36,9 @@
         <activity android:name=".Setting.MenuAlarmSettingActivity" />
         <activity android:name=".Opening.ProfileActivity" />
         <activity android:name=".Notice.NoticeReadActivity" />
+        <activity android:name=".Notice.NoticeAddActivity"
+            android:windowSoftInputMode="adjustNothing"/>
+
         <activity android:name=".Opening.LoginActivity" />
         <activity android:name=".Opening.PasswordActivity"/>
         <activity android:name=".Opening.SignUpActivity" />

@@ -3,13 +3,17 @@ package com.example.cube.MoonChang;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -107,12 +111,14 @@ public class MoonChangBagFragment extends Fragment {
                 });
 
         // 장바구니(BASKET)에서 음식들을 꺼내옴 + 가격 총 합 계산
-        Cursor c = db.rawQuery("SELECT name, num, price FROM BASKET", null);
+        Cursor c = db.rawQuery("SELECT name, num, price,photo FROM BASKET", null);
         while (c.moveToNext()) {
             HashMap<String, Object> item = new HashMap<>();
             item.put("name", c.getString(0));
             item.put("num", c.getInt(1));
             item.put("price", c.getInt(2));
+            item.put("photo", c.getString(3));
+
             pricesum += (c.getInt(2) * (c.getInt(1)));
             selectedFoodList.add(item);
         }
@@ -132,14 +138,22 @@ public class MoonChangBagFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
                 Map<String, Object> Selected = selectedFoodList.get(pos);
-                final int selectedPrice = (int) Selected.get("price");
-                final String selectedName = Selected.get("name").toString();
-                final int selectedNum = (int) Selected.get("num");
-                pricesum -= (selectedNum * selectedPrice);
-                totalPrice.setText(String.valueOf(pricesum));
-                db.execSQL("DELETE FROM BASKET WHERE name ='" + selectedName + "';");
+                int selectedPrice = (int) Selected.get("price");
+                String selectedName = Selected.get("name").toString();
+                int selectedNum = (int) Selected.get("num");
+                Log.d("selectednum", Integer.toString(selectedNum));
 
-                selectedFoodList.remove(pos);
+                pricesum -= selectedPrice;
+                totalPrice.setText(String.valueOf(pricesum));
+
+                if(selectedNum> 1){
+                    db.execSQL("UPDATE BASKET SET num = num-1 ");
+                    Selected.put("num", selectedNum-1);
+                }
+                else{
+                    db.execSQL("DELETE FROM BASKET WHERE name ='" + selectedName + "';");
+                    selectedFoodList.remove(pos);
+                }
                 bagAdapter.notifyDataSetChanged();
                 Toast.makeText(getContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
             }
@@ -221,6 +235,7 @@ public class MoonChangBagFragment extends Fragment {
             }
 
             // ImageView itemImage = (ImageView) convertView.findViewById(R.id.bag_food_image) ;
+            ImageView itemImage = (ImageView) convertView.findViewById(R.id.bag_food_image);
             TextView itemName = (TextView) convertView.findViewById(R.id.bag_food_name);
             TextView itemNum = (TextView) convertView.findViewById(R.id.bag_food_num);
             TextView itemPrice = (TextView) convertView.findViewById(R.id.bag_food_price);
@@ -231,7 +246,13 @@ public class MoonChangBagFragment extends Fragment {
             itemName.setText(bagItem.get("name").toString());
             itemNum.setText((bagItem.get("num").toString()));
             itemPrice.setText(bagItem.get("price").toString());
-
+            String imageStr = bagItem.get("photo").toString();
+            if (imageStr == null) {
+                itemImage.setImageResource(R.drawable.ic_logo);
+            } else {
+                byte[] photo = Base64.decode(imageStr, Base64.NO_WRAP);
+                itemImage.setImageBitmap(BitmapFactory.decodeByteArray(photo, 0, photo.length));
+            }
             return convertView;
         }
 

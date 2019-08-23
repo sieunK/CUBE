@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cube.BackPressCloseHandler;
 import com.example.cube.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,12 +25,14 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
     private Button submitButton;
     private Button loginButton;
     private FirebaseAuth firebaseAuth;
+    private BackPressCloseHandler backPressCloseHandler;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password);
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         userEmail = (EditText)findViewById(R.id.userEmail);
         loginButton = (Button)findViewById(R.id.login);
@@ -64,5 +67,10 @@ public class PasswordActivity extends AppCompatActivity implements View.OnClickL
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        backPressCloseHandler.onBackPressed();
     }
 }

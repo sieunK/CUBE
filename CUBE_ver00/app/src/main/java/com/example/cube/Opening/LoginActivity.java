@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cube.BackPressCloseHandler;
 import com.example.cube.DefaultActivity;
 import com.example.cube.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +39,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
+    private BackPressCloseHandler backPressCloseHandler;
+
 
     SharedPreferences setting;
     SharedPreferences.Editor editor;
@@ -52,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             firebaseAuth.getCurrentUser().delete();
         }
         progressDialog = new ProgressDialog(this);
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         checkAutoLogin = (CheckBox) findViewById(R.id.checkAutoLogin);
         editTextEmail = (EditText) findViewById(R.id.email);
@@ -158,5 +162,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(v == nonUserLogin) {
             nonUserLogin();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        backPressCloseHandler.onBackPressed();
     }
 }

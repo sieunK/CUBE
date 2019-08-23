@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cube.BackPressCloseHandler;
 import com.example.cube.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,6 +43,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private EditText nickName;
     private TextView textViewSignIn;
 
+    private BackPressCloseHandler backPressCloseHandler;
+
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
@@ -55,6 +58,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         db = FirebaseFirestore.getInstance();
 
         progressDialog = new ProgressDialog(this);
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         buttonCheckDuplicate = (Button)findViewById(R.id.buttonCheckDuplicate);
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
@@ -256,5 +260,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
         }
+    }
+    @Override
+    public void onBackPressed() {
+        backPressCloseHandler.onBackPressed();
     }
 }

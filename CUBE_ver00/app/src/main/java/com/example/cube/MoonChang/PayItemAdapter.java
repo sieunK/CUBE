@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,9 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.ItemView
     // adapter에 들어갈 list 입니다.
     private ArrayList<PayMenuData> listData = new ArrayList<>();
     private Context mContext;
+    public PayItemAdapter(ArrayList<PayMenuData> listData){
+        this.listData = listData;
+    }
 
     @NonNull
     @Override
@@ -57,15 +62,19 @@ public class PayItemAdapter extends RecyclerView.Adapter<PayItemAdapter.ItemView
 
         void onBind(PayMenuData data) {
             foodName.setText(data.getName());
-            foodPrice.setText(data.getPrice());
-            //foodImage.setImage(data.getImage());
-
+            foodPrice.setText(Integer.toString(data.getPrice()));
+            final String imageStr = data.getPhoto();
+            if (imageStr != null) {
+                byte[] photo = Base64.decode(imageStr, Base64.NO_WRAP);
+                foodImage.setImageBitmap(BitmapFactory.decodeByteArray(photo, 0, photo.length));
+            }
             Item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), SetCountPopUp.class);
                     intent.putExtra("name",foodName.getText().toString());
                     intent.putExtra("price", (Integer.parseInt(foodPrice.getText().toString())));
+                    intent.putExtra("photo",imageStr);
                     v.getContext().startActivity(intent);
                 }
             });

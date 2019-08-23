@@ -12,38 +12,38 @@
         android:id="@+id/bag_food_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:minWidth="100dp"
         android:layout_margin="10dp"
         android:gravity="center_vertical"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
+    <TextView
+        android:id="@+id/bag_food_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/bag_food_image"
+        android:layout_toRightOf="@+id/bag_food_image"
+        android:layout_toEndOf="@+id/bag_food_image"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:text="음식명"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 
-        <TextView
-            android:id="@+id/bag_food_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/bag_food_image"
-            android:layout_toRightOf="@+id/bag_food_image"
-            android:layout_toEndOf="@+id/bag_food_image"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:text="음식명"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-
-        <TextView
-            android:id="@+id/bag_food_X"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/bag_food_image"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_toRightOf="@+id/bag_food_image"
-            android:layout_toEndOf="@+id/bag_food_image"
-            android:textSize="16sp"
-            android:text="X" />
+    <TextView
+        android:id="@+id/bag_food_X"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/bag_food_image"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_toRightOf="@+id/bag_food_image"
+        android:layout_toEndOf="@+id/bag_food_image"
+        android:textSize="16sp"
+        android:text="X" />
 
     <TextView
         android:id="@+id/bag_food_num"

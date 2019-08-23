@@ -21,7 +21,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //implementation 'androidx.fragment:fragment:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.2'
@@ -33,11 +33,11 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     implementation 'androidx.preference:preference:1.0.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.google.firebase:firebase-core:17.0.1'
-    implementation 'com.google.firebase:firebase-auth:18.1.0'
-    implementation 'com.google.firebase:firebase-firestore:20.2.0'
-    implementation 'com.google.firebase:firebase-storage:18.1.1'
-    implementation 'com.google.firebase:firebase-database:18.0.1'
+    implementation 'com.google.firebase:firebase-core:17.1.0'
+    implementation 'com.google.firebase:firebase-auth:19.0.0'
+    implementation 'com.google.firebase:firebase-firestore:21.0.0'
+    implementation 'com.google.firebase:firebase-storage:19.0.0'
+    implementation 'com.google.firebase:firebase-database:19.0.0'
     //implementation 'androidx.recyclerview.widget.LinearLayoutManager'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.appcompat:appcompat:1.0.2'

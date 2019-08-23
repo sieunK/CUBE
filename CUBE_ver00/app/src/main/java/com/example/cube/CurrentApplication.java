@@ -5,6 +5,7 @@ import android.app.Application;
 public class CurrentApplication extends Application {
     private String Nickname;
     private String Email;
+    private boolean isAdmin;
 
     @Override
     public void onCreate() {
@@ -12,6 +13,7 @@ public class CurrentApplication extends Application {
         super.onCreate();
         Nickname = null;
         Email = null;
+        isAdmin = false;
     }
 
     @Override
@@ -24,6 +26,7 @@ public class CurrentApplication extends Application {
         return "CurrentUserInfo{" +
                 "Nickname='" + Nickname + '\'' +
                 ", Email='" + Email + '\'' +
+                ", isAdmin='" + isAdmin + '\'' +
                 '}';
     }
 
@@ -41,5 +44,13 @@ public class CurrentApplication extends Application {
 
     public void setEmail(String email) {
         Email = email;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }

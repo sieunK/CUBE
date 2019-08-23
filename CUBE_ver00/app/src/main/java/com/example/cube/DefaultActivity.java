@@ -1,6 +1,8 @@
 package com.example.cube;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +44,8 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
     final static HashMap<String, Pair<String, Integer>> mc_menu = new HashMap<>();
 
     private CurrentApplication currentUserInfo;
+    private BackPressCloseHandler backPressCloseHandler;
+
     private String getUserEmail;
     private String getUserNickName;
 
@@ -53,45 +57,59 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        backPressCloseHandler = new BackPressCloseHandler(this);
+
 
         /* DB 작업 */
+        Fdb = FirebaseFirestore.getInstance();
+
         helper = new DBHelper(this, "MC_MENU.db", null, 1);
         db = helper.getWritableDatabase();
         helper.onCreate(db);
-        Fdb = FirebaseFirestore.getInstance();
+        Cursor cursor = db.query("MC_MENU", null, null, null, null, null, null);
+        if (cursor.getCount() == 0) {
 
-        Fdb.collection("foodcourt/moonchang/menu")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String t_name = document.getData().get("name").toString();
-                                String t_photo = null;
-                                if (document.getData().get("photo") != null)
-                                    t_photo = document.getData().get("photo").toString();
-                                int t_price = ((Long) document.getData().get("price")).intValue();
-                                mc_menu.put(t_name, new Pair<>(t_photo, t_price));
-                                Log.d("For Test2", t_name);
-                                //Log.d("For Test3", t_photo);
-                                Log.d("For Test4", "" + mc_menu.get(t_name).second);
+            Fdb.collection("foodcourt/moonchang/menu")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
 
-                                // DB에 입력한 값으로 행 추가
-                                db.execSQL("INSERT INTO MC_MENU VALUES('" + t_name + "', '" + t_photo + "', " + t_price + ");");
+                                    String t_name = document.getData().get("name").toString();  // 음식 이름
+
+                                    String t_photo = null;     // 음식 사진
+
+                                    if (document.getData().get("photo") != null)
+                                        t_photo = document.getData().get("photo").toString();   // String TYPE의 data 를 받아옴(photo)
+
+                                    long t_price = (long) document.getData().get("price");   // 음식 가격
+
+                                /*테스트
+                                    mc_menu.put(t_name, new Pair<>(t_photo, t_price));
+                                    Log.d("For Test2", t_name);
+                                    //Log.d("For Test3", t_photo);
+                                    Log.d("For Test4", "" + mc_menu.get(t_name).second);
+                                   */
+                                    // DB에 입력한 값으로 행 추가
+                                    db.execSQL("INSERT INTO MC_MENU VALUES('" + t_name + "', '" + t_photo + "', " + t_price + ");");
+                                }
+                            } else {
+                                Log.w("????", "Error getting documents.", task.getException());
                             }
-                        } else {
-                            Log.w("????", "Error getting documents.", task.getException());
                         }
-                    }
-                });
+                    });
 
-
+        }
 
         /* 로그인 후 앱에서 계속 사용할 수 있도록 닉네임과 이메일을 저장 */
         currentUserInfo = (CurrentApplication) getApplication();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         getUserEmail = mAuth.getCurrentUser().getEmail();
+        final ProgressDialog progressDialog = new ProgressDialog(DefaultActivity.this);
+        progressDialog.setTitle("사용자 확인 중...");
+        progressDialog.show();
         Fdb.collection("users").whereEqualTo("email", getUserEmail).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -107,9 +125,18 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                                     currentUserInfo.setEmail(getUserEmail);
                                     currentUserInfo.setNickname(getUserNickName);
                                 }
+                                Object isAdmin = dc.getData().get("isAdmin");
+                                if(isAdmin!=null && (boolean)isAdmin==true) {
+                                    currentUserInfo.setAdmin(true);
+                                    Toast.makeText(getApplicationContext(), "관리자 확인", Toast.LENGTH_SHORT).show();
+
+                                }
+
                             }
+                            progressDialog.dismiss();
                         } else {
                             Toast.makeText(getApplicationContext(), "사용자를 찾을 수 없습니다", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                         }
                     }
                 });
@@ -124,7 +151,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         TextView nav_header_id_text = (TextView) nav_header_view.findViewById(R.id.show_nickname);
         nav_header_id_text.setText(getUserNickName);
 
-        DBHelper dbHelper = new DBHelper(getApplicationContext(), "NOTICE.db", null, 1);
+        //DBHelper dbHelper = new DBHelper(getApplicationContext(), "NOTICE.db", null, 1);
 
         /* 초기화면을 HomePage로 설정함 */
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -144,9 +171,16 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        int fragNum = getSupportFragmentManager().getBackStackEntryCount()+1;
+        Log.d("Number of Frag", Integer.toString(fragNum));
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else if(fragNum == 1){
+            backPressCloseHandler.onBackPressed();
+        }
+        else {
             super.onBackPressed();
         }
     }

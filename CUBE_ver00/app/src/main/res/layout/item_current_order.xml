@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cur_order_itemView"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1.0"
+    android:background="@android:color/white"
+    android:paddingVertical="10dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="0.8">
+        <TextView
+            android:id="@+id/cur_order_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize ="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:text="192 / 문창 / 2019-05-19 11:42"/>
+        <TextView
+            android:id="@+id/cur_order_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize ="14sp"
+            android:textStyle="bold"
+            android:text="라면1 "/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_weight="0.2"
+        android:id="@+id/cur_order_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_light"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="center_vertical"
+        android:padding="5dp"
+        android:text="주문진행중"
+        android:textSize="12sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"/>
+
+</LinearLayout>
