@@ -41,7 +41,7 @@ public class HomeActivity extends Fragment {
     RecyclerView notice_shortView;
     MainAdapter adapter;
     ArrayList<NoticeData> noticeList;
-
+    Fragment fragment;
     public HomeActivity() {
     }
 
@@ -74,13 +74,11 @@ public class HomeActivity extends Fragment {
 //                ft.commit();
 //            }
 //        });
-
+        fragment = new MoonChangFragment();
         moonChang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //getActivity().finish();
-
-                Fragment fragment = new MoonChangFragment();
                 if (fragment != null) {
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.addToBackStack(null);

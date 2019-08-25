@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class MoonChangFragment extends Fragment /*implements MoonChangPayFragment.OnFragmentInteractionListener*/ {
 
     private MoonChangBagFragment fragmentbag;
-
+    private MoonChangPagerAdapter myPagerAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +40,10 @@ public class MoonChangFragment extends Fragment /*implements MoonChangPayFragmen
 
         //어답터설정
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        final MoonChangPagerAdapter myPagerAdapter = new MoonChangPagerAdapter(getActivity().getSupportFragmentManager(), 4);
+        myPagerAdapter = new MoonChangPagerAdapter(getChildFragmentManager(), 4);
         viewPager.setAdapter(myPagerAdapter);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(4);
+
 
 
         tabs.getTabAt(0).setIcon(R.drawable.ic_tab_select_pay);

@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -71,8 +73,8 @@ public class MoonChangMenuFragment extends Fragment {
         Button btn_fourth = (Button)view.findViewById(R.id.btn_fourth);
         Button btn_fifth = (Button)view.findViewById(R.id.btn_fifth);
 
-        vp.setAdapter(new pagerAdapter(getActivity().getSupportFragmentManager()));
-        vp.setOffscreenPageLimit(4);
+        vp.setAdapter(new pagerAdapter(getChildFragmentManager()));
+        vp.setOffscreenPageLimit(5);
         vp.setCurrentItem(0);
 
         btn_first.setOnClickListener(movePageListener);
@@ -104,7 +106,6 @@ public class MoonChangMenuFragment extends Fragment {
 
         return view;
     }
-
 
     View.OnClickListener movePageListener = new View.OnClickListener()
     {
@@ -176,14 +177,14 @@ public class MoonChangMenuFragment extends Fragment {
 
 
 
-    private class pagerAdapter extends FragmentStatePagerAdapter
+    private class pagerAdapter extends FragmentPagerAdapter
     {
-        public pagerAdapter(androidx.fragment.app.FragmentManager fm)
-        {
-            super(fm);
+        public pagerAdapter(FragmentManager childFragmentManager) {
+            super(childFragmentManager);
         }
+
         @Override
-        public androidx.fragment.app.Fragment getItem(int position)
+        public Fragment getItem(int position)
         {
             MoonChangWeekMenu menu = new MoonChangWeekMenu();
             switch(position)

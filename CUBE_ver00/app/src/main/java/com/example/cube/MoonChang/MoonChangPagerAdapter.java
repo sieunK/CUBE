@@ -1,5 +1,10 @@
 package com.example.cube.MoonChang;
 
+import android.util.Log;
+import android.util.SparseArray;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -7,7 +12,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 //문창회관기능에 필요한 4가지 탭을 위한 탭어댑터입니다
 public class MoonChangPagerAdapter extends FragmentPagerAdapter {
     int mNumOfTabs; //tab의 갯수
-
     public MoonChangPagerAdapter(FragmentManager fm, int numOfTabs) {
         super(fm);
         this.mNumOfTabs = numOfTabs;
@@ -35,6 +39,7 @@ public class MoonChangPagerAdapter extends FragmentPagerAdapter {
         }
         //return null;
     }
+
 
     @Override
     public int getCount() {
