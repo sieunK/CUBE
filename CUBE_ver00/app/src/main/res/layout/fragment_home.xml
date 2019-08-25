@@ -9,6 +9,8 @@
     android:orientation="vertical"
     tools:context=".DefaultActivity"
     tools:showIn="@layout/app_bar_main"
+    android:background="@drawable/logback"
+    android:theme="@style/JuaTextViewStyle2"
     >
 
     <ScrollView
@@ -35,18 +37,20 @@
                     android:layout_width="357dp"
                     android:layout_height="271dp"
                     app:scale_height="400"
-                    app:scale_left="130"
+                    app:scale_left="100"
                     app:scale_top="0"
                     app:scale_width="400"
+                    android:layout_marginRight="5dp"
                     app:srcCompat="@drawable/moonchang" />
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/button_saet"
                     android:layout_width="357dp"
                     android:layout_height="271dp"
-                    app:scale_left="550"
+                    app:scale_left="580"
                     app:scale_top="0"
                     app:scale_width="400"
                     app:scale_height="400"
+                    android:layout_marginLeft="5dp"
                     app:srcCompat="@drawable/saetbul" />
             </com.ssomai.android.scalablelayout.ScalableLayout>
 
@@ -60,9 +64,10 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:text="문창회관"
-                    android:textColor="#000000"
-                    app:scale_left="210"
-                    app:scale_top="0"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
+                    app:scale_left="200"
+                    app:scale_top="10"
                     app:scale_textsize="65"
                     app:scale_height="100"
                     app:scale_width="296" />
@@ -71,9 +76,10 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:text="샛벌회관"
-                    android:textColor="#000000"
-                    app:scale_left="625"
-                    app:scale_top="0"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
+                    app:scale_left="665"
+                    app:scale_top="10"
                     app:scale_textsize="65"
                     app:scale_height="100"
                     app:scale_width="296" />
@@ -89,7 +95,7 @@
                     android:id="@+id/button_hak"
                     android:layout_width="357dp"
                     android:layout_height="271dp"
-                    app:scale_left="130"
+                    app:scale_left="100"
                     app:scale_top="0"
                     app:scale_width="400"
                     app:scale_height="400"
@@ -98,10 +104,11 @@
                     android:id="@+id/button_geum"
                     android:layout_width="357dp"
                     android:layout_height="271dp"
-                    app:scale_left="550"
+                    app:scale_left="580"
                     app:scale_top="0"
                     app:scale_width="400"
                     app:scale_height="400"
+                    android:layout_marginLeft="5dp"
                     app:srcCompat="@drawable/geumjeong" />
             </com.ssomai.android.scalablelayout.ScalableLayout>
             <com.ssomai.android.scalablelayout.ScalableLayout
@@ -114,20 +121,22 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:text="학생회관"
-                    android:textColor="#000000"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_height="100"
                     app:scale_left="210"
                     app:scale_textsize="65"
-                    app:scale_top="0"
+                    app:scale_top="10"
                     app:scale_width="296" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:text="금정회관"
-                    android:textColor="#000000"
-                    app:scale_left="625"
-                    app:scale_top="0"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
+                    app:scale_left="665"
+                    app:scale_top="10"
                     app:scale_textsize="65"
                     app:scale_height="100"
                     app:scale_width="296"/>
@@ -136,67 +145,87 @@
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:scale_base_height="100"
+                android:background="@drawable/ic_sigdangsuntak"
+                app:scale_base_height="200"
                 app:scale_base_width="1080">
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="식당을 선택해주세요."
                     app:scale_width="550"
-                    app:scale_height="100"
+                    app:scale_height="200"
                     app:scale_textsize="50"
                     app:scale_left="330"
-                    app:scale_top="0"
+                    app:scale_top="75"
 
                     />
             </com.ssomai.android.scalablelayout.ScalableLayout>
 
             <com.ssomai.android.scalablelayout.ScalableLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:scale_base_height="800"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/ic_notice_backbar"
+                app:scale_base_height="120"
                 app:scale_base_width="1080">
-
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    app:srcCompat="@drawable/ic_ringring_notice"/>
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:text="공지사항"
-                    android:textColor="#000000"
-                    android:textStyle="bold"
-                    app:scale_height="100"
-                    app:scale_left="50"
-                    app:scale_textsize="60"
-                    app:scale_top="10"
-                    app:scale_width="296" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button_more_notice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="더보기"
-                    app:scale_left="280"
-                    app:scale_width="180"
-                    app:scale_top="0"
+                    android:text="공지사항"
+                    android:textColor="@color/strongorange"
                     app:scale_height="100"
-                    app:scale_textsize="35"
-                    />
+                    app:scale_left="120"
+                    app:scale_top="30"
+                    app:scale_width="320"
+                    app:scale_textsize="55" />
+
+                <!--androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/button_more_notice"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="+"
+                    android:textSize="30dp"
+                    android:backgroundTint="#00ff0000"
+                    android:textColor="@color/strongorange"
+                    android:gravity="center"
+                    app:scale_left="320"
+                    android:layout_gravity="center_vertical"
+                    app:scale_width="20"
+                    app:scale_top="0"
+                    app:scale_height="20"
+                    android:layout_marginBottom="3dp"
+                    app:scale_textsize="80"
+                    style="?android:attr/borderlessButtonStyle"
+                    /-->
+            </com.ssomai.android.scalablelayout.ScalableLayout>
+
+            <com.ssomai.android.scalablelayout.ScalableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:scale_base_height="700"
+                app:scale_base_width="1080">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/notice_short"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:scale_width="1080"
+                    app:scale_width="980"
                     app:scale_height="600"
                     app:scale_left="50"
-                    app:scale_top="110"
-                    >
+                    app:scale_top="50" />
 
-                </androidx.recyclerview.widget.RecyclerView>
             </com.ssomai.android.scalablelayout.ScalableLayout>
 
-            <Space
+            <!--Space
                 android:layout_width="match_parent"
-                android:layout_height="159dp" />
+                android:layout_height="50dp" /-->
 
         </LinearLayout>
     </ScrollView>

@@ -112,7 +112,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="8dp"
-        app:backgroundTint="@android:color/holo_blue_bright"
+        app:backgroundTint="@color/orange"
         app:srcCompat="@drawable/ic_create_white_24dp"
 
         />

@@ -31,7 +31,7 @@ public class MoonChangFragment extends Fragment /*implements MoonChangPayFragmen
        // fragmentbag = new MoonChangBagFragment();
 
         //TabLayout
-        TabLayout tabs = (TabLayout) view.findViewById(R.id.tabs);
+        final TabLayout tabs = (TabLayout) view.findViewById(R.id.tabs);
         tabs.addTab(tabs.newTab().setText("결제"));
         tabs.addTab(tabs.newTab().setText("메뉴"));
         tabs.addTab(tabs.newTab().setText("리뷰"));
@@ -42,6 +42,13 @@ public class MoonChangFragment extends Fragment /*implements MoonChangPayFragmen
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         final MoonChangPagerAdapter myPagerAdapter = new MoonChangPagerAdapter(getActivity().getSupportFragmentManager(), 4);
         viewPager.setAdapter(myPagerAdapter);
+        viewPager.setOffscreenPageLimit(3);
+
+
+        tabs.getTabAt(0).setIcon(R.drawable.ic_tab_select_pay);
+        tabs.getTabAt(1).setIcon(R.drawable.ic_tab_unselect_menu);
+        tabs.getTabAt(2).setIcon(R.drawable.ic_tab_unselect_rev);
+        tabs.getTabAt(3).setIcon(R.drawable.ic_tab_unselect_info);
 
 /*
         //정보전달
@@ -56,7 +63,39 @@ public class MoonChangFragment extends Fragment /*implements MoonChangPayFragmen
 
         //탭메뉴를 클릭하면 해당 프래그먼트로 변경-싱크화
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs){
+            @Override
+            public void onPageSelected(int position){
+                tabs.getTabAt(0).setIcon(R.drawable.ic_tab_unselect_pay);
+                tabs.getTabAt(1).setIcon(R.drawable.ic_tab_unselect_menu);
+                tabs.getTabAt(2).setIcon(R.drawable.ic_tab_unselect_rev);
+                tabs.getTabAt(3).setIcon(R.drawable.ic_tab_unselect_info);
+                if(position==0){
+                    tabs.getTabAt(0).setIcon(R.drawable.ic_tab_select_pay);
+                }
+                if(position==1){
+                    tabs.getTabAt(1).setIcon(R.drawable.ic_tab_select_menu);
+                }
+                if(position==2){
+                    tabs.getTabAt(2).setIcon(R.drawable.ic_tab_select_rev);
+                }
+                if(position==3){
+                    tabs.getTabAt(3).setIcon(R.drawable.ic_tab_select_info);
+                }
+            }
+            @Override
+            public void onPageScrollStateChanged(int state)
+            {
+
+            }
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
+
+            }
+
+
+        });
 
         return view;
     }

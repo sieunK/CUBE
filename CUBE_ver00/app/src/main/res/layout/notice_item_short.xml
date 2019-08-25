@@ -13,7 +13,8 @@
         android:text="공지사항"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:fontFamily="@font/bmjua_ttf"
+        android:textColor="@color/bamcolor"
         android:layout_marginLeft="18dp"
         android:paddingTop="5dp"
         tools:ignore= "HardCodedText"/>
@@ -30,6 +31,8 @@
         android:text="2019/7/26"
         android:textSize="10sp"
         android:paddingTop="5dp"
+        android:fontFamily="@font/bmjua_ttf"
+        android:textColor="@color/bamcolor"
         android:paddingBottom="5dp"
         tools:ignore="HardCodedText" />
 
@@ -46,12 +49,7 @@
         android:layout_marginLeft="5dp"
         android:layout_alignBottom="@+id/board_item_date_short"
         android:layout_alignTop="@+id/board_item_date_short"
-
         android:textColor="#F44336"
-
         tools:ignore="HardCodedText" />
-
-
-
 </RelativeLayout>
 

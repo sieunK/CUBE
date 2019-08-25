@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MoonChang.MoonChangMenuFragment"
+    tools:context="MoonChang.MoonChangMenuFragment"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-    <!-- TODO: Update blank fragment layout -->
+        <!-- TODO: Update blank fragment layout -->
 
 
         <LinearLayout
@@ -21,6 +21,10 @@
                 android:id="@+id/btn_first"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/bmjua_ttf"
+                android:backgroundTint="@color/orange"
+                android:textSize="14dp"
+                android:textColor="@color/bamcolor"
                 android:layout_weight="1"
                 android:text="첫번째 주" />
 
@@ -28,6 +32,10 @@
                 android:id="@+id/btn_second"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/bmjua_ttf"
+                android:backgroundTint="@color/orange"
+                android:textSize="14dp"
+                android:textColor="@color/bamcolor"
                 android:layout_weight="1"
                 android:text="두번째 주" />
 
@@ -35,20 +43,32 @@
                 android:id="@+id/btn_third"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/bmjua_ttf"
+                android:backgroundTint="@color/orange"
+                android:textSize="14dp"
+                android:textColor="@color/bamcolor"
                 android:layout_weight="1"
                 android:text="세번째 주" />
             <Button
                 android:id="@+id/btn_fourth"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/bmjua_ttf"
+                android:backgroundTint="@color/orange"
+                android:textSize="14dp"
+                android:textColor="@color/bamcolor"
                 android:layout_weight="1"
                 android:text="네번째 주" />
             <Button
                 android:id="@+id/btn_fifth"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/bmjua_ttf"
+                android:backgroundTint="@color/orange"
+                android:textSize="14dp"
+                android:textColor="@color/bamcolor"
                 android:layout_weight="1"
-                android:text="다섯번째 주" />
+                android:text="마지막 주" />
         </LinearLayout>
 
 

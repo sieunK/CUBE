@@ -166,6 +166,10 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        /* 앱 실행시 장바구니 초기화 */
+        DBHelper helper = new DBHelper(getApplicationContext(), "BASKET.db", null,1);
+        helper.deleteAll("BASKET");
     }
 
     @Override

@@ -13,19 +13,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:text="식단 정보 알림 설정"
+                android:gravity="center_horizontal"
+                android:paddingTop="135dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:textColor="@color/strongorange"
+                android:textSize="19dp"
+                android:background="@drawable/ic_setting_bar"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="식단 정보를 받아 보고 싶은 식당과 시간대를 선택해주세요."
+                android:gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:textColor="@color/strongorange"
+                android:textSize="18dp"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/line"
+                android:layout_marginTop="10dp"
+                app:tint="@color/strongorange"
+                app:scale_left="80"
+                app:scale_width="230"
+                app:scale_height="100"/>
+
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:scale_base_height="130"
+                app:scale_base_height="150"
                 app:scale_base_width="1080">
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="금정회관"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="80"
-                    app:scale_top="30"
+                    app:scale_top="75"
                     app:scale_width="230"
                     app:scale_height="100"
                     app:scale_textsize="60"
@@ -33,11 +65,12 @@
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkbox_geumjeong"
+                    android:button="@drawable/check_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:scale_height="100"
                     app:scale_left="320"
-                    app:scale_top="20"
+                    app:scale_top="65"
                     app:scale_width="100" />
             </com.ssomai.android.scalablelayout.ScalableLayout>
             <com.ssomai.android.scalablelayout.ScalableLayout
@@ -56,7 +89,6 @@
                     app:scale_height="50"/>
 
             </com.ssomai.android.scalablelayout.ScalableLayout>
-
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:id="@+id/geumjeong_option"
                 android:layout_width="wrap_content"
@@ -69,17 +101,20 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="조식"
-                    app:scale_height="70"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="80"
-                    app:scale_textsize="50"
                     app:scale_top="30"
-                    app:scale_width="230" />
-
+                    app:scale_width="230"
+                    app:scale_height="70"
+                    app:scale_textsize="50"
+                    />
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkbox_geumjeong_morning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:scale_height="100"
+                    android:button="@drawable/check_button"
                     app:scale_left="200"
                     app:scale_top="15"
                     app:scale_width="100" />
@@ -90,16 +125,19 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="중식"
-                    app:scale_height="70"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="400"
-                    app:scale_textsize="50"
                     app:scale_top="30"
-                    app:scale_width="230" />
-
+                    app:scale_width="230"
+                    app:scale_height="70"
+                    app:scale_textsize="50"
+                    />
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkbox_geumjeong_lunch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="520"
                     app:scale_top="15"
@@ -111,61 +149,68 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="석식"
-                    app:scale_height="70"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="720"
-                    app:scale_textsize="50"
                     app:scale_top="30"
-                    app:scale_width="230" />
-
+                    app:scale_width="230"
+                    app:scale_height="70"
+                    app:scale_textsize="50"
+                    />
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkbox_geumjeong_dinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="840"
                     app:scale_top="15"
                     app:scale_width="100" />
 
             </com.ssomai.android.scalablelayout.ScalableLayout>
+
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:scale_base_height="50"
                 app:scale_base_width="1080">
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/line"
+                    app:scale_height="50"
                     app:scale_left="40"
                     app:scale_width="1000"
-                    app:scale_height="50"/>
+                    app:srcCompat="@drawable/line" />
             </com.ssomai.android.scalablelayout.ScalableLayout>
 
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:scale_base_height="130"
+                app:scale_base_height="150"
                 app:scale_base_width="1080">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/bmjua_ttf"
                     android:singleLine="true"
                     android:text="문창회관"
-                    app:scale_left="80"
-                    app:scale_top="30"
-                    app:scale_width="230"
+                    android:textColor="@color/bamcolor"
                     app:scale_height="100"
+                    app:scale_left="80"
                     app:scale_textsize="60"
-                    />
+                    app:scale_top="75"
+                    app:scale_width="230" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkbox_moonchang"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="320"
-                    app:scale_top="20"
+                    app:scale_top="65"
                     app:scale_width="100" />
             </com.ssomai.android.scalablelayout.ScalableLayout>
 
@@ -196,8 +241,10 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/bmjua_ttf"
                     android:singleLine="true"
                     android:text="조식"
+                    android:textColor="@color/bamcolor"
                     app:scale_height="70"
                     app:scale_left="80"
                     app:scale_textsize="50"
@@ -208,6 +255,7 @@
                     android:id="@+id/checkbox_moonchang_morning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="200"
                     app:scale_top="15"
@@ -217,8 +265,10 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/bmjua_ttf"
                     android:singleLine="true"
                     android:text="중식"
+                    android:textColor="@color/bamcolor"
                     app:scale_height="70"
                     app:scale_left="400"
                     app:scale_textsize="50"
@@ -229,6 +279,7 @@
                     android:id="@+id/checkbox_moonchang_lunch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="520"
                     app:scale_top="15"
@@ -238,8 +289,10 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/bmjua_ttf"
                     android:singleLine="true"
                     android:text="석식"
+                    android:textColor="@color/bamcolor"
                     app:scale_height="70"
                     app:scale_left="720"
                     app:scale_textsize="50"
@@ -250,6 +303,7 @@
                     android:id="@+id/checkbox_moonchang_dinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="840"
                     app:scale_top="15"
@@ -273,7 +327,7 @@
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:scale_base_height="130"
+                app:scale_base_height="150"
                 app:scale_base_width="1080">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -281,8 +335,10 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="샛벌회관"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="80"
-                    app:scale_top="30"
+                    app:scale_top="75"
                     app:scale_width="230"
                     app:scale_height="100"
                     app:scale_textsize="60"
@@ -292,12 +348,12 @@
                     android:id="@+id/checkbox_saetbul"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="320"
-                    app:scale_top="20"
+                    app:scale_top="65"
                     app:scale_width="100" />
             </com.ssomai.android.scalablelayout.ScalableLayout>
-
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:id="@+id/saetbul_line"
                 android:layout_width="wrap_content"
@@ -308,13 +364,12 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:scale_height="50"
+                    app:srcCompat="@drawable/line"
                     app:scale_left="80"
                     app:scale_width="230"
-                    app:srcCompat="@drawable/line" />
+                    app:scale_height="50"/>
 
             </com.ssomai.android.scalablelayout.ScalableLayout>
-
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:id="@+id/saetbul_option"
                 android:layout_width="wrap_content"
@@ -327,16 +382,19 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="조식"
-                    app:scale_height="70"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="80"
-                    app:scale_textsize="50"
                     app:scale_top="30"
-                    app:scale_width="230" />
-
+                    app:scale_width="230"
+                    app:scale_height="70"
+                    app:scale_textsize="50"
+                    />
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkbox_saetbul_morning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="200"
                     app:scale_top="15"
@@ -348,16 +406,19 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="중식"
-                    app:scale_height="70"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="400"
-                    app:scale_textsize="50"
                     app:scale_top="30"
-                    app:scale_width="230" />
-
+                    app:scale_width="230"
+                    app:scale_height="70"
+                    app:scale_textsize="50"
+                    />
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkbox_saetbul_lunch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="520"
                     app:scale_top="15"
@@ -369,16 +430,19 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="석식"
-                    app:scale_height="70"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="720"
-                    app:scale_textsize="50"
                     app:scale_top="30"
-                    app:scale_width="230" />
-
+                    app:scale_width="230"
+                    app:scale_height="70"
+                    app:scale_textsize="50"
+                    />
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkbox_saetbul_dinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="840"
                     app:scale_top="15"
@@ -402,7 +466,7 @@
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:scale_base_height="130"
+                app:scale_base_height="150"
                 app:scale_base_width="1080">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -410,8 +474,10 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="학생회관"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="80"
-                    app:scale_top="30"
+                    app:scale_top="75"
                     app:scale_width="230"
                     app:scale_height="100"
                     app:scale_textsize="60"
@@ -421,12 +487,12 @@
                     android:id="@+id/checkbox_haksaeng"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="320"
-                    app:scale_top="20"
+                    app:scale_top="65"
                     app:scale_width="100" />
             </com.ssomai.android.scalablelayout.ScalableLayout>
-
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:id="@+id/haksaeng_line"
                 android:layout_width="wrap_content"
@@ -437,13 +503,12 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:scale_height="50"
+                    app:srcCompat="@drawable/line"
                     app:scale_left="80"
                     app:scale_width="230"
-                    app:srcCompat="@drawable/line" />
+                    app:scale_height="50"/>
 
             </com.ssomai.android.scalablelayout.ScalableLayout>
-
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:id="@+id/haksaeng_option"
                 android:layout_width="wrap_content"
@@ -456,16 +521,19 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="조식"
-                    app:scale_height="70"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="80"
-                    app:scale_textsize="50"
                     app:scale_top="30"
-                    app:scale_width="230" />
-
+                    app:scale_width="230"
+                    app:scale_height="70"
+                    app:scale_textsize="50"
+                    />
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkbox_haksaeng_morning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="200"
                     app:scale_top="15"
@@ -477,16 +545,19 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="중식"
-                    app:scale_height="70"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="400"
-                    app:scale_textsize="50"
                     app:scale_top="30"
-                    app:scale_width="230" />
-
+                    app:scale_width="230"
+                    app:scale_height="70"
+                    app:scale_textsize="50"
+                    />
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkbox_haksaeng_lunch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="520"
                     app:scale_top="15"
@@ -498,16 +569,19 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:text="석식"
-                    app:scale_height="70"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     app:scale_left="720"
-                    app:scale_textsize="50"
                     app:scale_top="30"
-                    app:scale_width="230" />
-
+                    app:scale_width="230"
+                    app:scale_height="70"
+                    app:scale_textsize="50"
+                    />
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/checkbox_haksaeng_dinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:button="@drawable/check_button"
                     app:scale_height="100"
                     app:scale_left="840"
                     app:scale_top="15"
@@ -532,6 +606,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:scale_base_height="200"
+                android:layout_marginTop="50dp"
                 app:scale_base_width="1080">
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -539,6 +614,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="알림 설정 저장하기"
+                    android:background="@drawable/ic_orangelongbutton"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/whitecolor"
+                    android:layout_marginTop="50dp"
                     app:scale_width="1000"
                     app:scale_height="150"
                     app:scale_top="0"

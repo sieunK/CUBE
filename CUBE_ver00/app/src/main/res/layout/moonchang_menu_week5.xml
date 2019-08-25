@@ -5,9 +5,13 @@
     android:orientation="vertical"
 
     >
+
     <ScrollView
+        style="@style/scroll_custom"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fadeScrollbars = "false">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,88 +20,1350 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/ic_menu_cal"
+                android:fontFamily="@font/bmjua_ttf"
+                android:gravity="center_vertical"
+                android:paddingLeft="120dp"
+                android:text="2019/8/26 ~ 2019/8/31"
+                android:textColor="@color/whitecolor"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:layout_marginBottom="20dp"
-                android:text="첫번째 주 식단(7/1~7/7)"/>
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_blank_orange"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:gravity="center"
+                    android:layout_marginLeft="9dp"
+                    android:text="날짜"
+                    android:textColor="@color/strongorange" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:text="8/26(월)"
+                    android:textColor="@color/strongorange"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="150dp"
+                    android:background="@drawable/ic_blank_orange"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:gravity="center"
+                    android:text="월요일"
+                    android:textColor="@color/strongorange" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/line"
+                android:tint="@color/strongorange" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="7/1(월)"
+                android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                android:textStyle="bold"/>
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 닭다리스테이크덮밥"
+                android:textColor="@color/strongorange" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:text="닭다리스테이크덮밥,부타동,규동,쭈꾸미덮밥,왕돈까스,치킨까스,토마토소스함박스테이크,치킨마요덮밥,육개장,돼지국밥,콩나물국밥,양지쌀국수,고기칼국수,육개장칼국수,우육탕면,마제소바,돈고츠라면,가마타마우동,돼지고기김치찌게,춘천막국수,평양식냉면,밀면,나가사끼짬뽕,라면."/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7/2(화)"
+                android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                android:textStyle="bold"/>
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 부타동"
+                android:textColor="@color/strongorange" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:text="닭다리스테이크덮밥,부타동,규동,쭈꾸미덮밥,왕돈까스,치킨까스,토마토소스함박스테이크,치킨마요덮밥,육개장,돼지국밥,콩나물국밥,양지쌀국수,고기칼국수,육개장칼국수,우육탕면,마제소바,돈고츠라면,가마타마우동,돼지고기김치찌게,춘천막국수,평양식냉면,밀면,나가사끼짬뽕,라면."/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7/3(수)"
+                android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                android:textStyle="bold"/>
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 규동"
+                android:textColor="@color/strongorange" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:text="닭다리스테이크덮밥,부타동,규동,쭈꾸미덮밥,왕돈까스,치킨까스,토마토소스함박스테이크,치킨마요덮밥,육개장,돼지국밥,콩나물국밥,양지쌀국수,고기칼국수,육개장칼국수,우육탕면,마제소바,돈고츠라면,가마타마우동,돼지고기김치찌게,춘천막국수,평양식냉면,밀면,나가사끼짬뽕,라면."/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7/4(목)"
+                android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                android:textStyle="bold"/>
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 쭈꾸미 덮밥"
+                android:textColor="@color/strongorange" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:text="닭다리스테이크덮밥,부타동,규동,쭈꾸미덮밥,왕돈까스,치킨까스,토마토소스함박스테이크,치킨마요덮밥,육개장,돼지국밥,콩나물국밥,양지쌀국수,고기칼국수,육개장칼국수,우육탕면,마제소바,돈고츠라면,가마타마우동,돼지고기김치찌게,춘천막국수,평양식냉면,밀면,나가사끼짬뽕,라면."/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7/5(금)"
+                android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                android:textStyle="bold"/>
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 왕돈까스"
+                android:textColor="@color/strongorange" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:text="닭다리스테이크덮밥,부타동,규동,쭈꾸미덮밥,왕돈까스,치킨까스,토마토소스함박스테이크,치킨마요덮밥,육개장,돼지국밥,콩나물국밥,양지쌀국수,고기칼국수,육개장칼국수,우육탕면,마제소바,돈고츠라면,가마타마우동,돼지고기김치찌게,춘천막국수,평양식냉면,밀면,나가사끼짬뽕,라면."/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7/6(토)"
+                android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                android:textStyle="bold"/>
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 치킨까스"
+                android:textColor="@color/strongorange" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:text="식단 없음"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7/7(일)"
+                android:layout_marginLeft="10dp"
                 android:layout_marginBottom="5dp"
-                android:textStyle="bold"/>
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 토마토 함박 스테이크"
+                android:textColor="@color/strongorange" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:text="식단 없음"/>
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 치킨마요덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 육개장"
+                android:textColor="@color/strongorange" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돼지국밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 콩나물국밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 양지쌀국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 고기칼국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 육개장 칼국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 우육탕면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 마제소바"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돈고츠라면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 가마타마우동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돼지고기 김치찌개"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 춘천막국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 평양식냉면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 밀면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 나가사끼짬뽕"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 라면"
+                android:textColor="@color/strongorange" />
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/line"
+                android:tint="@color/strongorange" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_blank_orange"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:layout_marginLeft="9dp"
+                    android:gravity="center"
+                    android:text="날짜"
+                    android:textColor="@color/strongorange" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:text="8/27"
+                    android:textColor="@color/strongorange"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="150dp"
+                    android:background="@drawable/ic_blank_orange"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:gravity="center"
+                    android:text="화요일"
+                    android:textColor="@color/strongorange" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/line"
+                android:tint="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 닭다리스테이크덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 부타동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 규동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 쭈꾸미 덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 왕돈까스"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 치킨까스"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 토마토 함박 스테이크"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 치킨마요덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 육개장"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돼지국밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 콩나물국밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 양지쌀국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 고기칼국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 육개장 칼국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 우육탕면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 마제소바"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돈고츠라면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 가마타마우동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돼지고기 김치찌개"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 춘천막국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 평양식냉면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 밀면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 나가사끼짬뽕"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 라면"
+                android:textColor="@color/strongorange" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/line"
+                android:tint="@color/strongorange" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_blank_orange"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:layout_marginLeft="9dp"
+                    android:gravity="center"
+                    android:text="날짜"
+                    android:textColor="@color/strongorange" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:text="8/28"
+                    android:textColor="@color/strongorange"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="150dp"
+                    android:background="@drawable/ic_blank_orange"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:gravity="center"
+                    android:text="수요일"
+                    android:textColor="@color/strongorange" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/line"
+                android:tint="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 닭다리스테이크덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 부타동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 규동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 쭈꾸미 덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 왕돈까스"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 치킨까스"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 토마토 함박 스테이크"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 치킨마요덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 육개장"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돼지국밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 콩나물국밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 양지쌀국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 고기칼국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 육개장 칼국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 우육탕면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 마제소바"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돈고츠라면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 가마타마우동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돼지고기 김치찌개"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 춘천막국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 평양식냉면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 밀면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 나가사끼짬뽕"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 라면"
+                android:textColor="@color/strongorange" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/line"
+                android:tint="@color/strongorange" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_blank_orange"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:layout_marginLeft="9dp"
+                    android:gravity="center"
+                    android:text="날짜"
+                    android:textColor="@color/strongorange" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:text="8/29"
+                    android:textColor="@color/strongorange"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="150dp"
+                    android:background="@drawable/ic_blank_orange"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:gravity="center"
+                    android:text="목요일"
+                    android:textColor="@color/strongorange" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/line"
+                android:tint="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 닭다리스테이크덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 부타동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 규동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 쭈꾸미 덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 왕돈까스"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 치킨까스"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 토마토 함박 스테이크"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 치킨마요덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 육개장"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돼지국밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 콩나물국밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 양지쌀국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 고기칼국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 육개장 칼국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 우육탕면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 마제소바"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돈고츠라면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 가마타마우동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돼지고기 김치찌개"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 춘천막국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 평양식냉면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 밀면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 나가사끼짬뽕"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 라면"
+                android:textColor="@color/strongorange" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/line"
+                android:tint="@color/strongorange" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_blank_orange"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:layout_marginLeft="9dp"
+                    android:gravity="center"
+                    android:text="날짜"
+                    android:textColor="@color/strongorange" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:text="8/30"
+                    android:textColor="@color/strongorange"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="150dp"
+                    android:background="@drawable/ic_blank_orange"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:gravity="center"
+                    android:text="금요일"
+                    android:textColor="@color/strongorange" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/line"
+                android:tint="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 닭다리스테이크덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 부타동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 규동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 쭈꾸미 덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 왕돈까스"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 치킨까스"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 토마토 함박 스테이크"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 치킨마요덮밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 육개장"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돼지국밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 콩나물국밥"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 양지쌀국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 고기칼국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 육개장 칼국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 우육탕면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 마제소바"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돈고츠라면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 가마타마우동"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 돼지고기 김치찌개"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 춘천막국수"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 평양식냉면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 밀면"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 나가사끼짬뽕"
+                android:textColor="@color/strongorange" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/bmjua_ttf"
+                android:text="o 라면"
+                android:textColor="@color/strongorange" />
+
+
+
 
         </LinearLayout>
     </ScrollView>

@@ -34,7 +34,8 @@
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
             android:text="Food_name"
-            android:textColor="@android:color/black"
+            android:fontFamily="@font/bmjua_ttf"
+            android:textColor="@color/bamcolor"
             android:textSize="18sp"
             android:textStyle="normal" />
 
@@ -44,7 +45,8 @@
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
             android:text="Price"
-            android:textColor="@android:color/black"
+            android:fontFamily="@font/bmjua_ttf"
+            android:textColor="@color/bamcolor"
             android:textSize="15sp" />
     </LinearLayout>
 

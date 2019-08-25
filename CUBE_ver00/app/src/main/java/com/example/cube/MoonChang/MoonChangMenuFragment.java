@@ -72,6 +72,7 @@ public class MoonChangMenuFragment extends Fragment {
         Button btn_fifth = (Button)view.findViewById(R.id.btn_fifth);
 
         vp.setAdapter(new pagerAdapter(getActivity().getSupportFragmentManager()));
+        vp.setOffscreenPageLimit(4);
         vp.setCurrentItem(0);
 
         btn_first.setOnClickListener(movePageListener);

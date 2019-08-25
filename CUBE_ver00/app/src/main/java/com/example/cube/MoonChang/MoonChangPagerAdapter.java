@@ -40,4 +40,9 @@ public class MoonChangPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return mNumOfTabs;
     }
+
+    @Override
+    public CharSequence getPageTitle(int position){
+        return "";
+    }
 }

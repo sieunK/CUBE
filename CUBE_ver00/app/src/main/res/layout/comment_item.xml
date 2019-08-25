@@ -13,7 +13,8 @@
         android:text="익명"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:fontFamily="@font/bmjua_ttf"
+        android:textColor="@color/bamcolor"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
        />
@@ -27,7 +28,8 @@
         android:layout_below="@id/comment_author_text"
         android:text="댓글"
         android:textSize="15sp"
-        android:textColor="@android:color/black"
+        android:fontFamily="@font/bmjua_ttf"
+        android:textColor="@color/bamcolor"
         />
 
     <TextView
@@ -40,6 +42,8 @@
         android:paddingLeft="20dp"
         android:paddingTop="4dp"
         android:paddingBottom="10dp"
+        android:fontFamily="@font/bmjua_ttf"
+        android:textColor="@color/bamcolor"
         android:layout_below="@id/comment_body_text"
         />
 

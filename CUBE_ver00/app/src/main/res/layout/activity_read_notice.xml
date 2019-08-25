@@ -47,6 +47,8 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     android:text="2019-06-06"
                     android:textSize="16dp" />
 
@@ -57,6 +59,8 @@
                     android:layout_below="@id/read_date"
                     android:layout_alignStart="@id/read_date"
                     android:layout_alignLeft="@id/read_date"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:textColor="@color/bamcolor"
                     android:layout_marginTop="12sp"
                     android:text="TITLE"
                     android:textSize="20sp"
@@ -69,6 +73,8 @@
                     android:layout_below="@id/read_title"
                     android:layout_alignStart="@id/read_date"
                     android:layout_alignLeft="@id/read_date"
+                    android:textColor="@color/bamcolor"
+                    android:fontFamily="@font/bmjua_ttf"
                     android:layout_marginTop="12sp"
                     android:text="CONTENT"
                     android:textSize="16sp" />\
@@ -98,6 +104,8 @@
                     android:layout_alignStart="@id/read_date"
                     android:layout_alignLeft="@+id/read_date"
                     android:layout_marginTop="12sp"
+                    android:textColor="@color/bamcolor"
+                    android:fontFamily="@font/bmjua_ttf"
                     android:text="조회수 : "
                     android:textSize="16dp" />
 
@@ -109,6 +117,8 @@
                     android:layout_marginTop="12sp"
                     android:layout_toEndOf="@id/clicks"
                     android:layout_toRightOf="@id/clicks"
+                    android:textColor="@color/bamcolor"
+                    android:fontFamily="@font/bmjua_ttf"
                     android:textSize="16dp" />
 
 
@@ -140,6 +150,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.95"
                 android:background="@android:color/white"
+                android:textColor="@color/bamcolor"
+                android:fontFamily="@font/bmjua_ttf"
                 android:hint="Write a comment..."
                 android:maxLines="1" />
 
@@ -149,7 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.05"
-                android:background="@android:color/black"
+                android:background="@color/strongorange"
                 android:text="Post"
                 android:textColor="@android:color/white" />
 

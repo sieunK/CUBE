@@ -32,25 +32,30 @@
                     app:scale_left="70"
                     app:scale_height="350"
                     app:scale_width="350"
-                    app:srcCompat="@drawable/noname" />
+                    android:tint="@color/orange"
+                    app:srcCompat="@drawable/ic_tab_select_info" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button_changepic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="사진변경"
+                    android:backgroundTint="@color/orange"
+                    android:textColor="@color/bamcolor"
+                    android:fontFamily="@font/bmjua_ttf"
                     app:scale_height="100"
                     app:scale_left="130"
                     app:scale_textsize="30"
-                    app:scale_top="350"
-                    app:scale_width="230" />
+                    app:scale_top="320"
+                    app:scale_width="210" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/text_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="아이러브학식"
-                    android:textColor="#000000"
+                    android:textColor="@color/bamcolor"
+                    android:fontFamily="@font/bmjua_ttf"
                     app:scale_height="100"
                     app:scale_left="450"
                     app:scale_textsize="60"
@@ -61,18 +66,31 @@
                     android:id="@+id/button_setnickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:scale_height="80"
-                    app:scale_left="790"
-                    app:scale_top="80"
-                    app:scale_width="80"
+                    app:scale_height="50"
+                    app:scale_left="950"
+                    app:scale_top="97"
+                    app:scale_width="50"
+                    android:tint="@color/strongorange"
                     app:srcCompat="@drawable/ic_settings_black_24dp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    app:scale_height="100"
+                    app:scale_left="450"
+                    app:scale_top="110"
+                    app:scale_width="570"
+                    app:srcCompat="@drawable/line"
+                    app:tint="@color/strongorange" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/text_pointview"
                     android:layout_width="109dp"
                     android:layout_height="wrap_content"
                     android:text="5000 밥풀"
-                    android:textColor="#000000"
+                    android:textColor="@color/strongorange"
+                    android:fontFamily="@font/bmjua_ttf"
                     app:scale_height="100"
                     app:scale_left="450"
                     app:scale_textsize="55"
@@ -84,24 +102,28 @@
                     android:layout_width="109dp"
                     android:layout_height="wrap_content"
                     android:text="충전"
-                    android:textColor="#000000"
-                    app:scale_height="100"
-                    app:scale_left="700"
-                    app:scale_textsize="30"
+                    android:textColor="@color/bamcolor"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:backgroundTint="@color/orange"
+                    app:scale_height="90"
+                    app:scale_left="805"
+                    app:scale_textsize="23"
                     app:scale_top="170"
-                    app:scale_width="150" />
+                    app:scale_width="110" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/button_transferpoint"
                     android:layout_width="109dp"
                     android:layout_height="wrap_content"
                     android:text="양도"
-                    android:textColor="#000000"
-                    app:scale_height="100"
-                    app:scale_left="850"
-                    app:scale_textsize="30"
+                    android:textColor="@color/bamcolor"
+                    android:fontFamily="@font/bmjua_ttf"
+                    android:backgroundTint="@color/orange"
+                    app:scale_height="90"
+                    app:scale_left="908"
+                    app:scale_textsize="23"
                     app:scale_top="170"
-                    app:scale_width="150" />
+                    app:scale_width="110" />
 
             </com.ssomai.android.scalablelayout.ScalableLayout>
 
@@ -110,29 +132,33 @@
                 android:layout_height="15dp" />
 
             <com.ssomai.android.scalablelayout.ScalableLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:scale_base_height="160"
-                app:scale_base_width="1080">
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                app:scale_base_height="100"
+                app:scale_base_width="920"
+                android:background="@drawable/ic_longorangebutton">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="109dp"
                     android:layout_height="wrap_content"
                     android:text="구독중인 식당"
-                    android:textColor="#000000"
+                    android:textColor="@color/bamcolor"
+                    android:fontFamily="@font/bmjua_ttf"
                     app:scale_height="100"
                     app:scale_left="100"
-                    app:scale_textsize="60"
-                    app:scale_top="30"
+                    app:scale_textsize="40"
+                    app:scale_top="29"
                     app:scale_width="360" />
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/button_setsubscribe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:scale_height="80"
-                    app:scale_left="450"
-                    app:scale_top="33"
-                    app:scale_width="80"
+                    app:scale_height="50"
+                    app:scale_left="830"
+                    app:scale_top="28"
+                    app:scale_width="50"
+                    android:tint="@color/strongorange"
                     app:srcCompat="@drawable/ic_settings_black_24dp" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -162,38 +188,41 @@
                 </ScrollView>
             </LinearLayout>
             <com.ssomai.android.scalablelayout.ScalableLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:scale_base_height="800"
-                app:scale_base_width="1080">
+                android:layout_width="370dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                app:scale_base_height="100"
+                app:scale_base_width="920"
+                android:background="@drawable/ic_longorangebutton">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="109dp"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/bamcolor"
                     android:text="진행중인 주문"
-                    android:textColor="#000000"
+                    android:fontFamily="@font/bmjua_ttf"
                     app:scale_height="100"
                     app:scale_left="100"
-                    app:scale_textsize="60"
-                    app:scale_top="30"
+                    app:scale_textsize="40"
+                    app:scale_top="29"
                     app:scale_width="360" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="382dp"
                     android:layout_height="wrap_content"
                     app:scale_height="50"
                     app:scale_left="100"
                     app:scale_top="110"
-                    app:scale_width="880"
+                    app:scale_width="700"
                     app:srcCompat="@drawable/line" />
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:scale_height="800"
+                    app:scale_height="550"
                     app:scale_left="100"
                     app:scale_top="160"
-                    app:scale_width="900">
+                    app:scale_width="700">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_my_order_current"

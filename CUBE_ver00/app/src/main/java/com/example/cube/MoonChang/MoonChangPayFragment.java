@@ -106,13 +106,15 @@ public class MoonChangPayFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Fragment fragment = new MoonChangBagFragment();
-                if (fragment != null) {
-                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                    ft.addToBackStack(null);
-                    ft.replace(R.id.content_layout, fragment);
-                    ft.commit();
-                }
+                Intent intent = new Intent(getContext(), MoonChangBagActivity.class);
+                startActivity(intent);
+//                Fragment fragment = new MoonChangBagFragment();
+//                if (fragment != null) {
+//                    FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+//                    ft.addToBackStack(null);
+//                    ft.replace(R.id.content_layout, fragment);
+//                    ft.commit();
+//                }
                 //Intent intent = new Intent(getContext(), MoonChangBagFragment_tmp.class);
                 //startActivity(intent);
 /*

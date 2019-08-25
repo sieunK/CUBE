@@ -37,7 +37,7 @@ public class HomeActivity extends Fragment {
     ImageView saetBul;
     ImageView geumJeong;
     ImageView hakSaeng;
-    Button notice_more;
+    //Button notice_more;
     RecyclerView notice_shortView;
     MainAdapter adapter;
     ArrayList<NoticeData> noticeList;
@@ -56,7 +56,7 @@ public class HomeActivity extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         mStore = FirebaseFirestore.getInstance();
-        notice_more = (Button) view.findViewById(R.id.button_more_notice);
+        //notice_more = (Button) view.findViewById(R.id.button_more_notice);
         moonChang = (ImageView) view.findViewById(R.id.button_moon);
         saetBul = (ImageView) view.findViewById(R.id.button_saet);
         geumJeong = (ImageView) view.findViewById(R.id.button_geum);
@@ -64,16 +64,16 @@ public class HomeActivity extends Fragment {
         notice_shortView = (RecyclerView) view.findViewById(R.id.notice_short);
         notice_shortView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        notice_more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new NoticeActivity();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.content_layout, fragment);
-                ft.addToBackStack(null);
-                ft.commit();
-            }
-        });
+//        notice_more.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Fragment fragment = new NoticeActivity();
+//                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+//                ft.replace(R.id.content_layout, fragment);
+//                ft.addToBackStack(null);
+//                ft.commit();
+//            }
+//        });
 
         moonChang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +120,7 @@ public class HomeActivity extends Fragment {
         noticeList = new ArrayList<>();
         String collectionPath = "foodcourt/moonchang/board";
         Query noticeQuery = mStore.collection(collectionPath)
-                .orderBy("date", Query.Direction.DESCENDING).limit(4);
+                .orderBy("date", Query.Direction.DESCENDING).limit(3);
         noticeQuery.
                 addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override

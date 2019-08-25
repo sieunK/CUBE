@@ -14,6 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="79dp"
             android:hint="제목"
+            android:fontFamily="@font/bmjua_ttf"
+            android:textColor="@color/bamcolor"
             android:textSize="24sp"
             android:id="@+id/text_notice_title"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -32,6 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:fontFamily="@font/bmjua_ttf"
+            android:textColor="@color/bamcolor"
             android:gravity="start|top|left"
             android:inputType="textMultiLine"
             android:textSize="24sp" />
