@@ -1,28 +1,38 @@
-package com.example.cube.Notice;
+package com.example.cube.Administrator.Board;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cube.Components.NoticeData;
 import com.example.cube.CurrentApplication;
+
+import com.example.cube.Notice.NoticeAddActivity;
+import com.example.cube.Notice.NoticeReadActivity;
 import com.example.cube.R;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.annotations.NotNull;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,105 +40,99 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
-public class NoticeActivity extends Fragment {
-
+// NoticeActivity (Fragment) 와 기능은 같지만 이름만 BoardActivity (Activity) 로 달리함.
+public class BoardActivity extends AppCompatActivity {
     FirebaseFirestore mStore;
     FirebaseAuth mAuth;
 
-    private Query noticeQuery;
+    private Query boardQuery;
     private String collectionPath;
 
-    NoticeAdapter adapter;
-    RecyclerView noticeRC;
-    ArrayList<NoticeData> noticeList;
+    BoardAdapter adapter;
+    RecyclerView boardRC;
+    ArrayList<NoticeData> boardList;
 
     FloatingActionButton WriteNotice;
 
     CurrentApplication currentUserInfo;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@androidx.annotation.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        currentUserInfo = (CurrentApplication)(getActivity().getApplication());
+        setContentView(R.layout.fragment_noticepage);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.board_toolbar);
+        setSupportActionBar(toolbar);
 
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_noticepage, container, false);
-        final boolean isAdmin  =currentUserInfo.isAdmin();
-
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.board_toolbar);
-        toolbar.setVisibility(View.GONE);
-
-        WriteNotice = (FloatingActionButton)view.findViewById(R.id.write_notice);
+        currentUserInfo = (CurrentApplication)getApplication();
+        WriteNotice = (FloatingActionButton)findViewById(R.id.write_notice);
         WriteNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isAdmin) {
-                    Intent intent = new Intent(getContext(), NoticeAddActivity.class);
-                    startActivity(intent);
-                }
-                else Toast.makeText(getContext(), "관리자가 아닙니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), NoticeAddActivity.class);
+                startActivity(intent);
             }
         });
 
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
         collectionPath = "foodcourt/moonchang/board";
-        noticeQuery = mStore.collection(collectionPath)
+        boardQuery = mStore.collection(collectionPath)
                 .orderBy("date", Query.Direction.DESCENDING);
-        noticeRC = view.findViewById(R.id.notice_recycler);
-        noticeRC.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        return view;
+        boardRC = findViewById(R.id.notice_recycler);
     }
 
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
-        noticeRC.setLayoutManager(new LinearLayoutManager(getContext()));
-        noticeList = new ArrayList<>();
 
+        boardRC.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        boardRC.setHasFixedSize(true);
+        boardList = new ArrayList<>();
 
-        noticeQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        boardQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot qs, @Nullable FirebaseFirestoreException e) {
+            public void onEvent(@androidx.annotation.Nullable QuerySnapshot qs, @Nullable FirebaseFirestoreException e) {
                 for (DocumentChange dc : qs.getDocumentChanges()) {
                     NoticeData data = dc.getDocument().toObject(NoticeData.class);
-                    noticeList.add(data);
-                    //   Log.d("content", data.getContent());                    Log.d("numclicks", Integer.toString( data.getNumClicks()));
-                    //   Log.d("numcomments", Integer.toString(data.getNumComments()));
-
+                    boardList.add(data);
                 }
-                adapter = new NoticeAdapter(noticeList);
-                noticeRC.setAdapter(adapter);
+                adapter = new BoardAdapter(boardList);
+                boardRC.setAdapter(adapter);
             }
         });
-        noticeRC.addItemDecoration(new DividerItemDecoration(noticeRC.getContext(), 1));
-        noticeRC.addOnItemTouchListener(
-                new RecyclerItemClickListener(getContext(), noticeRC,
+        boardRC.addItemDecoration(new DividerItemDecoration(boardRC.getContext(), 1));
+        boardRC.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), boardRC,
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
                                 //     Log.d(this.getClass().getName(),"push");
-                                String id = noticeList.get(position).getId();
-                                int postNumClicks = noticeList.get(position).getNumClicks();
+                                String id = boardList.get(position).getId();
+                                int postNumClicks = boardList.get(position).getNumClicks();
                                 postNumClicks++;
                                 mStore.collection(collectionPath).document(id).update("numClicks", postNumClicks);
-                                Intent intent = new Intent(getContext(), NoticeReadActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), NoticeReadActivity.class);
                                 intent.putExtra("id", id);
                                 startActivity(intent);
-
                             }
                         })
         );
     }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (adapter != null) {
+            boardRC.clearOnChildAttachStateChangeListeners();
+            boardList.clear();
+        }
+    }
+
+
 
     private static class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
         private OnItemClickListener mListener;
@@ -176,5 +180,5 @@ public class NoticeActivity extends Fragment {
         }
     }
 
-
 }
+

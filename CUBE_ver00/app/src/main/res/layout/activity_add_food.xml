@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Administrator.Menu.MenuConfigActivity">
+
+    <ImageView
+        android:id="@+id/add_item_photo"
+        android:layout_width="235dp"
+        android:layout_height="159dp"
+        android:src="@drawable/ic_local_dining_black_24dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/add_item_name"
+        android:layout_marginRight="20dp"
+        android:text="이 름"
+        android:textSize="24sp"/>
+
+    <EditText
+        android:id="@+id/add_item_name"
+        android:layout_width="@android:dimen/thumbnail_width"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="5dp"
+
+        android:text="음 식 명"
+        android:textSize="24sp"
+        android:background="@drawable/border_edittext"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/add_item_price"
+        android:layout_marginRight="20dp"
+        android:layout_alignTop="@+id/add_item_price"
+        android:layout_alignBottom="@+id/add_item_price"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:text="가 격"/>
+
+    <EditText
+        android:id="@+id/add_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/add_item_name"
+        android:layout_alignRight="@+id/add_item_name"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/add_item_name"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+
+        android:text="가 격"
+        android:textSize="24sp"
+        android:inputType="numberDecimal"
+        android:background="@drawable/border_edittext"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/add_item_id"
+        android:layout_marginRight="20dp"
+        android:layout_alignTop="@+id/add_item_id"
+        android:layout_alignBottom="@+id/add_item_id"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:text="가 격"/>
+
+    <EditText
+        android:id="@+id/add_item_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/add_item_price"
+        android:layout_alignRight="@+id/add_item_price"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/add_item_price"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+
+        android:text="번 호"
+        android:textSize="24sp"
+        android:background="@drawable/border_edittext"/>
+
+    <Button
+        android:id="@+id/add_item_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:paddingVertical="15dp"
+        android:paddingHorizontal="40dp"
+        android:text="추 가"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:background="#FF9700"/>
+</RelativeLayout>

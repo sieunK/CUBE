@@ -1,6 +1,7 @@
 package com.example.cube.Opening;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -14,9 +15,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cube.Administrator.AdminActivity;
 import com.example.cube.BackPressCloseHandler;
 import com.example.cube.DefaultActivity;
 import com.example.cube.R;
@@ -25,10 +28,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private int adminCheck;
+
+    private ImageView BNULogo;
     private Button buttonSignIn;
+    private Button buttonSignInAdmin;
     private Button findPassword;
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -50,35 +63,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        adminCheck = 0;
+
         firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser() != null && !firebaseAuth.getCurrentUser().isEmailVerified()) {
+        if (firebaseAuth.getCurrentUser() != null && !firebaseAuth.getCurrentUser().isEmailVerified()) {
             firebaseAuth.getCurrentUser().delete();
         }
         progressDialog = new ProgressDialog(this);
         backPressCloseHandler = new BackPressCloseHandler(this);
 
+        BNULogo = (ImageView) findViewById(R.id.imageView);
         checkAutoLogin = (CheckBox) findViewById(R.id.checkAutoLogin);
         editTextEmail = (EditText) findViewById(R.id.email);
         editTextPassword = (EditText) findViewById(R.id.password);
+        buttonSignInAdmin = (Button) findViewById(R.id.signInAdmin);
         buttonSignIn = (Button) findViewById(R.id.signIn);
         textViewSignUp = (TextView) findViewById(R.id.textViewSignUp);
-        nonUserLogin = (TextView)findViewById(R.id.nonuserlogin);
+        nonUserLogin = (TextView) findViewById(R.id.nonuserlogin);
         findPassword = (Button) findViewById(R.id.findpassword);
 
-        setting = getSharedPreferences("setting",0);
+        setting = getSharedPreferences("setting", 0);
         editor = setting.edit();
 
-        if(setting.getBoolean("autoLogin",false)) {
-            editTextEmail.setText(setting.getString("email",""));
-            editTextPassword.setText(setting.getString("password",""));
+        if (setting.getBoolean("autoLogin", false)) {
+            editTextEmail.setText(setting.getString("email", ""));
+            editTextPassword.setText(setting.getString("password", ""));
             checkAutoLogin.setChecked(true);
         }
 
+        BNULogo.setOnClickListener(this);
         buttonSignIn.setOnClickListener(this);
+        buttonSignInAdmin.setOnClickListener(this);
+        buttonSignInAdmin.setVisibility(View.GONE);
         textViewSignUp.setOnClickListener(this);
         nonUserLogin.setOnClickListener(this);
         findPassword.setOnClickListener(this);
     }
+
     private void nonUserLogin() {
         firebaseAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -101,28 +122,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
     }
+
     private void userLogin() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if(TextUtils.isEmpty(email)) {
-            Toast.makeText(this,"Please enter email", Toast.LENGTH_LONG).show();
-            return ;
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
+            return;
         }
-        if(TextUtils.isEmpty(password)) {
-            Toast.makeText(this,"Please enter password", Toast.LENGTH_LONG).show();
-            return ;
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
+            return;
         }
         progressDialog.setMessage("로그인 중입니다...");
         progressDialog.show();
 
-        firebaseAuth.signInWithEmailAndPassword(email,password)
+        firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         //progressDialog.dismiss();
-                        if(task.isSuccessful()) {
-                            if(checkAutoLogin.isChecked()) {
+                        if (task.isSuccessful()) {
+                            if (checkAutoLogin.isChecked()) {
                                 String email = editTextEmail.getText().toString();
                                 String password = editTextPassword.getText().toString();
 
@@ -134,7 +156,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             finish();
                             startActivity(new Intent(getApplicationContext(), DefaultActivity.class));
                         } else {
-                            Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                             editor.remove("email");
                             editor.remove("password");
                             editor.remove("autoLogin");
@@ -146,20 +168,99 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
     }
+
+    private void adminLogin() {      // 로 그 인
+
+        final String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
+            return;
+        }
+        progressDialog.setMessage("관리자페이지로 로그인 중입니다...");
+        progressDialog.show();
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+                            mStore.collection("users").whereEqualTo("email", email)
+                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                            if (e != null) {
+                                                Toast.makeText(getApplicationContext(), "로그인 실패\n 사용자를 찾을 수 없습니다!", Toast.LENGTH_SHORT).show();
+                                                progressDialog.dismiss();
+                                                return;
+                                            }
+                                            for (DocumentSnapshot ds : queryDocumentSnapshots) {
+                                                Object isAdmin = (boolean) ds.get("isAdmin");
+                                                Log.d("isAdmin", Boolean.toString((boolean) isAdmin));
+                                                if (isAdmin == null) {
+                                                    Toast.makeText(getApplicationContext(), "관리자가 아닙니다", Toast.LENGTH_SHORT).show();
+                                                    progressDialog.dismiss();
+                                                    return;
+                                                }
+                                            }
+                                        }
+                                    });
+
+                            if (checkAutoLogin.isChecked()) {
+                                String email = editTextEmail.getText().toString();
+                                String password = editTextPassword.getText().toString();
+
+                                editor.putString("email", email);
+                                editor.putString("password", password);
+                                editor.putBoolean("autoLogin", true);
+                                editor.commit();
+                            }
+                            startActivity(new Intent(getApplicationContext(), AdminActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                            editor.remove("email");
+                            editor.remove("password");
+                            editor.remove("autoLogin");
+                            editor.clear();
+                            editor.commit();
+                            checkAutoLogin.setChecked(false);
+                        }
+                        progressDialog.dismiss();
+                    }
+                });
+
+    }
+
     @Override
     public void onClick(View v) {
-        if(v == buttonSignIn) {
+        if (v == BNULogo) {
+            adminCheck = (adminCheck + 1) % 5;
+            if (adminCheck == 4)
+                buttonSignInAdmin.setVisibility(View.VISIBLE);
+            else
+                buttonSignInAdmin.setVisibility(View.GONE);
+        }
+        if (v == buttonSignIn) {
             userLogin();
         }
-        if(v == textViewSignUp) {
+        if (v == buttonSignInAdmin) {
+            adminLogin();
+        }
+        if (v == textViewSignUp) {
             finish();
             startActivity(new Intent(this, SignUpActivity.class));
         }
-        if(v == findPassword) {
+        if (v == findPassword) {
             finish();
             startActivity(new Intent(this, PasswordActivity.class));
         }
-        if(v == nonUserLogin) {
+        if (v == nonUserLogin) {
             nonUserLogin();
         }
     }

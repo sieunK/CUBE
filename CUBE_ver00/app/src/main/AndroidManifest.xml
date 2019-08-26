@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+
         <activity android:name=".MoonChang.MoonChangBagActivity"></activity>
         <activity
             android:name=".MoonChang.SetCountPopUp"
@@ -49,7 +50,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+
+        <activity android:name=".Administrator.Menu.MenuAddActivity"/>
+        <activity android:name=".Administrator.Menu.MenuConfigActivity" />
+        <activity android:name=".Administrator.Order.ShowSalesStatusActivity" />
+        <activity android:name=".Administrator.AdminActivity" />
+        <activity android:name=".Administrator.Board.BoardActivity" />
+        <activity android:name=".Administrator.AdConfigActivity" />
+        <activity android:name=".Administrator.AppConfigActivity" />
+   \ </application>
 
 
 

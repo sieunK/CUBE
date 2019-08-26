@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/food_cardview"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardUseCompatPadding="true"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <ImageView
+            android:id="@+id/item_photo"
+            android:layout_width="200dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_local_dining_black_24dp" />
+
+        <TextView
+            android:id="@+id/item_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_photo"
+            android:layout_alignLeft="@+id/item_photo"
+            android:layout_marginTop="10dp"
+            android:text="FOOD NAME"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/item_price_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/item_name_text"
+            android:layout_alignLeft="@+id/item_photo"
+            android:layout_marginTop="10dp"
+            android:text="FOOD PRICE"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/item_sold_out_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignLeft="@id/item_photo"
+            android:layout_alignTop="@id/item_photo"
+            android:layout_alignRight="@id/item_photo"
+            android:layout_alignBottom="@id/item_photo"
+            android:layout_margin="40dp"
+            android:background="@android:color/holo_red_light"
+            android:gravity="center"
+            android:text="품 절"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

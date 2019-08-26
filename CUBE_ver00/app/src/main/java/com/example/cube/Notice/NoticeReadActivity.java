@@ -271,6 +271,10 @@ public class NoticeReadActivity extends AppCompatActivity {
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.placeholder(R.drawable.ic_logo);
+
+        if(this.isFinishing())
+            return;     // 중간에 액티비티 껐을 시
+
         Glide.with(this).load(bytes)
                 .apply(requestOptions).listener(requestListener).into(img);
         mPictures.addView(view);

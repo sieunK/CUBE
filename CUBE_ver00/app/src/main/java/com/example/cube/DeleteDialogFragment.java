@@ -29,6 +29,8 @@ public class DeleteDialogFragment extends DialogFragment implements View.OnClick
     private static int flag;
     private DeletePostListener plistener;
     private DeleteCommentListener clistener;
+    private DeleteOrderListener olistener;
+
     public DeleteDialogFragment(){}
 
     public static DeleteDialogFragment newInstance(DeletePostListener listener){
@@ -43,12 +45,23 @@ public class DeleteDialogFragment extends DialogFragment implements View.OnClick
         flag = 1;
         return ddf;
     }
+    public static DeleteDialogFragment newInstance(DeleteOrderListener listener) {
+        DeleteDialogFragment ddf = new DeleteDialogFragment();
+        ddf.olistener = listener;
+        flag = 2;
+        return ddf;
+    }
     public interface DeletePostListener{
         void DeleteOrNot(int IsDeleted);
     }
     public interface DeleteCommentListener{
         void DeleteOrNot(int IsDeleted);
     }
+    public interface DeleteOrderListener {
+        void DeleteOrNot(int IsDeleted);
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,6 +99,10 @@ public class DeleteDialogFragment extends DialogFragment implements View.OnClick
                         }
                         else if(task.isSuccessful() && deleteSelect==1) {
                             clistener.DeleteOrNot(1);
+                            dismiss();
+                        }
+                        else if (task.isSuccessful() && deleteSelect == 2) {
+                            olistener.DeleteOrNot(1);
                             dismiss();
                         }
                         else

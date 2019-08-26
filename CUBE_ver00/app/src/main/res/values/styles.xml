@@ -11,6 +11,9 @@
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:fitsSystemWindows">true</item>
     </style>
+    <style name="MyAnimation.Window" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/drop_down</item>
+    </style>
     <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:fontFamily">@font/font_family</item>
         <item name="android:textColorSecondary">@color/whitecolor</item>
@@ -35,6 +38,7 @@
         <item name="actionBarSize">80dp</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
     <style name="TabAppTheme" parent="Widget.Design.TabLayout">
         <item name="colorPrimary">@color/strongorange</item>                                <!-- 배경 -->
@@ -46,5 +50,13 @@
         <item name="android:scrollbarStyle">outsideInset</item>
         <item name="android:scrollbarTrackVertical">@drawable/ic_scroll_bar</item>
     </style>
+
+
+    <style name="AdminAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>
 

@@ -209,7 +209,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:scale_base_width="1080"
-            app:scale_base_height="100">
+            app:scale_base_height="130">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/signInAdmin"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                app:scale_left="340"
+                app:scale_top="0"
+                app:scale_width="400"
+                app:scale_height="130"
+                app:scale_textsize="45"
+                android:background="@drawable/ic_adminloginbutton"
+                android:fontFamily="@font/font_family"
+                android:text="관리자 모드"
+                android:textColor="#F3B355" />
         </com.ssomai.android.scalablelayout.ScalableLayout>
     </LinearLayout>
 </RelativeLayout>
