@@ -16,8 +16,8 @@
     </style>
     <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:fontFamily">@font/font_family</item>
-        <item name="android:textColorSecondary">@color/whitecolor</item>
-        <item name="android:textColorPrimary">@color/whitecolor</item>
+        <item name="android:textColorSecondary">@color/bamcolor</item>
+        <item name="android:textColorPrimary">@color/bamcolor</item>
     </style>
     <!--style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="colorPrimary">@color/strongorange</item>
