@@ -55,10 +55,10 @@ public class WriteCommentPopUp extends DialogFragment {
             public void onClick(View v) {
                 if (fragment != null) {
                     if (mDialogResult != null) {
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("comment", commentMain.getText().toString());
-//                        mDialogResult.finish(bundle);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("comment", commentMain.getText().toString());
 
+                        mDialogResult.finish(bundle);
                     }
 
                     DialogFragment dialogFragment = (DialogFragment) fragment;

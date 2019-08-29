@@ -3,6 +3,7 @@ package com.example.cube.Review;
 import java.util.Date;
 
 public class ReviewParent {
+    private String profile;
     private String review;
     private String user;
     private float rating;
@@ -10,12 +11,14 @@ public class ReviewParent {
     private Date date;
     private String comment;
     private Date commentDate;
+    private String id;
 
     public ReviewParent() {
     }
 
 
-    public ReviewParent(String review, String user, float rating, String photo, Date date, String comment, Date commentDate) {
+    public ReviewParent(String profile, String review, String user, float rating, String photo, Date date, String comment, Date commentDate, String id) {
+        this.profile = profile;
         this.review = review;
         this.user = user;
         this.rating = rating;
@@ -23,6 +26,7 @@ public class ReviewParent {
         this.date = date;
         this.comment = comment;
         this.commentDate = commentDate;
+        this.id = id;
     }
 
     public String getReview() {
@@ -80,6 +84,14 @@ public class ReviewParent {
     public void setCommentDate(Date commentDate) {
         this.commentDate = commentDate;
     }
+
+    public void setId(String Id) { this.id = Id;}
+
+    public String getId() { return id; }
+
+    public void setProfile(String profile) { this.profile = profile; }
+
+    public String getProfile( ) { return profile; }
 
     @Override
     public String toString() {

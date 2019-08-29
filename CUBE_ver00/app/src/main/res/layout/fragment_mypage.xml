@@ -32,7 +32,6 @@
                     app:scale_left="70"
                     app:scale_height="350"
                     app:scale_width="350"
-                    android:tint="@color/orange"
                     app:srcCompat="@drawable/ic_tab_select_info" />
 
                 <androidx.appcompat.widget.AppCompatButton

@@ -1,7 +1,10 @@
 package com.example.cube.MyPage;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,31 +15,43 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cube.Components.Order;
+import com.example.cube.CurrentApplication;
+import com.example.cube.MoonChang.WriteReviewPopUp;
 import com.example.cube.R;
+import com.example.cube.Review.ReviewParent;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.ItemViewHolder> {
 
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+    CurrentApplication currentApplication;
 
     // adapter에 들어갈 list 입니다.
     private ArrayList<Order> listData = new ArrayList<>();
     private Context mContext;
     private FragmentManager fm;
 
-    public OrderedListAdapter(ArrayList<Order> orderList, FragmentManager fragmentManager){
+    public OrderedListAdapter(ArrayList<Order> orderList, FragmentManager fragmentManager, Context context){
         listData = orderList;
         fm = fragmentManager;
+        mContext = context;
     }
 
 
@@ -62,7 +77,7 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
 
         ItemViewHolder(View itemView) {
             super(itemView);
-
+            currentApplication = (CurrentApplication)(mContext.getApplicationContext());
             RestaurantName = itemView.findViewById(R.id.ordered_itemView_title);
             orderDate = itemView.findViewById(R.id.ordered_itemView_date);
             orderDetail = itemView.findViewById(R.id.ordered_itemView_content);
@@ -73,7 +88,6 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
 
         void onBind(Order data, int position) {
             pos = position; // ***아이템의 리스트에서의 위치를 기억.
-
             // order collection은 식당별로 있기도하고 일단 문창만 주문을 했을 때 리뷰를 쓰는 것으로 하였음.
             RestaurantName.setText("문창회관");
 
@@ -85,7 +99,6 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
                 orderDetailStr += (_map.get("name") + "X" + _map.get("num") + "외" + (orderedList.size()-1)+"개");
 
             orderDetail.setText(orderDetailStr);
-
 
             Item.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -99,7 +112,61 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
             });
             writeReview.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
+                    Bundle args = new Bundle();
+                    args.putString("key", "value");
+                    //---------------------------------------.//
+                    WriteReviewPopUp dialog = new WriteReviewPopUp();
+                    dialog.setArguments(args);
+                    dialog.show(((AppCompatActivity)mContext).getSupportFragmentManager(),"review");
+                    dialog.setDialogResult(new WriteReviewPopUp.OnMyDialogResult() {
+                        @Override
+                        public void finish(Bundle result) {
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            SharedPreferences sf = mContext.getSharedPreferences("profileImage", Context.MODE_PRIVATE);
+
+                            String username = currentApplication.getNickname();
+                            String review = result.getString("review");
+                            Float rating = result.getFloat("rating");
+                            Boolean isImage = result.getBoolean("isImage");
+                            String photo;
+                            if(isImage) {
+                                photo = Base64.encodeToString(result.getByteArray("image"), Base64.NO_WRAP);
+                            } else {
+                                photo = "null";
+                            }
+                            String DocId = db.collection("foodcourt/moonchang/review").document().getId();
+                            String profile = sf.getString("Image","null");
+                            Log.e("?DFJSDJFSDIJ",profile);
+
+                            Log.e("???????????",DocId);
+                            Map<String, Object> post = new HashMap<>();
+                            post.put("user", username);
+                            post.put("review", review);
+                            post.put("rating", rating);
+                            post.put("date",new Date());
+                            post.put("photo",photo);
+                            post.put("comment","null");
+                            post.put("commentDate",new Date());
+                            post.put("id",DocId);
+                            post.put("profile",profile);
+
+                            db.collection("foodcourt/moonchang/review")
+                                    .document(DocId).set(post)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(v.getContext(),"성공적으로 올려짐.",Toast.LENGTH_SHORT).show();
+                                            writeReview.setVisibility(View.INVISIBLE);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+
+                                }
+                            });
+                        }
+                    });
                     Toast.makeText(v.getContext(), "리뷰쓰기 버튼 클릭됨.",Toast.LENGTH_SHORT).show();
                 }
             });

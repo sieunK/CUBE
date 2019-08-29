@@ -8,6 +8,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.media.Image;
 import android.os.Bundle;
@@ -33,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.cube.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 
@@ -48,6 +51,7 @@ public class WriteReviewPopUp extends DialogFragment {
     private ImageView reviewImage;
     private EditText reviewMain;
     private RatingBar ratingBar;
+    private Boolean isThereImage=false;
 
     public WriteReviewPopUp() {
     }
@@ -107,9 +111,20 @@ public class WriteReviewPopUp extends DialogFragment {
             public void onClick(View v) {
                 if (fragment != null) {
                     if (mDialogResult != null) {
+
                         Bundle bundle = new Bundle();
                         bundle.putString("review", reviewMain.getText().toString());
                         bundle.putFloat("rating", ratingBar.getRating());
+
+                        if(isThereImage) {
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            Bitmap bitmap = ((BitmapDrawable) reviewImage.getDrawable()).getBitmap();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            byte[] byteArray = stream.toByteArray();
+
+                            bundle.putByteArray("image", byteArray);
+                        }
+                        bundle.putBoolean("isImage",isThereImage);
                         mDialogResult.finish(bundle);
                     }
 
@@ -163,6 +178,7 @@ public class WriteReviewPopUp extends DialogFragment {
                 if (bitmap != null) {
                     Glide.with(this).load(bitmap)
                             .into(reviewImage);
+                    isThereImage=true;
                 }
             } catch (Exception e) {
                 e.printStackTrace();

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ public class HomeActivity extends Fragment {
     MainAdapter adapter;
     ArrayList<NoticeData> noticeList;
     Fragment fragment;
+    ScrollView scrollView;
+
     public HomeActivity() {
     }
 
@@ -63,6 +66,9 @@ public class HomeActivity extends Fragment {
         hakSaeng = (ImageView) view.findViewById(R.id.button_hak);
         notice_shortView = (RecyclerView) view.findViewById(R.id.notice_short);
         notice_shortView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        scrollView = (ScrollView)view.findViewById(R.id.scroll_home);
+        scrollView.fullScroll(ScrollView.FOCUS_UP);
 
 //        notice_more.setOnClickListener(new View.OnClickListener() {
 //            @Override

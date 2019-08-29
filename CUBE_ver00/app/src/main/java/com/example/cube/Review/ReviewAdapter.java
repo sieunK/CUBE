@@ -1,13 +1,16 @@
 package com.example.cube.Review;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +18,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.cube.CurrentApplication;
 import com.example.cube.MoonChang.WriteCommentPopUp;
 import com.example.cube.R;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,10 +32,11 @@ import java.util.Date;
 
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHolder> {
+    ArrayList<ReviewParent> ReviewParents; //부모 리스트를 담을 배열
 
     // adapter에 들어갈 list 입니다.
-    ArrayList<ReviewParent> ReviewParents; //부모 리스트를 담을 배열
     private Context mContext;
+    private DocumentReference DocumentRef;
 
     public ReviewAdapter(Context context, ArrayList<ReviewParent> ReviewParents) {
         super();
@@ -50,25 +58,28 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
     // 여기서 subView를 setting 해줍니다.
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView arrowIcon;
+        private ImageView writeComment;
         private ImageView rotatedArrow;
+        private ImageView userImage;
 
         private TextView userID;
-        private ImageView userImage;
         private TextView time;
         private ImageView reviewImage;
         private TextView review;
+        private LinearLayout comment_layout;
 
         private TextView comment;
         private TextView commentDate;
         private RatingBar ratingBar;
 
+        private CurrentApplication ca = (CurrentApplication)(mContext.getApplicationContext());
 
-        ItemViewHolder(View v) {
+        ItemViewHolder(final View v) {
             super(v);
 
-            arrowIcon = (ImageView) v.findViewById(R.id.review_write_comment);
+            writeComment = (ImageView) v.findViewById(R.id.review_write_comment);
             rotatedArrow = (ImageView) v.findViewById(R.id.image_rotated_arrow);
+            userImage = (ImageView) v.findViewById(R.id.review_user_image);
 
             userID = (TextView) v.findViewById(R.id.review_userID);
             userImage = (ImageView) v.findViewById(R.id.review_user_image);
@@ -76,7 +87,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
             reviewImage = (ImageView)v.findViewById(R.id.review_image);
             review = (TextView) v.findViewById(R.id.review_main);
 
-
+            comment_layout = (LinearLayout)v.findViewById(R.id.layout_comment);
             comment = (TextView) v.findViewById(R.id.review_comment);
             commentDate = (TextView)v.findViewById(R.id.review_comment_date);
 
@@ -94,7 +105,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
             String commentTime = timeGapCheck(data.getCommentDate());
             commentDate.setText(commentTime);
             String reviewImageStr = data.getPhoto();
-            if (reviewImageStr == null) {
+
+            /* 리뷰사진이 없을때와 있을때 구분 */
+            if (reviewImageStr.equals("null")) {
                 reviewImage.setVisibility(View.GONE);
             } else {
                 byte[] photo = Base64.decode(reviewImageStr, Base64.NO_WRAP);
@@ -102,22 +115,34 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
                 reviewImage.setImageBitmap(BitmapFactory.decodeByteArray(photo, 0, photo.length));
             }
 
-            if(data.getComment()==null) {
-                comment.setVisibility(View.GONE);
+            /* 코멘트가 있을때와 없을때 구분 */
+            if(data.getComment().equals("null")) {
+                comment_layout.setVisibility(View.GONE);
                 commentDate.setVisibility(View.GONE);
-                rotatedArrow.setVisibility(View.GONE);
-                //Toast.makeText(v.getContext(),"null임",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,"null임",Toast.LENGTH_SHORT).show();
             } else {
                 comment.setText(data.getComment());
+                comment_layout.setVisibility(View.VISIBLE);
                 commentDate.setVisibility(View.VISIBLE);
-                comment.setVisibility(View.VISIBLE);
-                rotatedArrow.setVisibility(View.VISIBLE);
+
                 //Toast.makeText(v.getContext(),"null아님",Toast.LENGTH_SHORT).show();
             }
 
-            arrowIcon.setOnClickListener(new View.OnClickListener() {
+            /* 프로필사진 저장된거 있으면 불러옴 */
+            if(!data.getProfile().equals("null")) {
+                byte[] decodedByteArray = Base64.decode(data.getProfile(), Base64.NO_WRAP);
+                Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
+                userImage.setImageBitmap(decodedBitmap);
+            }
+
+            /* 관리자가 아니면 코멘트쓰기 버튼 숨김 */
+            if(!ca.isAdmin()) {
+                Toast.makeText(mContext,"관리자아님",Toast.LENGTH_SHORT).show();
+                writeComment.setVisibility(View.INVISIBLE);
+            }
+            writeComment.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(final View v) {
+                public void onClick(View v) {
                     switch (v.getId()) {
                         case R.id.review_write_comment:
                             // 데이터를 다이얼로그로 보내는 코드
@@ -129,10 +154,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
                             dialog.setDialogResult(new WriteCommentPopUp.OnMyDialogResult() {
                                 @Override
                                 public void finish(Bundle result) {
-                                    //Toast.makeText(v.getContext(),result.getString("review"),Toast.LENGTH_SHORT).show();
-                                    //Log.i("[DEBUG]",result.getString("comment"));
-                                    data.setComment(result.getString("comment"));
-                                    notifyDataSetChanged();
+                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                    DocumentRef = db.collection("foodcourt/moonchang/review").document(data.getId());
+                                    DocumentRef.update("comment", result.getString("comment"));
+                                    DocumentRef.update("commentDate", new Date());
+
+//                                    data.setComment(result.getString("comment"));
+//                                    data.setCommentDate(new Date());
+
+                                    //notifyDataSetChanged();
                                 }
                             });
                             break;
@@ -188,5 +218,4 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
         else postStatus = simpleDateFormat.format(postDate);
         return postStatus;
     }
-
 }

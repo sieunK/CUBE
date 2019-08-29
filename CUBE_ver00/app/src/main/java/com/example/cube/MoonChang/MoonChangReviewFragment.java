@@ -40,7 +40,7 @@ public class MoonChangReviewFragment extends Fragment implements View.OnClickLis
 
     RecyclerView recyclerView;
     ReviewAdapter adapter;
-    ArrayList<ReviewParent> reviewList = new ArrayList<>(); //부모 리스트
+
     FloatingActionButton writeReview;
 
     public MoonChangReviewFragment() { }
@@ -54,6 +54,8 @@ public class MoonChangReviewFragment extends Fragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review, container, false);
+
+        final ArrayList<ReviewParent> reviewList = new ArrayList<>();
 
         currentUserInfo = (CurrentApplication) (getActivity().getApplication());
         mStore = FirebaseFirestore.getInstance();
@@ -95,7 +97,6 @@ public class MoonChangReviewFragment extends Fragment implements View.OnClickLis
             }
         });
 
-
         writeReview = (FloatingActionButton) view.findViewById(R.id.review_write);
         writeReview.setOnClickListener(this);
 //        writeReview.setOnClickListener(new View.OnClickListener() {
@@ -134,8 +135,8 @@ public class MoonChangReviewFragment extends Fragment implements View.OnClickLis
 
 
 
-       // listView.setGroupIndicator(null); //리스트뷰 기본 아이콘 표시 여부
-      //  setListItems();
+        // listView.setGroupIndicator(null); //리스트뷰 기본 아이콘 표시 여부
+        //  setListItems();
 
 
         return view;
@@ -167,12 +168,11 @@ public class MoonChangReviewFragment extends Fragment implements View.OnClickLis
         }
     }
 
-    //리스트 초기화 함수
-    public void setListItems() {
-        reviewList.clear();
-
-        adapter.notifyDataSetChanged();
-    }
+//    //리스트 초기화 함수
+//    public void setListItems() {
+//        reviewList.clear();
+//
+//        adapter.notifyDataSetChanged();
+//    }
 }
-
 
