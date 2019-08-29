@@ -1,30 +1,29 @@
 package com.example.cube.Review;
 
+import java.util.Date;
+
 public class ReviewParent {
     private String review;
-    private String userID;
+    private String user;
     private float rating;
-    private String date;
+    private String photo;
+    private Date date;
     private String comment;
+    private Date commentDate;
 
     public ReviewParent() {
     }
 
-    public ReviewParent(String userID, String date, float rating, String review) {
-        this.userID = userID;
-        this.date = date;
-        this.rating = rating;
-        this.review = review;
-    }
 
-    public ReviewParent(String userID, String date, float rating, String review, String comment) {
-        this.userID = userID;
-        this.date = date;
-        this.rating = rating;
+    public ReviewParent(String review, String user, float rating, String photo, Date date, String comment, Date commentDate) {
         this.review = review;
+        this.user = user;
+        this.rating = rating;
+        this.photo = photo;
+        this.date = date;
         this.comment = comment;
+        this.commentDate = commentDate;
     }
-
 
     public String getReview() {
         return review;
@@ -34,12 +33,12 @@ public class ReviewParent {
         this.review = review;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getUser() {
+        return user;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public float getRating() {
@@ -50,11 +49,19 @@ public class ReviewParent {
         this.rating = rating;
     }
 
-    public String getDate() {
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -64,5 +71,26 @@ public class ReviewParent {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Date getCommentDate() {
+        return commentDate;
+    }
+
+    public void setCommentDate(Date commentDate) {
+        this.commentDate = commentDate;
+    }
+
+    @Override
+    public String toString() {
+        return "ReviewParent{" +
+                "review='" + review + '\'' +
+                ", user='" + user + '\'' +
+                ", rating=" + rating +
+                ", photo='" + photo + '\'' +
+                ", date=" + date +
+                ", comment='" + comment + '\'' +
+                ", commentDate=" + commentDate +
+                '}';
     }
 }

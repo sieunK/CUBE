@@ -89,6 +89,7 @@ public class MenuConfigActivity extends AppCompatActivity implements View.OnClic
                                                 foodRef.update("photo", food.getPhoto());
                                                 foodRef.update("name", food.getName());
                                                 foodRef.update("price", food.getPrice());
+                                                foodRef.update("info", food.getInfo());
                                                 foodRef.update("is_soldout", food.getIs_soldout());
                                             }
 

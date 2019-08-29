@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -32,6 +34,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.cube.R;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -44,6 +47,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -121,9 +125,7 @@ public class NoticeAddActivity extends AppCompatActivity {
                 Log.d("The Number Of Image Is", Integer.toString(mImgIds.size()));
 
                 final int numberOfImages = mImgIds.size();
-                uploadedNum = 1;
-                progressDialog.setMax(numberOfImages);
-                progressDialog.show();
+                uploadedNum = 0;
 
                 Map<String, Object> post = new HashMap<>();
                 post.put("id", DocId);
@@ -133,52 +135,58 @@ public class NoticeAddActivity extends AppCompatActivity {
                 post.put("numClicks", 0);
                 post.put("numComments", 0);
                 post.put("filenum", mImgIds.size());
+
                 mStore.collection(collectionPath).document(DocId).set(post)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                for (int i = 0; i < mImgIds.size(); i++) {
-                                    final int imageNumber = i;
-                                    final String fileName = imageNumber + ".png";
+                                if (numberOfImages == 0)
+                                    finish();
+                                else {
+                                    progressDialog.setMax(numberOfImages);
+                                    progressDialog.show();
 
-                                    StorageReference storageRef = mStorage.getReferenceFromUrl("gs://bobnu-47135.appspot.com").
-                                            child(picFolderName + fileName);
+                                    for (int i = 0; i < numberOfImages; i++) {
+                                        final int imageNumber = i;
+                                        final String fileName = imageNumber + ".png";
 
-                                    Bitmap bitmap = mImgIds.get(imageNumber);
-                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-                                    byte[] data = baos.toByteArray();
+                                        StorageReference storageRef = mStorage.getReferenceFromUrl("gs://bobnu-47135.appspot.com").
+                                                child(picFolderName + fileName);
 
+                                        Bitmap bitmap = mImgIds.get(imageNumber);
+                                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                                        byte[] data = baos.toByteArray();
 
-                                    final UploadTask uploadTask = storageRef.putBytes(data);
-                                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception exception) {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(getApplicationContext(), "이미지 업로드 실패!", Toast.LENGTH_SHORT).show();
-                                            finish();
-                                        }
-                                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            Log.d("image number", Integer.toString(imageNumber));
-                                            Log.d("About Progress", uploadedNum + " / " + mImgIds.size());
-                                            progressDialog.setProgress(uploadedNum);
-                                            if (uploadedNum == numberOfImages) {
+                                        final UploadTask uploadTask = storageRef.putBytes(data);
+                                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception exception) {
                                                 progressDialog.dismiss();
+                                                Toast.makeText(getApplicationContext(), "이미지 업로드 실패!", Toast.LENGTH_SHORT).show();
                                                 finish();
                                             }
-                                            uploadedNum++;
-                                        }
-                                    }).addOnCanceledListener(new OnCanceledListener() {
-                                                                 @Override
-                                                                 public void onCanceled() {
-                                                                     Toast.makeText(getApplicationContext(), "글 업로드가 취소되었습니다", Toast.LENGTH_SHORT).show();
-                                                                     mStore.collection(collectionPath).document(DocId).delete();
-                                                                     finish();
+                                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                //   Log.d("image number", Integer.toString(imageNumber));
+                                                //   Log.d("About Progress", uploadedNum + " / " + mImgIds.size());
+                                                progressDialog.setProgress(++uploadedNum);
+                                                if (uploadedNum == numberOfImages) {
+                                                    progressDialog.dismiss();
+                                                    finish();
+                                                }
+                                            }
+                                        }).addOnCanceledListener(new OnCanceledListener() {
+                                                                     @Override
+                                                                     public void onCanceled() {
+                                                                         Toast.makeText(getApplicationContext(), "글 업로드가 취소되었습니다", Toast.LENGTH_SHORT).show();
+                                                                         mStore.collection(collectionPath).document(DocId).delete();
+                                                                         finish();
+                                                                     }
                                                                  }
-                                                             }
-                                    );
+                                        );
+                                    }
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -362,7 +370,10 @@ public class NoticeAddActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull pictureViewHolder holder, int pos) {
             Bitmap data = bitmapList.get(pos);
-            holder.picture.setImageBitmap(data);
+            if (data!= null) {
+                Glide.with(getApplicationContext()).load(data)
+                        .into(holder.picture);
+            }
         }
 
         @Override
@@ -485,15 +496,15 @@ public class NoticeAddActivity extends AppCompatActivity {
                 Cursor cursor = getContentResolver().query(data.getData(), projection, null, null,
                         MediaStore.Images.Media.DATE_MODIFIED);
                 cursor.moveToFirst();
-
+                String imagePath = cursor.getString(0);
 
                 BitmapFactory.Options options = new BitmapFactory.Options();    //data 뽑아내기
                 //   options.inJustDecodeBounds =true;
                 //    options.inSampleSize = calculateInSampleSize(options,100,100);
                 options.inSampleSize = 4;
-
-
-                Bitmap bitmap = BitmapFactory.decodeFile(cursor.getString(0), options); // 갤러리앱에서 넘어온 파일경로를 줘서 옵션제공, 비트맵생성.
+                Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options); // 갤러리앱에서 넘어온 파일경로를 줘서 옵션제공, 비트맵생성.
+                int degree = getExifOrientation(imagePath);
+                bitmap = getRotatedBitmap(bitmap, degree);
                 if (bitmap != null) {
                     //         mImgUris.add(data.getData());
                     mImgIds.add(bitmap);
@@ -532,4 +543,55 @@ public class NoticeAddActivity extends AppCompatActivity {
 
         return inSampleSize;
     }*/
+
+
+    private int getExifOrientation(String filePath) {
+        ExifInterface exif = null;
+
+        try {
+            exif = new ExifInterface(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (exif != null) {
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL);
+
+            if (orientation != -1) {
+                switch (orientation) {
+                    case ExifInterface.ORIENTATION_ROTATE_90:
+                        return 90;
+
+                    case ExifInterface.ORIENTATION_ROTATE_180:
+                        return 180;
+
+                    case ExifInterface.ORIENTATION_ROTATE_270:
+                        return 270;
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    private Bitmap getRotatedBitmap(Bitmap bitmap, int degree) {
+        if (degree != 0 && bitmap != null) {
+            Matrix matrix = new Matrix();
+            matrix.setRotate(degree, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
+
+            try {
+                Bitmap tmpBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+                if (bitmap != tmpBitmap) {
+                    bitmap.recycle();
+                    bitmap = tmpBitmap;
+                }
+            } catch (OutOfMemoryError e) {
+                e.printStackTrace();
+            }
+        }
+
+        return bitmap;
+    }
 }

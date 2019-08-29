@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,8 +43,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-// NoticeActivity (Fragment) 와 기능은 같지만 이름만 BoardActivity (Activity) 로 달리함.
-public class BoardActivity extends AppCompatActivity {
+// NoticeActivity (Fragment) 와 같음.
+public class BoardFragment extends Fragment {
+    @Nullable
+    private Bundle savedInstanceState;
+
     FirebaseFirestore mStore;
     FirebaseAuth mAuth;
 
@@ -57,20 +61,27 @@ public class BoardActivity extends AppCompatActivity {
     FloatingActionButton WriteNotice;
 
     CurrentApplication currentUserInfo;
-
     @Override
-    public void onCreate(@androidx.annotation.Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        this.savedInstanceState = savedInstanceState;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_noticepage);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.board_toolbar);
-        setSupportActionBar(toolbar);
+    }
 
-        currentUserInfo = (CurrentApplication)getApplication();
-        WriteNotice = (FloatingActionButton)findViewById(R.id.write_notice);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_noticepage, null);
+
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.board_toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
+
+        currentUserInfo = (CurrentApplication)getActivity().getApplication();
+        WriteNotice = view.findViewById(R.id.write_notice);
         WriteNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NoticeAddActivity.class);
+                Intent intent = new Intent(getContext(), NoticeAddActivity.class);
                 startActivity(intent);
             }
         });
@@ -80,16 +91,20 @@ public class BoardActivity extends AppCompatActivity {
         collectionPath = "foodcourt/moonchang/board";
         boardQuery = mStore.collection(collectionPath)
                 .orderBy("date", Query.Direction.DESCENDING);
-        boardRC = findViewById(R.id.notice_recycler);
+        boardRC = view.findViewById(R.id.notice_recycler);
+        boardRC.setLayoutManager(new LinearLayoutManager(getContext()));
+        boardRC.setHasFixedSize(true);
+        boardRC.addItemDecoration(new DividerItemDecoration(boardRC.getContext(), 1));
+
+        return view;
+
     }
 
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
 
-        boardRC.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        boardRC.setHasFixedSize(true);
         boardList = new ArrayList<>();
 
         boardQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -103,9 +118,8 @@ public class BoardActivity extends AppCompatActivity {
                 boardRC.setAdapter(adapter);
             }
         });
-        boardRC.addItemDecoration(new DividerItemDecoration(boardRC.getContext(), 1));
         boardRC.addOnItemTouchListener(
-                new RecyclerItemClickListener(getApplicationContext(), boardRC,
+                new RecyclerItemClickListener(getContext(), boardRC,
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
@@ -114,7 +128,7 @@ public class BoardActivity extends AppCompatActivity {
                                 int postNumClicks = boardList.get(position).getNumClicks();
                                 postNumClicks++;
                                 mStore.collection(collectionPath).document(id).update("numClicks", postNumClicks);
-                                Intent intent = new Intent(getApplicationContext(), NoticeReadActivity.class);
+                                Intent intent = new Intent(getContext(), NoticeReadActivity.class);
                                 intent.putExtra("id", id);
                                 startActivity(intent);
                             }

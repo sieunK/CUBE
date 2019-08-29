@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.example.cube.Administrator.Board.BoardFragment;
 import com.example.cube.Administrator.Order.OrderListFragment;
+import com.example.cube.MoonChang.MoonChangReviewFragment;
 
 public class TabPagerAdapter extends FragmentStatePagerAdapter {
     private int tabCount;
@@ -23,6 +25,14 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
                 return olf;
             }
             case 1: {
+                BoardFragment bf = new BoardFragment();
+                return bf;
+            }
+            case 2: {
+                MoonChangReviewFragment rf = new MoonChangReviewFragment();
+                return rf;
+            }
+            case 3: {
                 ConfigFragment cf = new ConfigFragment();
                 return cf;
             }

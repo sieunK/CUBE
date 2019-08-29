@@ -39,8 +39,6 @@ import java.util.Map;
 public class ShowSalesStatusActivity extends AppCompatActivity implements View.OnClickListener {
     // 날짜 선택
     private TextView datePickerTextView;
-    // 달력 다이얼로그
-    private DatePickerDialog dateDialog;
 
     //월 매출
     private TextView salesMonth;
@@ -135,6 +133,7 @@ public class ShowSalesStatusActivity extends AppCompatActivity implements View.O
                                 for (Map<String, Object> _map : OrderList) {
                                     sellDay += (long) (_map.get("num")) * (long) (_map.get("price"));
                                     int i;
+
                                     for (i = 0; i < foodList.size(); ++i) {
                                         if (foodList.get(i).containsKey(_map.get("name").toString())) {
                                             long soldNum = (long) (foodList.get(i).get("num"));
@@ -145,10 +144,8 @@ public class ShowSalesStatusActivity extends AppCompatActivity implements View.O
                                     if (i == foodList.size()) {
                                         foodList.add(_map);
                                         Log.d("added", foodList.get(0).get("name").toString());
-
                                     }
                                 }
-
                             }
                             mAdapter = new salesAdapter(foodList);
 
@@ -175,7 +172,7 @@ public class ShowSalesStatusActivity extends AppCompatActivity implements View.O
     public void onClick(View view) {
         if (view == datePickerTextView) {
             Calendar cal = Calendar.getInstance(Locale.KOREA);
-            dateDialog = new DatePickerDialog(ShowSalesStatusActivity.this, dateSetListener,
+            DatePickerDialog dateDialog = new DatePickerDialog(ShowSalesStatusActivity.this, dateSetListener,
                     cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
             dateDialog.show();
 
@@ -221,7 +218,7 @@ public class ShowSalesStatusActivity extends AppCompatActivity implements View.O
     public class salesAdapter extends RecyclerView.Adapter<salesViewHolder> {
         private List<Map<String, Object>> list;
 
-        public salesAdapter(ArrayList<Map<String, Object>> mlist) {
+        private salesAdapter(ArrayList<Map<String, Object>> mlist) {
             this.list = mlist;
             Log.d("Size of List : ", Integer.toString(list.size()));
 
@@ -242,15 +239,12 @@ public class ShowSalesStatusActivity extends AppCompatActivity implements View.O
             holder.salesSumView.setText(Long.toString((long) (data.get("num")) * (long) (data.get("price"))));
         }
 
-
         @Override
         public int getItemCount() {
             return list.size();
         }
 
-
-        public void resetAll(Query newQuery) {
-            // foodList.clear();
+        private void resetAll(Query newQuery) {
             final ProgressDialog progressDialog = new ProgressDialog(ShowSalesStatusActivity.this);
             progressDialog.setTitle("loading...");
             progressDialog.show();
@@ -269,27 +263,26 @@ public class ShowSalesStatusActivity extends AppCompatActivity implements View.O
                                         sellDay += (long) (_map.get("num")) * (long) (_map.get("price"));
                                         int i;
                                         for (i = 0; i < list.size(); ++i) {
-                                            if (list.get(i).containsKey(_map.get("name").toString())) {
+                                            //   Log.d("name", _map.get("name").toString());
+                                            if (list.get(i).containsValue(_map.get("name").toString())) {
                                                 long soldNum = (long) (list.get(i).get("num"));
-                                                list.get(i).put("num", soldNum + 1);
+                                                list.get(i).put("num", soldNum + (long) _map.get("num"));
                                                 break;
                                             }
                                         }
                                         if (i == list.size()) {
                                             list.add(_map);
-                                            Log.d("added", list.get(list.size() - 1).get("name").toString());
+                                            //  Log.d("added", list.get(list.size() - 1).get("name").toString());
                                         }
                                     }
                                 }
                                 mAdapter.notifyDataSetChanged();
                                 salesDay.setText(Long.toString(sellDay));
                                 progressDialog.dismiss();
-
                             } else {
                                 Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                                 Log.d("ShowSalesStatusActivity", "Error getting documents: ", task.getException());
                                 progressDialog.dismiss();
-
                             }
                         }
                     });
@@ -302,7 +295,7 @@ public class ShowSalesStatusActivity extends AppCompatActivity implements View.O
         TextView salesNumView;
         TextView salesSumView;
 
-        public salesViewHolder(@NonNull View itemView) {
+        private salesViewHolder(@NonNull View itemView) {
             super(itemView);
             salesNameView = (TextView) itemView.findViewById(R.id.sales_field_name);
             salesPriceView = (TextView) itemView.findViewById(R.id.sales_field_price);

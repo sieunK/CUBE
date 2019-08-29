@@ -9,6 +9,21 @@
     android:orientation="vertical"
     >
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/config_toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.PopupOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/config_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            app:title="설  정"
+            app:titleTextColor="#000000" />
+
+    </com.google.android.material.appbar.AppBarLayout>
     <ListView
         android:id="@+id/config_view"
         android:layout_width="match_parent"

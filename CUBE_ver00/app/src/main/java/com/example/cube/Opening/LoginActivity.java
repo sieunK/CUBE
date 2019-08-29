@@ -197,31 +197,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             if (e != null) {
                                                 Toast.makeText(getApplicationContext(), "로그인 실패\n 사용자를 찾을 수 없습니다!", Toast.LENGTH_SHORT).show();
                                                 progressDialog.dismiss();
-                                                return;
                                             }
                                             for (DocumentSnapshot ds : queryDocumentSnapshots) {
-                                                Object isAdmin = (boolean) ds.get("isAdmin");
-                                                Log.d("isAdmin", Boolean.toString((boolean) isAdmin));
+                                                Object isAdmin = ds.get("isAdmin");
                                                 if (isAdmin == null) {
                                                     Toast.makeText(getApplicationContext(), "관리자가 아닙니다", Toast.LENGTH_SHORT).show();
+                                                    progressDialog.dismiss();;
+                                                }
+                                                else{
+                                                    if (checkAutoLogin.isChecked()) {
+                                                        String email = editTextEmail.getText().toString();
+                                                        String password = editTextPassword.getText().toString();
+
+                                                        editor.putString("email", email);
+                                                        editor.putString("password", password);
+                                                        editor.putBoolean("autoLogin", true);
+                                                        editor.commit();
+                                                    }
                                                     progressDialog.dismiss();
-                                                    return;
+                                                    startActivity(new Intent(getApplicationContext(), AdminActivity.class));
+                                                    finish();
                                                 }
                                             }
                                         }
                                     });
 
-                            if (checkAutoLogin.isChecked()) {
-                                String email = editTextEmail.getText().toString();
-                                String password = editTextPassword.getText().toString();
-
-                                editor.putString("email", email);
-                                editor.putString("password", password);
-                                editor.putBoolean("autoLogin", true);
-                                editor.commit();
-                            }
-                            startActivity(new Intent(getApplicationContext(), AdminActivity.class));
-                            finish();
                         } else {
                             Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
                             editor.remove("email");

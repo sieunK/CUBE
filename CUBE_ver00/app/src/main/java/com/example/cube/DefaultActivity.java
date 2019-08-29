@@ -49,6 +49,9 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
     private String getUserEmail;
     private String getUserNickName;
 
+    private View nav_header_view;
+    private TextView nav_header_id_text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +106,15 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
         }
 
+
+        /* 세팅된 닉네임 가져와서 드로어 레이아웃 프로필에 적음 */
+        //  Intent intent = getIntent();
+        //  String nickname = intent.getStringExtra("nickname");
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        nav_header_view= navigationView.getHeaderView(0);
+        nav_header_id_text = (TextView) nav_header_view.findViewById(R.id.show_nickname);
+
+
         /* 로그인 후 앱에서 계속 사용할 수 있도록 닉네임과 이메일을 저장 */
         currentUserInfo = (CurrentApplication) getApplication();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -124,6 +136,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                                     Toast.makeText(getApplicationContext(), "사용자 확인", Toast.LENGTH_SHORT).show();
                                     currentUserInfo.setEmail(getUserEmail);
                                     currentUserInfo.setNickname(getUserNickName);
+                                    nav_header_id_text.setText(getUserNickName);
                                 }
                                 Object isAdmin = dc.getData().get("isAdmin");
                                 if(isAdmin!=null && (boolean)isAdmin==true) {
@@ -143,13 +156,6 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
 
 
-        /* 세팅된 닉네임 가져와서 드로어 레이아웃 프로필에 적음 */
-      //  Intent intent = getIntent();
-      //  String nickname = intent.getStringExtra("nickname");
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View nav_header_view = navigationView.getHeaderView(0);
-        TextView nav_header_id_text = (TextView) nav_header_view.findViewById(R.id.show_nickname);
-        nav_header_id_text.setText(getUserNickName);
 
         //DBHelper dbHelper = new DBHelper(getApplicationContext(), "NOTICE.db", null, 1);
 

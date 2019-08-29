@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,20 +45,28 @@ public class MenuInfoDialogFragment
         extends DialogFragment implements View.OnClickListener {
     public static final String TAG = "Food Information Event";
 
+    private Context context;
+
     private FirebaseFirestore mStore;
     private Boolean readStoragePermission;
+    private Boolean isSoldOut;
+
     private static String DocId;
-    private static int FoodId;
+    private static int foodId;
     private FoodInfoListener listener;
+
+
+    private TextView foodNum;
     private byte[] photo;
     private ImageView foodPhotoEdit;
     private EditText foodNameEdit;
     private EditText foodPriceEdit;
+    private String foodType;
+    private EditText foodInfoEdit;
     private Switch soldOutEdit;
-    private Boolean isSoldOut;
+
     private Button deleteBtn;
     private Button saveBtn;
-    private Context context;
 
 
     public MenuInfoDialogFragment() {
@@ -99,10 +109,27 @@ public class MenuInfoDialogFragment
 
         mStore = FirebaseFirestore.getInstance();
 
+        foodNum = v.findViewById(R.id.item_num);
         foodPhotoEdit = (ImageView) v.findViewById(R.id.edit_item_photo);
         foodNameEdit = (EditText) v.findViewById(R.id.edit_item_name);
         foodPriceEdit = (EditText) v.findViewById(R.id.edit_item_price);
+        foodInfoEdit = (EditText)v.findViewById(R.id.edit_item_info);
+        foodInfoEdit.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View view, MotionEvent event) {
+                // TODO Auto-generated method stub
+                if (view == foodInfoEdit) {
+                    view.getParent().requestDisallowInterceptTouchEvent(true);
+                    switch (event.getAction()&MotionEvent.ACTION_MASK){
+                        case MotionEvent.ACTION_UP:
+                            view.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
         soldOutEdit = (Switch) v.findViewById(R.id.edit_soldout_switch);
+
         saveBtn = (Button) v.findViewById(R.id.edit_save_btn);
         deleteBtn = (Button) v.findViewById(R.id.edit_delete_btn);
 
@@ -121,7 +148,11 @@ public class MenuInfoDialogFragment
             @Override
             public void onEvent(@Nullable DocumentSnapshot ds, @Nullable FirebaseFirestoreException e) {
                 Menu menu = ds.toObject(Menu.class);
-                FoodId = menu.getId();
+
+                foodId = menu.getId();
+                foodNum.setText(Integer.toString(foodId));
+                foodType = menu.getType();
+
                 String photoStr = menu.getPhoto();
                 if (photoStr == null) {
                     foodPhotoEdit.setImageBitmap(BitmapFactory.decodeResource(context.getResources(),
@@ -130,8 +161,15 @@ public class MenuInfoDialogFragment
                     photo = Base64.decode(photoStr, Base64.NO_WRAP);
                     foodPhotoEdit.setImageBitmap(BitmapFactory.decodeByteArray(photo, 0, photo.length));
                 }
+
                 foodNameEdit.setText(menu.getName());
                 foodPriceEdit.setText(Integer.toString(menu.getPrice()));
+                String infoStr = menu.getInfo();
+                if(infoStr==null)
+                    foodInfoEdit.setText("");
+                else
+                    foodInfoEdit.setText(infoStr);
+
                 isSoldOut = menu.getIs_soldout();
                 if (isSoldOut) {
                     soldOutEdit.setChecked(true);
@@ -169,10 +207,14 @@ public class MenuInfoDialogFragment
                     Toast.makeText(getActivity(), "허가되지않음", Toast.LENGTH_SHORT).show();
                 }
             } else if (v == saveBtn) {
-                Menu food = new Menu(FoodId,
+                Menu food = new Menu(foodId,
                         bitmapToString(((BitmapDrawable) (foodPhotoEdit.getDrawable())).getBitmap()),
                         foodNameEdit.getText().toString(),
-                        Integer.parseInt(foodPriceEdit.getText().toString()), isSoldOut);
+                        Integer.parseInt(foodPriceEdit.getText().toString()),
+                        isSoldOut,
+                        foodType,
+                        foodInfoEdit.getText().toString()
+                );
                 listener.saveFoodInfo(food, DocId);
                 dismiss();
             } else if (v == deleteBtn) {

@@ -20,7 +20,6 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ItemViewHo
 
     // adapter에 들어갈 list 입니다.
     private ArrayList<NoticeData> NoticeList;
-    private Context mContext;
     public NoticeAdapter(ArrayList<NoticeData> NoticeList) {
         this.NoticeList = NoticeList;
     }

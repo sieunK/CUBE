@@ -6,27 +6,50 @@ public class Menu {
     private String name;
     private int price;
     private boolean is_soldout;
+    private String type;
+    private String info;
 
     public Menu(){
     }
 
-    public Menu(int id, String photo, String name, int price, boolean is_soldout) {
+    public Menu(int id, String photo, String name, int price, boolean is_soldout, String type, String info) {
         this.id = id;
         this.photo = photo;
         this.name = name;
         this.price = price;
         this.is_soldout = is_soldout;
+        this.type = type;
+        this.info = info;
     }
 
     @Override
     public String toString() {
         return "Menu{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", photo='" + photo + '\'' +
                 ", name='" + name + '\'' +
-                ", price='" + price + '\'' +
+                ", price=" + price +
                 ", is_soldout=" + is_soldout +
+                ", type='" + type + '\'' +
+                ", info='" + info + '\'' +
                 '}';
+    }
+
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 
     public int getId() {

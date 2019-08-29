@@ -55,10 +55,9 @@
         <activity android:name=".Administrator.Menu.MenuConfigActivity" />
         <activity android:name=".Administrator.Order.ShowSalesStatusActivity" />
         <activity android:name=".Administrator.AdminActivity" />
-        <activity android:name=".Administrator.Board.BoardActivity" />
         <activity android:name=".Administrator.AdConfigActivity" />
         <activity android:name=".Administrator.AppConfigActivity" />
-   \ </application>
+    </application>
 
 
 

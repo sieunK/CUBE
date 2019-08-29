@@ -1,10 +1,13 @@
 package com.example.cube.Review;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +19,21 @@ import android.widget.TextView;
 import com.example.cube.MoonChang.WriteCommentPopUp;
 import com.example.cube.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHolder> {
 
     // adapter에 들어갈 list 입니다.
-    ArrayList<ReviewParent> ReviewParents=new ArrayList<>(); //부모 리스트를 담을 배열
+    ArrayList<ReviewParent> ReviewParents; //부모 리스트를 담을 배열
     private Context mContext;
 
-    public ReviewAdapter(Context context) {
+    public ReviewAdapter(Context context, ArrayList<ReviewParent> ReviewParents) {
         super();
         this.mContext = context;
+        this.ReviewParents = ReviewParents;
     }
 
     @NonNull
@@ -46,46 +52,64 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
 
         private ImageView arrowIcon;
         private ImageView rotatedArrow;
-        private ImageView userImage;
-        private TextView comment;
-        private TextView userID;
-        private TextView time;
-        private TextView review;
-        private RatingBar ratingBar;
-        private LinearLayout li;
 
-        public LinearLayout Item;
+        private TextView userID;
+        private ImageView userImage;
+        private TextView time;
+        private ImageView reviewImage;
+        private TextView review;
+
+        private TextView comment;
+        private TextView commentDate;
+        private RatingBar ratingBar;
+
 
         ItemViewHolder(View v) {
             super(v);
 
             arrowIcon = (ImageView) v.findViewById(R.id.review_write_comment);
             rotatedArrow = (ImageView) v.findViewById(R.id.image_rotated_arrow);
-            userImage = (ImageView) v.findViewById(R.id.review_user_image);
-            comment = (TextView) v.findViewById(R.id.review_comment);
+
             userID = (TextView) v.findViewById(R.id.review_userID);
+            userImage = (ImageView) v.findViewById(R.id.review_user_image);
             time = (TextView) v.findViewById(R.id.review_time);
-            ratingBar = (RatingBar) v.findViewById(R.id.review_rating);
+            reviewImage = (ImageView)v.findViewById(R.id.review_image);
             review = (TextView) v.findViewById(R.id.review_main);
-            li = (LinearLayout) v.findViewById(R.id.layout_comment);
+
+
+            comment = (TextView) v.findViewById(R.id.review_comment);
+            commentDate = (TextView)v.findViewById(R.id.review_comment_date);
+
+            ratingBar = (RatingBar) v.findViewById(R.id.review_rating);
         }
 
         void onBind(final ReviewParent data) {
             /* 임시 ID */
-            data.setUserID("익명24810");
 
             review.setText(data.getReview());
-            userID.setText(data.getUserID());
+            userID.setText(data.getUser());
             ratingBar.setRating(data.getRating());
-            time.setText(data.getDate());
-            //foodImage.setImage(data.getImage());
+            String postTime = timeGapCheck(data.getDate());
+            time.setText(postTime);
+            String commentTime = timeGapCheck(data.getCommentDate());
+            commentDate.setText(commentTime);
+            String reviewImageStr = data.getPhoto();
+            if (reviewImageStr == null) {
+                reviewImage.setVisibility(View.GONE);
+            } else {
+                byte[] photo = Base64.decode(reviewImageStr, Base64.NO_WRAP);
+                reviewImage.setVisibility(View.VISIBLE);
+                reviewImage.setImageBitmap(BitmapFactory.decodeByteArray(photo, 0, photo.length));
+            }
 
             if(data.getComment()==null) {
                 comment.setVisibility(View.GONE);
+                commentDate.setVisibility(View.GONE);
                 rotatedArrow.setVisibility(View.GONE);
                 //Toast.makeText(v.getContext(),"null임",Toast.LENGTH_SHORT).show();
             } else {
                 comment.setText(data.getComment());
+                commentDate.setVisibility(View.VISIBLE);
                 comment.setVisibility(View.VISIBLE);
                 rotatedArrow.setVisibility(View.VISIBLE);
                 //Toast.makeText(v.getContext(),"null아님",Toast.LENGTH_SHORT).show();
@@ -152,5 +176,17 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
         ReviewParents.add(0,data);
     }
 
+
+    public static String timeGapCheck(Date postDate) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm (E)");
+        long timeGap = new Date().getTime() - postDate.getTime();
+        long min = timeGap / 60000;  // 분
+        String postStatus;
+        if (min == 0) postStatus = "방금";
+        else if (0 < min && min < 60) postStatus = min + "분 전";
+        else if (60 <= min && min < 60 * 24) postStatus = min / 60 + "시간 전";
+        else postStatus = simpleDateFormat.format(postDate);
+        return postStatus;
+    }
 
 }

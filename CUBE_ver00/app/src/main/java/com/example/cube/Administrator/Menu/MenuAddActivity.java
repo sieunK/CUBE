@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,23 +20,34 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.cube.Components.Menu;
 import com.example.cube.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class MenuAddActivity extends AppCompatActivity {
     private ImageView foodPhotoView;
     private EditText foodNameEdit;
     private EditText foodPriceEdit;
-    private  EditText foodIdEdit;
+    private AppCompatSpinner foodTypeEdit;
+    private EditText foodInfoEdit;
     private Button addBtn;
     private FirebaseFirestore mStore;
     private boolean readStoragePermission;
+    private int nextMenuNum;
+
+    private ArrayList<String> menuTypes;
+    private ArrayAdapter<String> menuTypeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +67,42 @@ public class MenuAddActivity extends AppCompatActivity {
         foodPhotoView = (ImageView) findViewById(R.id.add_item_photo);
         foodNameEdit = (EditText) findViewById(R.id.add_item_name);
         foodPriceEdit = (EditText) findViewById(R.id.add_item_price);
-        foodIdEdit = (EditText)findViewById(R.id.add_item_id);
+        foodTypeEdit = findViewById(R.id.add_item_type);
+        foodInfoEdit = findViewById(R.id.add_item_info);
         addBtn = (Button) findViewById(R.id.add_item_btn);
+
+        menuTypes = new ArrayList<>();
+        menuTypes.add("한식");
+        menuTypes.add("일식");
+        menuTypes.add("양식");
+        menuTypeAdapter = new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                menuTypes);
+        foodTypeEdit.setAdapter(menuTypeAdapter);
+
+
+        // 이번에 메뉴 추가 시 들어갈 메뉴번호 가져옴
+        DocumentReference MoonChangRef = mStore.collection("foodcourt").document("moonchang");
+        MoonChangRef.get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot dc = task.getResult();
+                            if (dc.exists()) {
+                                nextMenuNum = (int) (long) dc.get("menu_num")+1;
+                            } else {
+                                Toast.makeText(getApplicationContext(), "실행 오류 - 문서를 찾지못함", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), "실행 오류", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    }
+                });
+
+
 
         foodPhotoView.setOnClickListener(new ImageView.OnClickListener(){
             @Override
@@ -75,11 +122,13 @@ public class MenuAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bitmap bitmapPhoto = ((BitmapDrawable) (foodPhotoView.getDrawable())).getBitmap();
-                int id = Integer.parseInt(foodIdEdit.getText().toString());
+                int id = nextMenuNum;
                 String photo = bitmapToString(bitmapPhoto);
                 String name = foodNameEdit.getText().toString();
+                String type = foodTypeEdit.getSelectedItem().toString();
+                String info = foodInfoEdit.getText().toString();
                 int price = Integer.parseInt(foodPriceEdit.getText().toString());
-                Menu menu = new Menu(id, photo, name, price, false);
+                Menu menu = new Menu(id, photo, name, price, false, type, info);
                 mStore.collection("foodcourt/moonchang/menu").document().set(menu);
                 Toast.makeText(getApplicationContext(), "저장되었습니다", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), MenuConfigActivity.class));

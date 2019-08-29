@@ -31,24 +31,38 @@
             android:background="@android:color/background_light"
             android:elevation="1dp"
             app:tabIndicatorGravity="top"
-            app:tabIndicatorColor="#000000"
+            app:tabIndicatorColor="#FF9800"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="#ffffff"
-            app:tabTextColor="@color/colorPrimary">
+            app:tabSelectedTextColor="#FF9800"
+            app:tabTextColor="@android:color/black">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/order_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/ic_format_list_bulleted_black_24dp" />
+                android:text="주문내역"
+                />
 
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/board_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="공지사항"
+                />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/review_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="리  뷰"
+                />
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/menu_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/ic_settings_black_24dp" />
-
+                android:text="설  정"
+                />
         </com.google.android.material.tabs.TabLayout>
 
     </com.google.android.material.appbar.AppBarLayout>

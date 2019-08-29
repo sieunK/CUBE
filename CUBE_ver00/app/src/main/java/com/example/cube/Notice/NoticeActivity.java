@@ -84,6 +84,8 @@ public class NoticeActivity extends Fragment {
                 .orderBy("date", Query.Direction.DESCENDING);
         noticeRC = view.findViewById(R.id.notice_recycler);
         noticeRC.setLayoutManager(new LinearLayoutManager(getContext()));
+        noticeRC.setHasFixedSize(true);
+        noticeRC.addItemDecoration(new DividerItemDecoration(noticeRC.getContext(), 1));
 
         return view;
     }
@@ -92,7 +94,6 @@ public class NoticeActivity extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        noticeRC.setLayoutManager(new LinearLayoutManager(getContext()));
         noticeList = new ArrayList<>();
 
 
@@ -110,7 +111,6 @@ public class NoticeActivity extends Fragment {
                 noticeRC.setAdapter(adapter);
             }
         });
-        noticeRC.addItemDecoration(new DividerItemDecoration(noticeRC.getContext(), 1));
         noticeRC.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), noticeRC,
                         new RecyclerItemClickListener.OnItemClickListener() {
