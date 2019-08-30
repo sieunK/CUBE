@@ -58,7 +58,6 @@ public class AdminReviewFragment extends Fragment implements View.OnClickListene
         mStore = FirebaseFirestore.getInstance();
 
         String collectionPath = "foodcourt/moonchang/review";
-        final Query reviewQuery = mStore.collection(collectionPath).orderBy("date", Query.Direction.DESCENDING);
         final Query reviewQuery = mStore.collection(collectionPath).orderBy("date", Query.Direction.ASCENDING);
 
         reviewList = new ArrayList<>();

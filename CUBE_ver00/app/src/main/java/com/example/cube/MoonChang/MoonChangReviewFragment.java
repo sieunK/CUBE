@@ -107,7 +107,6 @@ public class MoonChangReviewFragment extends Fragment implements View.OnClickLis
         //  setListItems();
 
         String collectionPath = "foodcourt/moonchang/review";
-        final Query reviewQuery = mStore.collection(collectionPath).orderBy("date", Query.Direction.DESCENDING);
         final Query reviewQuery = mStore.collection(collectionPath).orderBy("date", Query.Direction.ASCENDING);
 
         reviewList = new ArrayList<>();

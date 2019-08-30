@@ -167,7 +167,6 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
                                                 // Log and toast
                                                 Log.d(TAG + "TOKEN", token);
-                                                Toast.makeText(getApplicationContext(), token, Toast.LENGTH_SHORT).show();
                                                 //Toast.makeText(getApplicationContext(), token, Toast.LENGTH_SHORT).show();
                                             }
                                         });
