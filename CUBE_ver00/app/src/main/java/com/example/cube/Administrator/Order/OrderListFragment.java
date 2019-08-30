@@ -541,8 +541,13 @@ public class OrderListFragment extends Fragment {
                     JSONObject notification = new JSONObject();
                     notification.put("body", message);
                     notification.put("title", getString(R.string.app_name));
+                    JSONObject data = new JSONObject();
+                    data.put("title", getString(R.string.app_name));
+                    data.put("message", message);
                     root.put("notification", notification);
+                    root.put("data",data);
                     root.put("to", userLoginToken);
+                    root.put("click_action", "OPEN_ACTIVITY");
 
                     // FMC 메시지 생성 end
 

@@ -73,7 +73,7 @@ public class AdminReviewFragment extends Fragment implements View.OnClickListene
                     ReviewParent data = dc.getDocument().toObject(ReviewParent.class);
                     reviewList.add(data);
                 }
-                adapter = new ReviewAdapter(getActivity(), reviewQuery);
+                adapter = new ReviewAdapter(getContext().getApplicationContext(), reviewQuery);
                 recyclerView.setAdapter(adapter);
             }
         });

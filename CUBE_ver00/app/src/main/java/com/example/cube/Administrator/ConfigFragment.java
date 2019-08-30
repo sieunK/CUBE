@@ -51,21 +51,21 @@ public class ConfigFragment extends Fragment {
 
                     case 0: {
                         Toast.makeText(getActivity(), "메뉴 설정 페이지입니다" ,Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity(), MenuConfigActivity.class));
+                        startActivity(new Intent(getActivity().getApplicationContext(), MenuConfigActivity.class));
                         break;
                     }
                     case 1:{
                         Toast.makeText(getActivity(), "광고 설정 페이지입니다" ,Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity(), AdConfigActivity.class));
+                        startActivity(new Intent(getActivity().getApplicationContext(), AdConfigActivity.class));
                         break;                    }
                     case 2:{
                         Toast.makeText(getActivity(), "앱 기본 설정 페이지입니다" ,Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity(), AppConfigActivity.class));
+                        startActivity(new Intent(getActivity().getApplicationContext(), AppConfigActivity.class));
                         break;                    }
                     case 3:{
                         mAuth.signOut();
                         Toast.makeText(getActivity(), "로그아웃되었습니다." ,Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
                         getActivity().finish();
                         break;
                     }
