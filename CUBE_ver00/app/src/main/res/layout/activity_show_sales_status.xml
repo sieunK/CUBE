@@ -16,9 +16,12 @@
             android:id="@+id/sales_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
+            android:background="@color/strongorange"
             app:title="판매내역"
-            app:titleTextColor="#000000" />
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            android:layout_gravity="center"
+            android:gravity="center"
+            app:titleTextColor="#FFFFFF" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -28,12 +31,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/sales_toolbar_layout"
         android:layout_marginVertical="10dp"
-        android:background="#03A9F4"
+        android:background="@color/strongorange"
         android:gravity="center"
         android:text="날 짜 선 택"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"></TextView>
+        android:textSize="24dp"
+        android:fontFamily="@font/font_family">
+    </TextView>
 
 
     <View
@@ -51,6 +55,7 @@
         android:layout_below="@+id/sales_date_picker_text"
         android:layout_marginVertical="2dp"
         android:orientation="horizontal"
+        android:background="@drawable/ic_longorangeblank"
         android:weightSum="10">
 
         <TextView
@@ -58,18 +63,22 @@
             android:layout_height="wrap_content"
             android:layout_weight="2.5"
             android:gravity="center"
-            android:text="이 름"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/font_family"
+            android:textColor="@color/bamcolor"
+            android:textSize="17dp"
+            android:text="이 름" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2.5"
             android:gravity="center"
-            android:text="가 격"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/font_family"
+            android:textColor="@color/bamcolor"
+            android:textSize="17dp"
+            android:text="가 격" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -77,8 +86,10 @@
             android:layout_weight="2.5"
             android:gravity="center"
             android:text="수 량"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/font_family"
+            android:textColor="@color/bamcolor"
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -86,8 +97,10 @@
             android:layout_weight="2.5"
             android:gravity="center"
             android:text="합 계"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/font_family"
+            android:textColor="@color/bamcolor"
+            android:textSize="17dp" />
 
 
     </LinearLayout>
@@ -100,7 +113,7 @@
         android:layout_below="@+id/show_sales_field_layout"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="#BEBBBB" />
+        android:background="#FFFFFF" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -111,6 +124,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/sales_list"
+            android:background="@drawable/ic_orangeblank"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.0"
@@ -120,27 +134,30 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/simple_layout_box"
+            android:layout_height="50dp"
             android:orientation="horizontal"
             android:paddingVertical="10dp"
             android:weightSum="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="50dp"
+            android:background="@drawable/ic_orangelongbutton"
             tools:ignore="UnknownId">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
+                android:layout_marginLeft="24dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:text="일 매출 : "
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/whitecolor"
+                    android:fontFamily="@font/font_family"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/sales_day"
@@ -148,24 +165,38 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="금액"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="@font/font_family"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/whitecolor"
+                    android:textSize="18dp" />
             </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="@color/whitecolor"
+                android:layout_weight="0.05"
+                android:layout_gravity="center_horizontal"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_gravity="right"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="월 매출 : "
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/whitecolor"
+                    android:textSize="18dp"
+                    android:fontFamily="@font/font_family" />
 
                 <TextView
                     android:id="@+id/sales_month"
@@ -173,8 +204,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:text="금액"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/whitecolor"
+                    android:fontFamily="@font/font_family"
+                    android:textSize="18dp" />
             </LinearLayout>
 
         </LinearLayout>

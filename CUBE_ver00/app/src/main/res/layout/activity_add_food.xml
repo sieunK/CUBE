@@ -1,128 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whitecolor"
+    android:orientation="vertical"
     tools:context=".Administrator.Menu.MenuConfigActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/admin_menu_back">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/ic_logo"/>
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/add_item_photo"
         android:layout_width="235dp"
-        android:layout_height="200dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/ic_local_dining_black_24dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        android:layout_toLeftOf="@+id/add_item_name"
-        android:text="이 름"
-        android:textSize="22sp" />
-
-    <EditText
-        android:id="@+id/add_item_name"
-        android:layout_width="@android:dimen/thumbnail_width"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@drawable/border_edittext"
-        android:inputType="text"
-        android:padding="10dp"
-        android:text="음 식 명"
-        android:textSize="18sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/add_item_price"
-        android:layout_alignBottom="@+id/add_item_price"
-        android:layout_marginRight="20dp"
-        android:layout_toLeftOf="@+id/add_item_price"
-        android:gravity="center"
-        android:text="가 격"
-        android:textSize="22sp" />
-
-    <EditText
-        android:id="@+id/add_item_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/add_item_name"
-        android:layout_alignLeft="@+id/add_item_name"
-        android:layout_alignRight="@+id/add_item_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/border_edittext"
-
-        android:padding="10dp"
-        android:text="가 격"
-        android:textSize="18sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/add_item_type"
-        android:layout_alignBottom="@+id/add_item_type"
-        android:layout_marginRight="20dp"
-        android:layout_toLeftOf="@+id/add_item_type"
-        android:gravity="center"
-        android:text="분 류"
-        android:textSize="22sp" />
-
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/add_item_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/add_item_price"
-        android:layout_alignLeft="@+id/add_item_price"
-        android:layout_alignRight="@+id/add_item_price"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:minHeight="20dp"
-        android:padding="10dp"
-
-        />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/add_item_info"
-        android:layout_alignBottom="@+id/add_item_info"
-        android:layout_marginRight="20dp"
-        android:layout_toLeftOf="@+id/add_item_info"
-        android:gravity="center"
-        android:text="기 타"
-        android:textSize="22sp" />
-
-    <EditText
-        android:id="@+id/add_item_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/add_item_type"
-        android:layout_alignLeft="@+id/add_item_price"
-        android:layout_alignRight="@+id/add_item_price"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/border_edittext"
-        android:hint="내용을 입력해주세요"
-        android:maxHeight="80dp"
-        android:padding="10dp"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/add_item_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_height="159dp"
+        android:src="@drawable/ic_addmenu_pic"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="30dp"
-        android:background="#FF9700"
-        android:paddingHorizontal="40dp"
-        android:paddingVertical="15dp"
-        android:text="추 가"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-</RelativeLayout>
+        android:layout_gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="20dp">
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="75dp"
+            app:srcCompat="@drawable/addmenu_name"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="음식명"
+            android:textColor="@color/strongorange"
+            android:fontFamily="@font/font_family"
+            android:textSize="22dp"/>
+
+        <EditText
+            android:id="@+id/add_item_name"
+            android:layout_width="@android:dimen/thumbnail_width"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            android:textColor="@color/bamcolor"
+            android:fontFamily="@font/font_family"
+            android:hint="내용을 입력해주세요"
+            android:textSize="21dp"
+            android:inputType="text" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="20dp">
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="75dp"
+            app:srcCompat="@drawable/addmenu_price"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="가격"
+            android:textColor="@color/strongorange"
+            android:fontFamily="@font/font_family"
+            android:textSize="22dp"/>
+
+        <EditText
+            android:id="@+id/add_item_price"
+            android:layout_width="@android:dimen/thumbnail_width"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            android:textColor="@color/bamcolor"
+            android:fontFamily="@font/font_family"
+            android:hint="내용을 입력해주세요"
+            android:textSize="21dp"
+            android:inputType="text" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="20dp">
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="75dp"
+            app:srcCompat="@drawable/addmenu_num"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="분류"
+            android:textColor="@color/strongorange"
+            android:fontFamily="@font/font_family"
+            android:textSize="22dp"/>
+
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/add_item_type"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:minHeight="40dp"
+            android:padding="10dp"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="20dp">
+
+        <ImageView
+            android:layout_width="55dp"
+            android:layout_height="75dp"
+            app:srcCompat="@drawable/addmenu_soldout"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:text="기타"
+            android:textColor="@color/strongorange"
+            android:fontFamily="@font/font_family"
+            android:textSize="22dp"/>
+
+        <EditText
+            android:id="@+id/add_item_info"
+            android:layout_width="@android:dimen/thumbnail_width"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            android:textColor="@color/bamcolor"
+            android:fontFamily="@font/font_family"
+            android:hint="내용을 입력해주세요"
+            android:textSize="21dp"
+            android:inputType="text" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/ic_gradation_orange">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/add_item_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="추가"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:textSize="24dp"
+            android:background="#00ff0000"/>
+
+    </LinearLayout>
+</LinearLayout>

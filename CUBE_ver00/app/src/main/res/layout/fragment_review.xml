@@ -5,21 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/whitecolor"
     tools:context=".MoonChang.MoonChangReviewFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/review_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:theme="@style/AppTheme.PopupOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/review_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
-            app:title="리  뷰"
-            app:titleTextColor="#000000" />
+            android:background="@color/orange"
+            app:title=" 리 뷰"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            android:layout_gravity="center"
+            android:gravity="center"
+            app:titleTextColor="@color/bamcolor" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -32,6 +37,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/review_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="20dp"
+            android:src="@drawable/circle_plus"
+            app:backgroundTint="#FFFFFF" />
     </FrameLayout>
 </LinearLayout>

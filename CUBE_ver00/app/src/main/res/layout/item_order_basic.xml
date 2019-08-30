@@ -21,7 +21,11 @@
             android:id="@+id/order_checkbox_basic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/order_item_num"
+            android:layout_alignBottom="@+id/order_item_num"
+            android:layout_toRightOf="@+id/order_item_num"
             android:layout_marginLeft="12dp"
+            android:button="@drawable/check_button_bam"
             />
 
         <TextView
@@ -31,11 +35,12 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="주문번호"
-            android:textColor="@android:color/black"/>
+            android:fontFamily="@font/font_family"
+            android:textColor="@color/bamcolor"/>
     </LinearLayout>
     <TextView
         android:id="@+id/order_item_list_basic"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="280dp"
         android:layout_weight="0.7"
@@ -44,5 +49,6 @@
         android:text="주문내역"
         android:maxLines="1"
         android:ellipsize="end"
-        android:textColor="@android:color/black" />
+        android:fontFamily="@font/font_family"
+        android:textColor="@color/bamcolor" />
 </LinearLayout>

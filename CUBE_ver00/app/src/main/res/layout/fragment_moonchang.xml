@@ -6,21 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/parentView"
+    android:background="@color/strongorange"
+    android:backgroundTint="@color/strongorange"
     tools:context=".MoonChang.MoonChangFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:background="@drawable/tab_layout_background"
-        app:tabIndicatorColor="#FFFFFF"
+        app:tabIndicatorColor="@color/whitecolor"
         app:tabTextColor="#FFFFFF"
         android:fontFamily="@font/bmjua_ttf"
         app:tabSelectedTextColor="@color/strongorange"
         app:tabBackground="@drawable/tabbackground"
         app:tabRippleColor="@null"
-        android:layout_height="70dp" />
+        app:tabPaddingBottom="5dp"
+        app:tabPaddingTop="5dp"
+        android:layout_marginTop="7dp"
+        android:layout_height="65dp" />
 
-    <androidx.viewpager.widget.ViewPager
+    <com.example.cube.MoonChang.nonSwipeViewpager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

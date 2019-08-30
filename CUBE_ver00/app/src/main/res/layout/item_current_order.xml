@@ -11,21 +11,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginHorizontal="15dp"
         android:layout_weight="0.8">
         <TextView
             android:id="@+id/cur_order_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize ="14sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textSize ="14dp"
+            android:fontFamily="@font/font_family"
+            android:textColor="@color/bamcolor"
             android:text="192 / 문창 / 2019-05-19 11:42"/>
         <TextView
             android:id="@+id/cur_order_food"
+            android:fontFamily="@font/font_family"
+            android:textColor="@color/bamcolor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize ="14sp"
-            android:textStyle="bold"
+            android:textSize ="16dp"
             android:text="라면1 "/>
     </LinearLayout>
 
@@ -34,14 +36,15 @@
         android:id="@+id/cur_order_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_red_light"
+        android:background="@drawable/ic_blank_orange"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_gravity="center_vertical"
         android:padding="5dp"
         android:text="주문진행중"
-        android:textSize="12sp"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"/>
+        android:textSize="17dp"
+        android:gravity="center"
+        android:fontFamily="@font/font_family"
+        android:textColor="@color/bamcolor"/>
 
 </LinearLayout>

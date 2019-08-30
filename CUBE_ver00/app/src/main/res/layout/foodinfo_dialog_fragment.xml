@@ -2,143 +2,234 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:scrollbars="none"
+    android:background="@color/whitecolor"
     tools:context=".Administrator.Menu.MenuAddActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="20dp"
-        android:gravity="center_horizontal"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/admin_menu_back">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:srcCompat="@drawable/ic_logo"/>
+
+        </LinearLayout>
         <TextView
             android:id="@+id/item_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:text="메뉴번호"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="25dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/bamcolor"
+            android:fontFamily="@font/font_family"/>
 
         <ImageView
             android:id="@+id/edit_item_photo"
-            android:layout_width="200dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_local_dining_black_24dp" />
+            android:layout_width="235dp"
+            android:layout_height="159dp"
+            android:src="@drawable/ic_addmenu_pic"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="25dp"
+            android:layout_gravity="center_horizontal" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="이 름"
-            android:textSize="24sp" />
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp">
 
-        <EditText
-            android:id="@+id/edit_item_name"
-            android:layout_width="@android:dimen/thumbnail_width"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border_edittext"
-            android:inputType=""
-            android:padding="5dp"
-            android:textSize="20sp" />
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="75dp"
+                app:srcCompat="@drawable/addmenu_name"
+                android:layout_marginRight="10dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="가 격"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/edit_item_price"
-            android:layout_width="@android:dimen/thumbnail_width"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border_edittext"
-            android:padding="5dp"
-            android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:maxHeight="80dp"
-            android:text="기 타"
-            android:textSize="24sp" />
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            >
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="음식명"
+                android:textColor="@color/strongorange"
+                android:fontFamily="@font/font_family"
+                android:textSize="22dp"/>
 
             <EditText
-                android:id="@+id/edit_item_info"
+                android:id="@+id/edit_item_name"
                 android:layout_width="@android:dimen/thumbnail_width"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/border_edittext"
-                android:maxHeight="120dp"
-                android:overScrollMode="always"
+                android:layout_centerInParent="true"
                 android:padding="5dp"
-                android:scrollbarStyle="insideInset"
-                android:scrollbars="vertical"
-                android:textSize="20sp" />
-        </androidx.core.widget.NestedScrollView>
+                android:textColor="@color/bamcolor"
+                android:fontFamily="@font/font_family"
+                android:hint="내용을 입력해주세요"
+                android:textSize="21dp"
+                android:inputType="text" />
+        </LinearLayout>
 
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="품 절"
-            android:textSize="24sp" />
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp">
 
-        <Switch
-            android:id="@+id/edit_soldout_switch"
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="75dp"
+                app:srcCompat="@drawable/addmenu_price"
+                android:layout_marginRight="10dp"/>
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="가격"
+                android:textColor="@color/strongorange"
+                android:fontFamily="@font/font_family"
+                android:textSize="22dp"/>
+
+            <EditText
+                android:id="@+id/edit_item_price"
+                android:layout_width="@android:dimen/thumbnail_width"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="5dp"
+                android:textColor="@color/bamcolor"
+                android:fontFamily="@font/font_family"
+                android:hint="내용을 입력해주세요"
+                android:textSize="21dp"
+                android:inputType="text" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@android:color/holo_orange_light"
-            android:padding="20dp" />
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="75dp"
+                app:srcCompat="@drawable/addmenu_soldout"
+                android:layout_marginRight="10dp"/>
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="기타"
+                android:textColor="@color/strongorange"
+                android:fontFamily="@font/font_family"
+                android:textSize="22dp"/>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                >
+
+                <EditText
+                    android:id="@+id/edit_item_info"
+                    android:layout_width="@android:dimen/thumbnail_width"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/border_edittext"
+                    android:maxHeight="120dp"
+                    android:overScrollMode="always"
+                    android:padding="5dp"
+                    android:fontFamily="@font/font_family"
+
+                    android:textColor="@color/bamcolor"
+                    android:hint="내용을 입력해주세요"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollbars="vertical"
+                    android:textSize="20sp" />
+            </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="20dp">
+
+            <ImageView
+                android:layout_width="55dp"
+                android:layout_height="75dp"
+                app:srcCompat="@drawable/addmenu_num"
+                android:layout_marginRight="10dp"/>
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="품절"
+                android:textColor="@color/strongorange"
+                android:fontFamily="@font/font_family"
+                android:textSize="22dp"/>
+
+            <Switch
+                android:id="@+id/edit_soldout_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:switchMinWidth="20dp"
+                android:thumb="@drawable/switch_btn_seletor"
+                android:track="@drawable/switch_track_selector"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:padding="10dp" />
+        </LinearLayout>
+
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/edit_save_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="#FF9700"
-                android:text="저 장"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_gradation_orange">
 
             <Button
                 android:id="@+id/edit_delete_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="#FF9700"
-                android:text="삭 제"
+                android:layout_gravity="end"
+                android:text="삭제"
+                android:textStyle="bold"
                 android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:textSize="24dp"
+                android:background="#00ff0000"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/edit_save_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="수정"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:textSize="24dp"
+                android:background="#00ff0000"/>
 
         </LinearLayout>
     </LinearLayout>

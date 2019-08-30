@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:id="@+id/comment_write_layout"
+    android:id="@+id/comment_write_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
+    android:padding="20dp"
     android:orientation="vertical">
 
 
@@ -14,6 +15,7 @@
         android:gravity="center"
         android:text="댓글 작성"
         android:paddingTop="5dp"
+        style="@style/JuaTextViewStyle2"
         android:paddingBottom="5dp"
         android:textSize="20sp" />
 
@@ -23,8 +25,9 @@
         android:layout_height="150dp"
         android:background="@null"
         android:textSize="20sp"
+        style="@style/JuaTextViewStyle2"
         android:layout_marginTop="20dp"
-        android:gravity="top|left"/>
+        android:gravity="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,6 +40,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            style="@style/JuaTextViewStyle2"
+            android:textSize="20dp"
+            android:backgroundTint="@color/orange"
             android:text="취소" />
 
         <Button
@@ -44,6 +50,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            style="@style/JuaTextViewStyle2"
+            android:textSize="20dp"
+            android:backgroundTint="@color/orange"
             android:text="확인" />
     </LinearLayout>
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:MapView="http://schemas.android.com/apk/res-auto"
-    tools:context=".MoonChangInfoFragment"
+    android:background="@color/whitecolor"
     android:orientation="vertical">
     <!-- TODO: Update blank fragment layout -->
     <ScrollView

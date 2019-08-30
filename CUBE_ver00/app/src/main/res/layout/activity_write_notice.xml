@@ -16,7 +16,7 @@
             android:hint="제목"
             android:fontFamily="@font/bmjua_ttf"
             android:textColor="@color/bamcolor"
-            android:textSize="24sp"
+            android:textSize="24dp"
             android:id="@+id/text_notice_title"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,7 +38,7 @@
             android:textColor="@color/bamcolor"
             android:gravity="start|top|left"
             android:inputType="textMultiLine"
-            android:textSize="24sp" />
+            android:textSize="24dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

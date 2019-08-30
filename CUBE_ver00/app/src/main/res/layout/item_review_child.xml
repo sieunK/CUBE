@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="사장님 댓글"
-                    android:textColor="#AA000000"
+                    style="@style/JuaTextViewStyle2"
                     android:textSize="18sp" />
 
                 <TextView
@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    style="@style/JuaTextViewStyle2"
                     android:text="30분 전" />
 
 
@@ -65,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:text="댓글 쓰기"
+        style="@style/JuaTextViewStyle2"
         android:visibility="gone" />
 
     <TextView
@@ -72,6 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="니가 만들던가^^"
+        style="@style/JuaTextViewStyle2"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="30dp"
         android:textSize="16sp"/>

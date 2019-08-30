@@ -13,9 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="주문리스트"
-        android:background="#00BCD4"
-        android:textStyle="bold"
-        android:textSize="20sp"
+        android:background="@color/strongorange"
+        android:fontFamily="@font/font_family"
+        android:textColor="@color/whitecolor"
+        android:textSize="23dp"
         android:layout_marginBottom="16dp"
         android:gravity="center_horizontal"/>
 

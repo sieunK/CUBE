@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/baglinearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -7,53 +8,98 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FAFAD2"
+        android:background="#FFFFFFFF"
         android:orientation="vertical"
         android:weightSum="1.0">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:text="장바구니"
+            android:gravity="center_horizontal"
+            android:paddingTop="135dp"
+            android:fontFamily="@font/bmjua_ttf"
+            android:textColor="@color/strongorange"
+            android:textSize="19dp"
+            android:background="@drawable/ic_setting_bar"/>
 
         <ListView
             android:id="@+id/bagMenuListView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.0" />
+            android:layout_weight="1.0"
+            android:fadeScrollbars="false"
+            android:scrollbarSize="10dp"/>
 
-        <RelativeLayout
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/line"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:tint="@color/strongorange"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:gravity="center_vertical"
             >
-
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                app:srcCompat="@drawable/ic_bag_leftbar"
+                android:layout_marginRight="10dp"/>
             <TextView
                 android:id="@+id/priceSumText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:textStyle="bold"
-                android:textSize="16dp"
-                android:text="총가격 : " />
+                android:textSize="30dp"
+                android:fontFamily="@font/font_family"
+                android:textColor="@color/bamcolor"
+                android:text="총 주문 금액  :  " />
 
             <TextView
                 android:id="@+id/priceSumView"
-                android:layout_toRightOf="@+id/priceSumText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
                 android:layout_centerVertical="true"
+                android:textSize="30dp"
+                android:text="0"
+                android:fontFamily="@font/font_family"
+                android:textColor="@color/bamcolor"
                 />
-
-            <Button
-                android:id="@+id/gotopaybutton"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textSize="30dp"
+                android:fontFamily="@font/font_family"
+                android:textColor="@color/bamcolor"
+                android:text=" 원" />
 
-                android:text="결제하기"
+        </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/line"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:tint="@color/strongorange"/>
 
-                />
+        <Button
+            android:id="@+id/gotopaybutton"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ic_orangebutton"
+            android:backgroundTint="#000000"
+            android:textColor="@color/whitecolor"
+            android:textSize="20dp"
+            android:text="결제하기"
+            android:fontFamily="@font/font_family"
 
-
-        </RelativeLayout>
+            />
 
 
     </LinearLayout>

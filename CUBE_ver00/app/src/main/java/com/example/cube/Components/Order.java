@@ -1,34 +1,25 @@
 package com.example.cube.Components;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Order {
     private int order_num;
-    private List<HashMap<String, Object>> order_list;
+    private List<Map<String, Object>> order_list;
     private Date order_time;
     private boolean standby;
     private boolean called;
-    private boolean written;
     private String user;
 
     public Order(){}
 
-    public Order(int order_num,
-                 List<HashMap<String, Object>> order_list,
-                 Date order_time,
-                 boolean standby,
-                 boolean called,
-                 boolean written,
-                 String user) {
+    public Order(int order_num, List<Map<String, Object>> order_list, Date order_time, boolean standby, boolean called, String user) {
         this.order_num = order_num;
         this.order_list = order_list;
         this.order_time = order_time;
         this.standby = standby;
         this.called = called;
-        this.written = written;
         this.user = user;
     }
 
@@ -40,17 +31,8 @@ public class Order {
                 ", order_time=" + order_time +
                 ", standby=" + standby +
                 ", called=" + called +
-                ", written=" + written +
                 ", user='" + user + '\'' +
                 '}';
-    }
-
-    public boolean isWritten() {
-        return written;
-    }
-
-    public void setWritten(boolean written) {
-        this.written = written;
     }
 
     public int getOrder_num() {
@@ -61,11 +43,11 @@ public class Order {
         this.order_num = order_num;
     }
 
-    public List<HashMap<String, Object>> getOrder_list() {
+    public List<Map<String, Object>> getOrder_list() {
         return order_list;
     }
 
-    public void setOrder_list(List<HashMap<String, Object>> order_list) {
+    public void setOrder_list(List<Map<String, Object>> order_list) {
         this.order_list = order_list;
     }
 

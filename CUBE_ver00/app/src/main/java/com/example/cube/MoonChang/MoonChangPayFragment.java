@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,9 +60,12 @@ public class MoonChangPayFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_pay, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.paymenulist);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
+        //리니어레이아웃-->그리드레이아웃으로 바꿨습니다
+        //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
+        int numCol=2;
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(view.getContext(),numCol);
+        //recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
         //db추가부분 + 어댑터
         helper = new DBHelper(getContext(), "MC_MENU.db", null, 1);
         db = helper.getWritableDatabase();

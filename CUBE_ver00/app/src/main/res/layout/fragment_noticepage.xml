@@ -10,15 +10,19 @@
         android:id="@+id/board_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:theme="@style/AppTheme.PopupOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/board_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
-            app:title="공지사항"
-            app:titleTextColor="#000000" />
+            android:background="@color/orange"
+            app:title=" 공지사항"
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            android:layout_gravity="center"
+            android:gravity="center"
+            app:titleTextColor="@color/bamcolor" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

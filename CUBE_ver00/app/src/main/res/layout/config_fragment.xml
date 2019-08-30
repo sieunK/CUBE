@@ -7,27 +7,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/logback"
     >
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/config_toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:background="@color/strongorange"
         android:theme="@style/AppTheme.PopupOverlay">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/config_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
-            app:title="설  정"
-            app:titleTextColor="#000000" />
-
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/config_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/strongorange"
+        app:title="설정"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        android:layout_gravity="center"
+        android:gravity="center"
+        app:titleTextColor="#FFFFFF" />
     </com.google.android.material.appbar.AppBarLayout>
+
+
     <ListView
         android:id="@+id/config_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
+        android:background="@color/whitecolor"
         >
 
     </ListView>

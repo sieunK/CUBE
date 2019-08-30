@@ -32,7 +32,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -129,7 +128,7 @@ public class ShowSalesStatusActivity extends AppCompatActivity implements View.O
                                 //데이터 불러오기
                                 Order order = dc.toObject(Order.class);
 
-                                List<HashMap<String, Object>> OrderList = order.getOrder_list();
+                                List<Map<String, Object>> OrderList = order.getOrder_list();
 
                                 for (Map<String, Object> _map : OrderList) {
                                     sellDay += (long) (_map.get("num")) * (long) (_map.get("price"));
@@ -259,7 +258,7 @@ public class ShowSalesStatusActivity extends AppCompatActivity implements View.O
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot dc : task.getResult()) {
                                     Order order = dc.toObject(Order.class);
-                                    List<HashMap<String, Object>> orderList = order.getOrder_list();
+                                    List<Map<String, Object>> orderList = order.getOrder_list();
                                     for (Map<String, Object> _map : orderList) {
                                         sellDay += (long) (_map.get("num")) * (long) (_map.get("price"));
                                         int i;

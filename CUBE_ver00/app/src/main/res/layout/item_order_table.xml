@@ -27,7 +27,8 @@
             android:layout_alignBottom="@+id/order_item_num"
             android:layout_toRightOf="@+id/order_item_num"
             android:layout_marginLeft="12dp"
-           />
+            android:button="@drawable/check_button_bam"
+            />
 
         <TextView
             android:id="@+id/order_item_num"
@@ -43,8 +44,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/order_item_num"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_family"
+            android:textColor="@color/bamcolor"
             android:text="주문내용"
-            android:textSize="12sp"
+            android:textSize="16dp"
             android:maxLines="2"
             android:ellipsize="end"/>
 
@@ -58,7 +61,7 @@
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:text="대기"
-            android:textSize="18sp"
+            android:textSize="18dp"
             android:textStyle="bold" />
 
         <ImageView
@@ -77,6 +80,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/order_item_list"
+            android:textColor="@color/bamcolor"
+            android:textSize="14dp"
+            android:fontFamily="@font/font_family"
             android:layout_marginTop="10dp"/>
 
         <TextView
@@ -85,6 +91,9 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/order_item_total_price"
             android:layout_alignParentRight="true"
+            android:textColor="@color/bamcolor"
+            android:textSize="14dp"
+            android:fontFamily="@font/font_family"
             android:text="시 분 초"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

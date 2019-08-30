@@ -51,10 +51,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
     private DocumentReference DocumentRef;
     private CurrentApplication ca;
 
-    public ReviewAdapter(Context context, Query query, CurrentApplication ca) {
+    public ReviewAdapter(Context context, Query query) {
         super();
         this.mContext = context;
-        this.ca = ca;
+        ca = (CurrentApplication)(mContext.getApplicationContext());
         ReviewParents = new ArrayList<>();
         EventListener childEventListener = new EventListener<QuerySnapshot>() {
             @Override
@@ -135,7 +135,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
         private ImageView writeComment;
         private ImageView rotatedArrow;
         private ImageView userImage;
-        private ImageView deleteBtn;
 
         private TextView userID;
         private TextView time;
@@ -155,8 +154,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
             writeComment.setOnClickListener(this);
             rotatedArrow = (ImageView) v.findViewById(R.id.image_rotated_arrow);
             userImage = (ImageView) v.findViewById(R.id.review_user_image);
-            deleteBtn = v.findViewById(R.id.delete_review);
+
             userID = (TextView) v.findViewById(R.id.review_userID);
+            userImage = (ImageView) v.findViewById(R.id.review_user_image);
             time = (TextView) v.findViewById(R.id.review_time);
             reviewImage = (ImageView)v.findViewById(R.id.review_image);
             review = (TextView) v.findViewById(R.id.review_main);
@@ -230,8 +230,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
         // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
         ReviewParent data = ReviewParents.get(position);
 
-
-
         holder.review.setText(data.getReview());
         holder.userID.setText(data.getUser());
         holder.ratingBar.setRating(data.getRating());
@@ -240,12 +238,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
         String commentTime = timeGapCheck(data.getCommentDate());
         holder.commentDate.setText(commentTime);
         String reviewImageStr = data.getPhoto();
-        /* 관리자가 아니면 코멘트쓰기 버튼 숨김 */
-        if(!ca.isAdmin()) {
-            //    Toast.makeText(mContext,"관리자아님",Toast.LENGTH_SHORT).show();
-            holder.deleteBtn.setVisibility(View.GONE);
-            holder.writeComment.setVisibility(View.GONE);
-        }
+
 
         /* 리뷰사진이 없을때와 있을때 구분 */
         if (reviewImageStr.equals("null")) {
@@ -276,7 +269,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
             holder. userImage.setImageBitmap(decodedBitmap);
         }
 
-
+        /* 관리자가 아니면 코멘트쓰기 버튼 숨김 */
+        if(!ca.isAdmin()) {
+            //Toast.makeText(mContext,"관리자아님",Toast.LENGTH_SHORT).show();
+            holder.writeComment.setVisibility(View.INVISIBLE);
+        }
     }
 
 

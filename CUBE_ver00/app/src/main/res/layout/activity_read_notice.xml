@@ -10,15 +10,19 @@
         android:id="@+id/read_notice_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/strongorange"
         android:theme="@style/AppTheme.PopupOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/read_notice_toolbar"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/white"
+            android:background="@color/strongorange"
             app:title="공지사항"
-            app:titleTextColor="#000000" />
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            android:layout_gravity="center"
+            android:gravity="center"
+            app:titleTextColor="#FFFFFF" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -161,8 +165,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.05"
+                android:textSize="20dp"
                 android:background="@color/strongorange"
                 android:text="Post"
+                android:fontFamily="@font/font_family"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

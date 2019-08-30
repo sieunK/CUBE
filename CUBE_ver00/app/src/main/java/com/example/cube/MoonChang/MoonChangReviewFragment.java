@@ -32,7 +32,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class MoonChangReviewFragment extends Fragment {
+public class MoonChangReviewFragment extends Fragment implements View.OnClickListener{
 
     FirebaseFirestore mStore;
     CurrentApplication currentUserInfo;
@@ -41,6 +41,7 @@ public class MoonChangReviewFragment extends Fragment {
     RecyclerView recyclerView;
     ReviewAdapter adapter;
 
+    FloatingActionButton writeReview;
 
     public MoonChangReviewFragment() { }
 
@@ -64,6 +65,8 @@ public class MoonChangReviewFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), 1));
 
+        writeReview = (FloatingActionButton) view.findViewById(R.id.review_write);
+        writeReview.setOnClickListener(this);
 //        writeReview.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -115,7 +118,7 @@ public class MoonChangReviewFragment extends Fragment {
                     Log.d("Data Inserted  ", data.getComment());
                     reviewList.add(data);
                 }
-                adapter = new ReviewAdapter(getActivity(), reviewQuery, currentUserInfo);
+                adapter = new ReviewAdapter(getActivity(), reviewQuery);
                 adapter.setHasStableIds(true);
                 recyclerView.setAdapter(adapter);
             }
@@ -142,7 +145,7 @@ public class MoonChangReviewFragment extends Fragment {
 
 
 
-/*
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -166,7 +169,7 @@ public class MoonChangReviewFragment extends Fragment {
                 });
                 break;
         }
-    }*/
+    }
 
 //    //리스트 초기화 함수
 //    public void setListItems() {

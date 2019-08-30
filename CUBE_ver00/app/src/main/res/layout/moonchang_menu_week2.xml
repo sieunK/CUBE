@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/whitecolor"
 
     >
 
@@ -57,10 +58,14 @@
                     android:textColor="@color/strongorange"
                     android:textStyle="bold" />
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="30dp"
-                    android:layout_marginLeft="150dp"
+                    android:layout_gravity="right"
                     android:background="@drawable/ic_blank_orange"
                     android:fontFamily="@font/bmjua_ttf"
                     android:gravity="center"
@@ -325,11 +330,15 @@
                     android:text="8/6"
                     android:textColor="@color/strongorange"
                     android:textStyle="bold" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="30dp"
-                    android:layout_marginLeft="150dp"
+                    android:layout_gravity="right"
                     android:background="@drawable/ic_blank_orange"
                     android:fontFamily="@font/bmjua_ttf"
                     android:gravity="center"
@@ -592,11 +601,15 @@
                     android:text="8/7"
                     android:textColor="@color/strongorange"
                     android:textStyle="bold" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="30dp"
-                    android:layout_marginLeft="150dp"
+                    android:layout_gravity="right"
                     android:background="@drawable/ic_blank_orange"
                     android:fontFamily="@font/bmjua_ttf"
                     android:gravity="center"
@@ -859,11 +872,15 @@
                     android:text="8/8"
                     android:textColor="@color/strongorange"
                     android:textStyle="bold" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="30dp"
-                    android:layout_marginLeft="150dp"
+                    android:layout_gravity="right"
                     android:background="@drawable/ic_blank_orange"
                     android:fontFamily="@font/bmjua_ttf"
                     android:gravity="center"
@@ -1126,11 +1143,15 @@
                     android:text="8/9"
                     android:textColor="@color/strongorange"
                     android:textStyle="bold" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
 
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="30dp"
-                    android:layout_marginLeft="150dp"
+                    android:layout_gravity="right"
                     android:background="@drawable/ic_blank_orange"
                     android:fontFamily="@font/bmjua_ttf"
                     android:gravity="center"

@@ -41,7 +41,7 @@ public class ConfigFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         mListView = (ListView) view.findViewById(R.id.config_view);
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, MENU);
+        ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.admin_settinglist_item, MENU);
         mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -50,22 +50,22 @@ public class ConfigFragment extends Fragment {
                 switch (position){
 
                     case 0: {
-                        Toast.makeText(getActivity(), "메뉴 설정 페이지입니다" ,Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity().getApplicationContext(), MenuConfigActivity.class));
+                        Toast.makeText(getActivity().getApplicationContext(), "메뉴 설정 페이지입니다" ,Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(), MenuConfigActivity.class));
                         break;
                     }
                     case 1:{
-                        Toast.makeText(getActivity(), "광고 설정 페이지입니다" ,Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity().getApplicationContext(), AdConfigActivity.class));
+                        Toast.makeText(getActivity().getApplicationContext(), "광고 설정 페이지입니다" ,Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(), AdConfigActivity.class));
                         break;                    }
                     case 2:{
-                        Toast.makeText(getActivity(), "앱 기본 설정 페이지입니다" ,Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity().getApplicationContext(), AppConfigActivity.class));
+                        Toast.makeText(getActivity().getApplicationContext(), "앱 기본 설정 페이지입니다" ,Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(), AppConfigActivity.class));
                         break;                    }
                     case 3:{
                         mAuth.signOut();
-                        Toast.makeText(getActivity(), "로그아웃되었습니다." ,Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
+                        Toast.makeText(getActivity().getApplicationContext(), "로그아웃되었습니다." ,Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
                         getActivity().finish();
                         break;
                     }

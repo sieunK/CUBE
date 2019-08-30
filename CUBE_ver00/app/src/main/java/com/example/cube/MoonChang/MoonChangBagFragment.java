@@ -21,14 +21,14 @@ import android.widget.Toast;
 import java.util.Date;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.FragmentActivity;
 
-import com.example.cube.Components.Order;
 import com.example.cube.CurrentApplication;
 import com.example.cube.DBHelper;
-import com.example.cube.DefaultActivity;
 import com.example.cube.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,7 +41,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -54,14 +53,13 @@ public class MoonChangBagFragment extends Fragment {
 
     private FirebaseFirestore mStore;
     private FirebaseAuth mAuth;
-    private DocumentReference MoonChangRef;
 
     private CurrentApplication currentUserInfo;
     private String userNickname;
 
     private long currentOrderNum;
 
-    private List<HashMap<String, Object>> selectedFoodList;
+    private ArrayList<HashMap<String, Object>> selectedFoodList;
     long pricesum = 0;
 
 
@@ -90,7 +88,7 @@ public class MoonChangBagFragment extends Fragment {
         userNickname = currentUserInfo.getNickname();
 
         // '문창' 문서 레퍼런스
-        MoonChangRef = mStore.collection("foodcourt").document("moonchang");
+        DocumentReference MoonChangRef = mStore.collection("foodcourt").document("moonchang");
 
         // 이번에 주문 넣을 시 들어갈 주문번호 가져옴
         MoonChangRef.get()
@@ -172,9 +170,6 @@ public class MoonChangBagFragment extends Fragment {
                     return;
                 }
 
-                MoonChangRef
-                        .update("order_num", currentOrderNum + 1);
-
                 // 주문 문서로 넣을 Map
                 Map<String, Object> order = new HashMap<>();
 
@@ -186,17 +181,9 @@ public class MoonChangBagFragment extends Fragment {
 
                 order.put("order_time", new Date());    // 주문 시간
                 order.put("standby", true);          // 대기 여부
+
                 order.put("user", userNickname);        // 사용자
-                order.put("written",false);
 
-
-//                Log.d("USER", order.get("user").toString());
-//                Log.d("LIST", order.get("order_list").toString());
-//                Log.d("NUM", order.get("order_num")));
-//                Log.d("TIME", order.getOrder_time().toString());
-//                Log.d("CAL", Boolean.toString(order.isCalled()));
-                Toast.makeText(getContext(), Boolean.toString((boolean) order.get("written")),Toast.LENGTH_SHORT).show();
-//                Log.d("STNDB", Boolean.toString(order.isStandby()));
 
                 mStore.collection("foodcourt/moonchang/order").add(order).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -226,9 +213,9 @@ public class MoonChangBagFragment extends Fragment {
 
     // 장바구니 리스트뷰 어댑터
     public class BagAdapter extends BaseAdapter {
-        private List<HashMap<String, Object>> bagList;
+        private ArrayList<HashMap<String, Object>> bagList;
 
-        public BagAdapter(List<HashMap<String, Object>> bagList) {
+        public BagAdapter(ArrayList<HashMap<String, Object>> bagList) {
             this.bagList = bagList;
         }
 

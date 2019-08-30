@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/signupback"
     tools:context=".Opening.SignUpActivity">
 
     <LinearLayout
@@ -13,112 +14,216 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="User Registration"
-            android:layout_gravity="center_horizontal"/>
-
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:hint="Enter your email"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:hint="Enter your password at least 6 charters"
-            android:inputType="textPassword" />
-
-        <EditText
-            android:id="@+id/passwordCheck"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:hint="Check your password"
-            android:inputType="textPassword" />
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="@font/font_family"
+            android:gravity="center_horizontal"
+            android:textColor="#FFA500"
+            android:textSize="40dp"
+            android:layout_gravity="center_horizontal"
+            android:text="회원 가입"/>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <EditText
-                android:id="@+id/nickName"
-                android:layout_width="200dp"
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_tawon"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
+                android:fontFamily="@font/font_family"
+                android:textColor="#FFA500"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:text="이메일"/>
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp"
-                android:hint="Enter Your Nickname"
-                android:inputType="textPersonName" />
+                android:layout_gravity="center_vertical"
+                android:hint="이메일을 입력해 주세요"
+                android:textSize="17dp"
+                android:fontFamily="@font/font_family"
+                android:inputType="textEmailAddress" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/ic_tawon">
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_family"
+                android:textColor="#FFA500"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:text="비밀번호"/>
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center_vertical"
+                android:hint="비밀번호를 입력해 주세요(6자 이상)"
+                android:textSize="17dp"
+                android:fontFamily="@font/font_family"
+                android:inputType="textPassword" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_tawon"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="5dp">
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_family"
+                android:gravity="center_horizontal"
+                android:textColor="#FFA500"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:text="비밀번호 확인"/>
+
+            <EditText
+                android:id="@+id/passwordCheck"
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="center_vertical"
+                android:hint="비밀번호를 재입력 해주세요"
+                android:textSize="17dp"
+                android:fontFamily="@font/font_family"
+                android:inputType="textPassword" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_tawon"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="5dp">
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_family"
+                    android:gravity="center_horizontal"
+                    android:textColor="#FFA500"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="닉네임"/>
+
+                <EditText
+                    android:id="@+id/nickName"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:hint="닉네임을 입력해주세요"
+                    android:textSize="17dp"
+                    android:fontFamily="@font/font_family"
+                    android:inputType="textPersonName" />
+
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/buttonCheckDuplicate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:layout_marginTop="23dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/btn_jungbok"
                 android:enabled="false"
-                android:text="Duplicate Check" />
+                android:fontFamily="@font/font_family"
+                android:text="중복확인"
+                android:textSize="17dp"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
+
 
         <Button
             android:id="@+id/buttonVerification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="380dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
             android:enabled="false"
-            android:text="Send Verification Email" />
+            android:fontFamily="@font/font_family"
+            android:background="@drawable/ic_longorangebutton"
+            android:backgroundTint="@color/strongorange"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:text="인증 이메일 전송하기" />
 
         <Button
             android:id="@+id/buttonRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="380dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
             android:enabled="false"
-            android:text="User Register" />
+            android:fontFamily="@font/font_family"
+            android:background="@drawable/ic_longorangebutton"
+            android:backgroundTint="@color/strongorange"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:text="회원가입하기" />
 
         <TextView
             android:id="@+id/alredyRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Already Registered? Sign in here"
+            android:text="이미 가입되어 있다면 로그인하기"
+            android:onClick="onClick"
+            android:fontFamily="@font/font_family"
+            android:textColor="#FFA500"
+            android:layout_marginTop="25dp"
+            android:textSize="17dp"
+            android:layout_gravity="center_horizontal"
             android:textAlignment="center" />
     </LinearLayout>
 </RelativeLayout>

@@ -16,8 +16,8 @@
             android:textSize="20sp"
             android:gravity="center"
             android:fontFamily="@font/bmjua_ttf"
-            android:textColor="@color/bamcolor"
-            android:background="@color/strongorange"
+            android:textColor="@color/whitecolor"
+            android:background="@drawable/ic_longorangebutton"
             android:layout_width="match_parent"
             android:layout_height="40dp" />
     </LinearLayout>
@@ -34,8 +34,8 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bmjua_ttf"
-            android:textColor="@color/bamcolor"
-            android:textSize="16sp"
+            android:textColor="@color/strongorange"
+            android:textSize="16dp"
             android:hint="PASSWORD"
             />
     </LinearLayout>
@@ -48,10 +48,11 @@
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/delete_post_button"
-            android:text="삭제"
+            android:text="삭제하기"
+            android:textSize="17dp"
             android:fontFamily="@font/bmjua_ttf"
-            android:textColor="@color/bamcolor"
-            android:textStyle="bold"
+            android:textColor="@color/strongorange"
+            android:background="@drawable/ic_blank_orange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />

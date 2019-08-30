@@ -5,9 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
-import android.os.PowerManager;
 import android.util.Log;
-import android.view.WindowManager;
 
 import androidx.core.app.NotificationCompat;
 
@@ -35,10 +33,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 notificationChannel.setDescription("FCMtest");
                 notificationManager.createNotificationChannel(notificationChannel);
             }
-            PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE );
-            PowerManager.WakeLock wakeLock = pm.newWakeLock( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                    | PowerManager.ACQUIRE_CAUSES_WAKEUP,  "AppName:tag" );
-            wakeLock.acquire(3000);
 
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getApplicationContext(),"channel_id")
                     .setSmallIcon(R.drawable.ic_logo) // 알림 영역에 노출 될 아이콘.

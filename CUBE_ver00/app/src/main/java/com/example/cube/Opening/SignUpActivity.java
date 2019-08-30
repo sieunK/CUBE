@@ -136,12 +136,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 String checkPassword = editTextPasswordCheck.getText().toString().trim();
 
                 if(TextUtils.isEmpty(email)) {
-                    Toast.makeText(SignUpActivity.this,"Please enter email",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Please enter email",Toast.LENGTH_SHORT).show();
                     return ;
                 }
 
                 if(TextUtils.isEmpty(password)) {
-                    Toast.makeText(SignUpActivity.this,"Please enter password",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Please enter password",Toast.LENGTH_SHORT).show();
                     return ;
                 }
                 buttonCheckDuplicate.setEnabled(password.equals(checkPassword));
@@ -168,10 +168,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()) {
-                                                Toast.makeText(SignUpActivity.this, "Successfully Send a Email!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "Successfully Send a Email!", Toast.LENGTH_SHORT).show();
                                                 buttonRegister.setEnabled(task.isSuccessful());
                                             } else {
-                                                Toast.makeText(SignUpActivity.this, "Fail to Send a Email!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "Fail to Send a Email!", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
@@ -183,7 +183,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                    if(task.isSuccessful()) {
                                        firebaseUser = firebaseAuth.getCurrentUser();
                                        if(firebaseUser != null) {
-                                           Toast.makeText(SignUpActivity.this, "check your email", Toast.LENGTH_LONG).show();
+                                           Toast.makeText(getApplicationContext(), "check your email", Toast.LENGTH_LONG).show();
                                            buttonRegister.setEnabled(task.isSuccessful());
                                        }
                                    }
@@ -226,12 +226,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(SignUpActivity.this, "Fail to register", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), "Fail to register", Toast.LENGTH_LONG).show();
                                     }
                                 });
                     }
                     else {
-                        Toast.makeText(SignUpActivity.this,"Please Check Your Email",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Please Check Your Email",Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -247,14 +247,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     if(task.isSuccessful()) {
                         if(task.getResult().isEmpty()) {
                             if(userName.isEmpty())
-                                Toast.makeText(SignUpActivity.this,"Please fill the blank",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),"Please fill the blank",Toast.LENGTH_LONG).show();
                             else {
                                 buttonVerification.setEnabled(true);
-                                Toast.makeText(SignUpActivity.this, "You can use this nickname", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "You can use this nickname", Toast.LENGTH_LONG).show();
                             }
                         }
                         else {
-                            Toast.makeText(SignUpActivity.this,"Find same nick name",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"Find same nick name",Toast.LENGTH_LONG).show();
                         }
                     }
                 }

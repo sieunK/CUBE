@@ -14,7 +14,6 @@ import com.example.cube.Components.Order;
 import com.example.cube.R;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +49,7 @@ public class OrderDetailDialogFragment extends DialogFragment {
 
         OrderNumText.setText(Integer.toString(order.getOrder_num()));
 
-        List<HashMap<String, Object>> orderedList = order.getOrder_list();
+        List<Map<String, Object>> orderedList = order.getOrder_list();
 
         String orderDetailStr = "";
         int total_Price = 0;
