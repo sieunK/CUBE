@@ -46,6 +46,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -300,7 +301,7 @@ public class MyInformation extends Fragment {
                 orderInfoStr += (data.getOrder_num() + " / 문창 / ");
                 orderInfoStr += simpleDateFormat.format(data.getOrder_time());
 
-                List<Map<String, Object>> orderedList = data.getOrder_list();
+                List<HashMap<String, Object>> orderedList = data.getOrder_list();
                 String orderDetailStr = "";
                 Map<String, Object> _map = orderedList.get(0);
                 orderDetailStr += (_map.get("name") + "X" + _map.get("num") + "외" + (orderedList.size()-1)+"개");

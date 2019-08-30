@@ -30,7 +30,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class AdminReviewFragment extends Fragment implements View.OnClickListener{
+public class AdminReviewFragment extends Fragment{
 
     FirebaseFirestore mStore;
     CurrentApplication currentUserInfo;
@@ -38,7 +38,6 @@ public class AdminReviewFragment extends Fragment implements View.OnClickListene
     RecyclerView recyclerView;
     ReviewAdapter adapter;
     ArrayList<ReviewParent> reviewList; //부모 리스트
-    FloatingActionButton writeReview;
 
     public AdminReviewFragment() { }
 
@@ -73,7 +72,7 @@ public class AdminReviewFragment extends Fragment implements View.OnClickListene
                     ReviewParent data = dc.getDocument().toObject(ReviewParent.class);
                     reviewList.add(data);
                 }
-                adapter = new ReviewAdapter(getContext().getApplicationContext(), reviewQuery);
+                adapter = new ReviewAdapter(getActivity(), reviewQuery, currentUserInfo);
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -95,8 +94,7 @@ public class AdminReviewFragment extends Fragment implements View.OnClickListene
             }
         });
 
-        writeReview = (FloatingActionButton) view.findViewById(R.id.review_write);
-        writeReview.setOnClickListener(this);
+        //        writeReview.setOnClickListener(this);
 //        writeReview.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -140,6 +138,7 @@ public class AdminReviewFragment extends Fragment implements View.OnClickListene
         return view;
     }
 
+/*
 
     @Override
     public void onClick(View v) {
@@ -165,6 +164,7 @@ public class AdminReviewFragment extends Fragment implements View.OnClickListene
                 break;
         }
     }
+*/
 
     //리스트 초기화 함수
     public void setListItems() {

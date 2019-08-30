@@ -44,14 +44,19 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
     CurrentApplication currentApplication;
 
     // adapter에 들어갈 list 입니다.
-    private ArrayList<Order> listData = new ArrayList<>();
+    private ArrayList<Order> listData ;
+    private ArrayList<String> DocIDs;
     private Context mContext;
     private FragmentManager fm;
+    private  FirebaseFirestore db;
 
-    public OrderedListAdapter(ArrayList<Order> orderList, FragmentManager fragmentManager, Context context){
+    public OrderedListAdapter(ArrayList<Order> orderList, ArrayList<String> docIDList,
+                              FragmentManager fragmentManager, Context context){
         listData = orderList;
+        DocIDs = docIDList;
         fm = fragmentManager;
         mContext = context;
+        db= FirebaseFirestore.getInstance();
     }
 
 
@@ -93,7 +98,7 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
 
             orderDate.setText(simpleDateFormat.format(data.getOrder_time()));
 
-            List<Map<String, Object>> orderedList = data.getOrder_list();
+            List<HashMap<String, Object>> orderedList = data.getOrder_list();
             String orderDetailStr = "";
             Map<String, Object> _map = orderedList.get(0);
                 orderDetailStr += (_map.get("name") + "X" + _map.get("num") + "외" + (orderedList.size()-1)+"개");
@@ -122,9 +127,8 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
                     dialog.setDialogResult(new WriteReviewPopUp.OnMyDialogResult() {
                         @Override
                         public void finish(Bundle result) {
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
                             SharedPreferences sf = mContext.getSharedPreferences("profileImage", Context.MODE_PRIVATE);
-
+                            final String orderDocID = DocIDs.get(pos);
                             String username = currentApplication.getNickname();
                             String review = result.getString("review");
                             Float rating = result.getFloat("rating");
@@ -157,7 +161,8 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(v.getContext(),"성공적으로 올려짐.",Toast.LENGTH_SHORT).show();
-                                            writeReview.setVisibility(View.INVISIBLE);
+                                            db.collection("foodcourt/moonchang/order")
+                                                .document(orderDocID).delete();
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override

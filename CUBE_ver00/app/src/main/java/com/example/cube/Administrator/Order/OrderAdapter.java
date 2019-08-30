@@ -23,6 +23,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -144,7 +145,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         //int total_Price = 0;
 
         Log.d("data", Integer.toString(data.getOrder_list().size()));
-        List<Map<String, Object>> orderList = data.getOrder_list();
+        List<HashMap<String, Object>> orderList = data.getOrder_list();
         for (Map<String, Object> _map : orderList) {
             orderList_String += (_map.get("name") + " " + _map.get("num") + "\n");
             //    total_Price += (long) (_map.get("price")) * (long) (_map.get("num"));

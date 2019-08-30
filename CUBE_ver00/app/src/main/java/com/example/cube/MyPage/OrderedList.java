@@ -20,6 +20,7 @@ import com.example.cube.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 
 public class OrderedList extends Fragment {
     private ArrayList<Order> orderList;
+    private ArrayList<String> orderIDs;
     private OrderedListAdapter adapter;
     private FirebaseFirestore mStore;
     private RecyclerView recyclerView;
@@ -52,7 +54,10 @@ public class OrderedList extends Fragment {
         String UserNickName = currentUserInfo.getNickname();
 
         orderList = new ArrayList<>();
+        orderIDs = new ArrayList<>();
         mStore.collection("foodcourt/moonchang/order").whereEqualTo("user", UserNickName)
+                .whereEqualTo("written", false)
+                .orderBy("order_time", Query.Direction.DESCENDING)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -60,9 +65,10 @@ public class OrderedList extends Fragment {
                     for(QueryDocumentSnapshot ds : task.getResult()){
                         Order order = ds.toObject(Order.class);
                         orderList.add(order);
+                        orderIDs.add(ds.getId());
                     }
                     FragmentManager fm = getFragmentManager();
-                    adapter = new OrderedListAdapter(orderList, fm,getActivity());
+                    adapter = new OrderedListAdapter(orderList, orderIDs, fm,getActivity());
                     recyclerView.setAdapter(adapter);
                 }
                 else{

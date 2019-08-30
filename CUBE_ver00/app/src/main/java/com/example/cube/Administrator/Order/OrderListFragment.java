@@ -53,6 +53,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -268,7 +269,7 @@ public class OrderListFragment extends Fragment {
         String orderList_String = "";
         int totalPrice = 0;
 
-        List<Map<String, Object>> orderList = order.getOrder_list();
+        List<HashMap<String, Object>> orderList = order.getOrder_list();
         for (Map<String, Object> _map : orderList) {
             orderList_String += (_map.get("name") + " " + _map.get("num") + "\t\t" + _map.get("price") + "원\n");
             totalPrice += (long) (_map.get("price")) * (long) (_map.get("num"));
