@@ -3,6 +3,7 @@ package com.example.cube.Setting;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.os.IBinder;
 import androidx.core.app.NotificationCompat;
 
 import com.example.cube.DBHelper;
+import com.example.cube.Opening.MainActivity;
 import com.example.cube.R;
 
 public class MenuAlarmService extends Service {
@@ -68,18 +70,51 @@ public class MenuAlarmService extends Service {
             db = helper.getWritableDatabase();
             Cursor cursor = db.rawQuery(" SELECT NAME FROM MC_MENU ",null);
             String mc_list = "";
+            int iii=0;
             if(MC) {
                 while( cursor.moveToNext()) {
                     mc_list += cursor.getString(0);
-                    mc_list += ",";
+                    if(iii<2) {
+                        mc_list += "\t";
+                        ++iii;
+                    } else {
+                        mc_list += "\n";
+                        iii=0;
+                    }
                 }
             }
 
-            String result = mc_list.substring(0,mc_list.lastIndexOf(","));
 
-            NotificationCompat.Builder builder;
+//            NotificationCompat.Builder builder;
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//                NotificationChannel notificationChannel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_DEFAULT);
+//                notificationChannel.setDescription("channel description");
+//                notificationChannel.enableLights(true);
+//                notificationChannel.setLightColor(Color.GREEN);
+//                notificationChannel.enableVibration(true);
+//                notificationChannel.setVibrationPattern(new long[]{100, 200, 100, 200});
+//                notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+//                notificationManager.createNotificationChannel(notificationChannel);
+//                builder = new NotificationCompat.Builder(getApplicationContext(), notificationChannel.getId());
+//
+//            } else {
+//                builder = new NotificationCompat.Builder(getApplicationContext());
+//            }
+//            builder.setAutoCancel(true);
+//            builder.setSmallIcon(R.drawable.ic_notifications_black_24dp);
+//            if(MC) {
+//                builder.setContentTitle("문창회관 메뉴");
+//                builder.setContentText(result);
+//                builder.setStyle(new Notification.BigTextStyle().bigText(result));
+//                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//                notificationManager.notify(0, builder.build());
+//            }
+
+            android.app.Notification.Builder builder;
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 NotificationChannel notificationChannel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_DEFAULT);
                 notificationChannel.setDescription("channel description");
                 notificationChannel.enableLights(true);
@@ -88,20 +123,27 @@ public class MenuAlarmService extends Service {
                 notificationChannel.setVibrationPattern(new long[]{100, 200, 100, 200});
                 notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
                 notificationManager.createNotificationChannel(notificationChannel);
-                builder = new NotificationCompat.Builder(getApplicationContext(), notificationChannel.getId());
+                builder = new android.app.Notification.Builder(getApplicationContext(), notificationChannel.getId());
 
             } else {
-                builder = new NotificationCompat.Builder(getApplicationContext());
+                builder = new android.app.Notification.Builder(getApplicationContext());
             }
-            builder.setAutoCancel(true);
-            builder.setSmallIcon(R.drawable.ic_notifications_black_24dp);
-            if(MC) {
-                builder.setContentTitle("문창회관 메뉴");
-                builder.setContentText(result);
-                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                notificationManager.notify(0, builder.build());
-            }
+            builder.setContentTitle("식단 알림")
+                    .setContentText("문창회관 메뉴")
+                    .setSmallIcon(R.drawable.ic_logo).setAutoCancel(true)
+                    .setPriority(Notification.PRIORITY_HIGH);
+            Notification notification = new Notification.BigTextStyle(builder)
+                    .bigText(mc_list).build();
 
+            notificationManager.notify(0, notification);
         }
     };
+    public NotificationManager getNotificationManager() {
+        return (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    }
+
+    public PendingIntent getPendingIntent() {
+        return PendingIntent.getActivity(this, 0, new Intent(this,
+                MainActivity.class), 0);
+    }
 }

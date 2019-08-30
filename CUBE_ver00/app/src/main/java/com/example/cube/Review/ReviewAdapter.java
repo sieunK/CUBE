@@ -238,7 +238,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
         String commentTime = timeGapCheck(data.getCommentDate());
         holder.commentDate.setText(commentTime);
         String reviewImageStr = data.getPhoto();
-
+        /* 관리자가 아니면 코멘트쓰기 버튼 숨김 */
+        if(!ca.isAdmin()) {
+            //Toast.makeText(mContext,"관리자아님",Toast.LENGTH_SHORT).show();
+            holder.writeComment.setVisibility(View.INVISIBLE);
 
         /* 리뷰사진이 없을때와 있을때 구분 */
         if (reviewImageStr.equals("null")) {
@@ -269,12 +272,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
             holder. userImage.setImageBitmap(decodedBitmap);
         }
 
-        /* 관리자가 아니면 코멘트쓰기 버튼 숨김 */
-        if(!ca.isAdmin()) {
-            //Toast.makeText(mContext,"관리자아님",Toast.LENGTH_SHORT).show();
-            holder.writeComment.setVisibility(View.INVISIBLE);
-        }
+
     }
+}
 
 
     @Override

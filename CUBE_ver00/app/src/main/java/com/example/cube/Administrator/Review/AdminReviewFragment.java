@@ -59,6 +59,7 @@ public class AdminReviewFragment extends Fragment implements View.OnClickListene
 
         String collectionPath = "foodcourt/moonchang/review";
         final Query reviewQuery = mStore.collection(collectionPath).orderBy("date", Query.Direction.DESCENDING);
+        final Query reviewQuery = mStore.collection(collectionPath).orderBy("date", Query.Direction.ASCENDING);
 
         reviewList = new ArrayList<>();
         recyclerView = (RecyclerView) view.findViewById(R.id.view_reviewList);
