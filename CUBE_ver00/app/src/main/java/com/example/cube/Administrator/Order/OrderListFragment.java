@@ -43,8 +43,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
+
 
 import org.json.JSONObject;
 
@@ -65,8 +64,7 @@ public class OrderListFragment extends Fragment {
 
     private static final String FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send";
     private static final String SERVER_KEY
-            = "AAAAvvzO9hU:APA91bFQcNh5jlRTJkH6Yk3Vy8YG0pEB_2Al1s3qv8hqI0e3GTwa032nJhpmS0Y45TFxgQYN_uWCS6shUe5oLSo6yhtonYlAvylOU3lMGdJ9l-uaYQM2HprfFdR7GoqD3oR-ji48h3LQ";
-
+            ="AAAAvvzO9hU:APA91bFQcNh5jlRTJkH6Yk3Vy8YG0pEB_2Al1s3qv8hqI0e3GTwa032nJhpmS0Y45TFxgQYN_uWCS6shUe5oLSo6yhtonYlAvylOU3lMGdJ9l-uaYQM2HprfFdR7GoqD3oR-ji48h3LQ";
     private FirebaseFirestore mStore;
     private Query setQuery;
     private CollectionReference collectionRef;
