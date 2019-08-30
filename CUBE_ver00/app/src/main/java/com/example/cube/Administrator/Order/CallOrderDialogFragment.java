@@ -25,7 +25,6 @@ public class CallOrderDialogFragment extends DialogFragment implements View.OnCl
     private TextView callText;
     private TextView callState;
     private TextView callPrice;
-    private TextView callTime;
     private Button callBtn;
 
     private static String nick_name;
@@ -64,7 +63,6 @@ public class CallOrderDialogFragment extends DialogFragment implements View.OnCl
         callWho = v.findViewById(R.id.call_order_who);
         callState = v.findViewById(R.id.call_order_state);
         callPrice = v.findViewById(R.id.call_order_price);
-        callTime = v.findViewById(R.id.call_order_time);
         String msg =  order_list;
 
         callNum.setText(Integer.toString(order_Num));

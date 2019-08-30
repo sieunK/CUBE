@@ -46,6 +46,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import org.json.JSONObject;
+
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,6 +62,10 @@ public class OrderListFragment extends Fragment {
     @Nullable
     private Bundle savedInstanceState;
     private String TAG = "OrderListFragment";
+
+    private static final String FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send";
+    private static final String SERVER_KEY
+            = "AAAAvvzO9hU:APA91bFQcNh5jlRTJkH6Yk3Vy8YG0pEB_2Al1s3qv8hqI0e3GTwa032nJhpmS0Y45TFxgQYN_uWCS6shUe5oLSo6yhtonYlAvylOU3lMGdJ9l-uaYQM2HprfFdR7GoqD3oR-ji48h3LQ";
 
     private FirebaseFirestore mStore;
     private Query setQuery;
@@ -92,7 +101,7 @@ public class OrderListFragment extends Fragment {
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.order_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-      //  setHasOptionsMenu(true);
+        //  setHasOptionsMenu(true);
 
         selectAll = (CheckBox) view.findViewById(R.id.order_all_checkbox);
         goYesterday = view.findViewById(R.id.order_date_picker_yesterday);
@@ -255,6 +264,8 @@ public class OrderListFragment extends Fragment {
     }
 
     private void callOrder(Order order, String orderId, final int pos) {
+
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY년 MM월 dd일 (E)");
         String orderList_String = "";
         int totalPrice = 0;
@@ -266,52 +277,58 @@ public class OrderListFragment extends Fragment {
 
         }
 
-        final String nickName = order.getUser();
-        final int orderNum = order.getOrder_num();
-        final String orderID = orderId;
-        final String orderTime = simpleDateFormat.format(order.getOrder_time());
-        final boolean orderStandby = order.isStandby();
-        final boolean orderCalled = order.isCalled();
-        final boolean isCalled = order.isCalled();
+        final String ORDERLIST =orderList_String;
+        final String NICKNAME = order.getUser();
+        final int ORDERNUM = order.getOrder_num();
+        final String ORDERID = orderId;
+        final String TIME = simpleDateFormat.format(order.getOrder_time());
+        final boolean STANDBY = order.isStandby();
+        final boolean ISCALLED = order.isCalled();
+
         CallOrderDialogFragment codf =
                 CallOrderDialogFragment.newInstance(new CallOrderDialogFragment.CallOrderListener() {
                     @Override
                     public void callUser(final String nickName) {
-                        if (isCalled) {
+                        if (ISCALLED) {
                             Toast.makeText(getActivity(), "이미 호출하였습니다", Toast.LENGTH_SHORT).show();
                         } else {
+                            ;
                             mStore.collection("users").whereEqualTo("username", nickName)
                                     .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                                 @Override
                                 public void onSuccess(QuerySnapshot qs) {
-                                    String user_email = qs.getDocuments().get(0)
-                                            .getString("email");
-                                    //--------------------------------------------------------------//
-                                    FirebaseInstanceId.getInstance().getInstanceId()
-                                            .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                                    if (!task.isSuccessful()) {
-                                                        Log.w(TAG, "getInstanceId failed", task.getException());
-                                                        return;
-                                                    }
-
-                                                    // Get new Instance ID token
-                                                    String token = task.getResult().getToken();
-
-                                                    // Log and toast
-                                                    Log.d(TAG, token);
-                                                    Toast.makeText(getActivity(), token, Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
+                                    String userLoginToken = qs.getDocuments().get(0)
+                                            .getString("token");
+                                    Log.d("TOKEN get", userLoginToken);
+                                    sendPostToFCM(nickName +"님, 주문하신 음식이 완료되었습니다!\n"+ORDERLIST,
+                                            userLoginToken);
 
                                     //--------------------------------------------------------------//
+//                                    FirebaseInstanceId.getInstance().getInstanceId()
+//                                            .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+//                                                @Override
+//                                                public void onComplete(@NonNull Task<InstanceIdResult> task) {
+//                                                    if (!task.isSuccessful()) {
+//                                                        Log.w(TAG, "getInstanceId failed", task.getException());
+//                                                        return;
+//                                                    }
+//
+//                                                    // Get new Instance ID token
+//                                                    String token = task.getResult().getToken();
+//
+//                                                    // Log and toast
+//                                                    Log.d(TAG, token);
+//                                                    Toast.makeText(getActivity(), token, Toast.LENGTH_SHORT).show();
+//                                                }
+//                                            });
+//
+//                                    //--------------------------------------------------------------//
                                     //  Toast.makeText(getActivity(), nickName + " 조회 성공!\r "
                                     //          + user_email + "알림 설정은 나중에!", Toast.LENGTH_SHORT).show();
 
                                     // orderRecylcerView.getChildViewHolder(view).itemView.setBackgroundColor(Color.LTGRAY);
 
-                                    collectionRef.document(orderID)
+                                    collectionRef.document(ORDERID)
                                             .update("called", true).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -333,7 +350,7 @@ public class OrderListFragment extends Fragment {
                             });
                         }
                     }
-                }, nickName, orderNum, orderList_String, orderTime, orderStandby, orderCalled, totalPrice);
+                }, NICKNAME, ORDERNUM, ORDERLIST, TIME, STANDBY, ISCALLED, totalPrice);
 
         codf.setCancelable(true);
         codf.show(getFragmentManager(), CallOrderDialogFragment.TAG);
@@ -514,4 +531,40 @@ public class OrderListFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void sendPostToFCM(final String message, final String userLoginToken) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.d("TOKEN is ", userLoginToken);
+                    // FMC 메시지 생성 start
+                    JSONObject root = new JSONObject();
+                    JSONObject notification = new JSONObject();
+                    notification.put("body", message);
+                    notification.put("title", getString(R.string.app_name));
+                    root.put("notification", notification);
+                    root.put("to", userLoginToken);
+
+                    // FMC 메시지 생성 end
+
+                    URL Url = new URL(FCM_MESSAGE_URL);
+                    HttpURLConnection conn = (HttpURLConnection) Url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setDoOutput(true);
+                    conn.setDoInput(true);
+                    conn.addRequestProperty("Authorization", "key=" + SERVER_KEY);
+                    conn.setRequestProperty("Accept", "application/json");
+                    conn.setRequestProperty("Content-type", "application/json");
+                    OutputStream os = conn.getOutputStream();
+                    os.write(root.toString().getBytes("utf-8"));
+                    os.flush();
+                    conn.getResponseCode();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
 }

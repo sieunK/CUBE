@@ -34,10 +34,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.HashMap;
 
 public class DefaultActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    final String TAG = "DefaultActivity";
+
     private FirebaseFirestore Fdb;
     private DBHelper helper;
     private static SQLiteDatabase db;
@@ -48,6 +52,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
     private String getUserEmail;
     private String getUserNickName;
+    private String getUserDocID;
 
     private View nav_header_view;
     private TextView nav_header_id_text;
@@ -129,6 +134,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot dc : task.getResult()) {
                                 getUserNickName = dc.getData().get("username").toString();
+                                getUserDocID = dc.getId();
                                 if (getUserNickName == null) {
                                     Log.d("nullName", "null");
                                     Toast.makeText(getApplicationContext(), "사용자를 찾을 수 없습니다", Toast.LENGTH_SHORT).show();
@@ -145,6 +151,25 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
                                 }
 
+                                FirebaseInstanceId.getInstance().getInstanceId()
+                                        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                                if (!task.isSuccessful()) {
+                                                    Log.w(TAG, "getInstanceId failed", task.getException());
+                                                    return;
+                                                }
+
+                                                // Get new Instance ID token
+                                                String token = task.getResult().getToken();
+                                                Fdb.collection("users").document(getUserDocID)
+                                                        .update("token", token);
+
+                                                // Log and toast
+                                                Log.d(TAG + "TOKEN", token);
+                                                Toast.makeText(getApplicationContext(), token, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                             }
                             progressDialog.dismiss();
                         } else {
@@ -153,6 +178,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                         }
                     }
                 });
+
 
 
 

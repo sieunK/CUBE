@@ -1,11 +1,17 @@
 package com.example.cube;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cube.Components.NoticeData;
 import com.example.cube.MoonChang.MoonChangFragment;
 import com.example.cube.Notice.NoticeActivity;
+import com.example.cube.Notice.NoticeReadActivity;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,6 +37,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HomeActivity extends Fragment {
@@ -44,7 +52,7 @@ public class HomeActivity extends Fragment {
     ArrayList<NoticeData> noticeList;
     Fragment fragment;
     ScrollView scrollView;
-
+    String collectionPath;
     public HomeActivity() {
     }
 
@@ -59,16 +67,20 @@ public class HomeActivity extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         mStore = FirebaseFirestore.getInstance();
+        collectionPath = "foodcourt/moonchang/board";
+
         //notice_more = (Button) view.findViewById(R.id.button_more_notice);
         moonChang = (ImageView) view.findViewById(R.id.button_moon);
         saetBul = (ImageView) view.findViewById(R.id.button_saet);
         geumJeong = (ImageView) view.findViewById(R.id.button_geum);
         hakSaeng = (ImageView) view.findViewById(R.id.button_hak);
+
         notice_shortView = (RecyclerView) view.findViewById(R.id.notice_short);
         notice_shortView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         scrollView = (ScrollView)view.findViewById(R.id.scroll_home);
         scrollView.fullScroll(ScrollView.FOCUS_UP);
+        notice_shortView.setFocusable(false);
 
 //        notice_more.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -122,7 +134,6 @@ public class HomeActivity extends Fragment {
     public void onStart() {
         super.onStart();
         noticeList = new ArrayList<>();
-        String collectionPath = "foodcourt/moonchang/board";
         Query noticeQuery = mStore.collection(collectionPath)
                 .orderBy("date", Query.Direction.DESCENDING).limit(3);
         noticeQuery.
@@ -148,7 +159,6 @@ public class HomeActivity extends Fragment {
         MainAdapter adapter = new MainAdapter(noticeList);
         notice_shortView.setAdapter(adapter);
         notice_shortView.addItemDecoration(new DividerItemDecoration(notice_shortView.getContext(), 1));
-
     }
 
     private class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
@@ -166,10 +176,27 @@ public class HomeActivity extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MainViewHolder holder, int pos) {
+            final int CHOSEN = pos;
+
             NoticeData data = noticeList.get(pos);
+            holder.mItemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String id = noticeList.get(CHOSEN).getId();
+                    int postNumClicks = noticeList.get(CHOSEN).getNumClicks();
+                    postNumClicks++;
+                    mStore.collection(collectionPath).document(id).update("numClicks", postNumClicks);
+                    Intent intent = new Intent(getContext(), NoticeReadActivity.class);
+                    intent.putExtra("id", id);
+                    startActivity(intent);
+                }
+            });
             holder.mTitleTextView.setText(data.getTitle());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm (E)");
             holder.mDateTextView.setText(simpleDateFormat.format(data.getDate()));
+            if ((new Date().getTime() - data.getDate().getTime()) / (24 * 60 * 60 * 1000) >= 1)
+                holder.mNewTagView.setVisibility(View.GONE);
+
         }
 
         @Override
@@ -177,21 +204,22 @@ public class HomeActivity extends Fragment {
             return noticeList.size();
         }
 
-        public void cleanupListener() {
-
-        }
-
         class MainViewHolder extends RecyclerView.ViewHolder {
+            private RelativeLayout mItemView;
             private TextView mTitleTextView;
             private TextView mDateTextView;
             private TextView mNewTagView;
 
             public MainViewHolder(@NonNull View itemView) {
                 super(itemView);
+                mItemView = itemView.findViewById(R.id.board_item_short);
                 mTitleTextView = itemView.findViewById(R.id.board_item_title_short);
                 mDateTextView = itemView.findViewById(R.id.board_item_date_short);
                 mNewTagView = itemView.findViewById(R.id.board_item_newtag_short);
             }
         }
     }
+
+
+
 }

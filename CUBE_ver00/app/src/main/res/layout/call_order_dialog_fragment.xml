@@ -109,17 +109,6 @@
         android:layout_height="1dp"
         android:background="#BEBBBB" />
 
-    <TextView
-        android:id="@+id/call_order_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textColor="@android:color/black"
-        android:text="주문시간"
-        android:textSize="20sp"
-        android:paddingTop="10dp"
-
-        />
 
     <LinearLayout
         android:layout_width="match_parent"
