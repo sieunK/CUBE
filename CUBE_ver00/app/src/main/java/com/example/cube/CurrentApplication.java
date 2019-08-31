@@ -5,6 +5,7 @@ import android.app.Application;
 public class CurrentApplication extends Application {
     private String Nickname;
     private String Email;
+    private String profileImage;
     private boolean isAdmin;
 
     @Override
@@ -14,6 +15,7 @@ public class CurrentApplication extends Application {
         Nickname = null;
         Email = null;
         isAdmin = false;
+        profileImage = null;
     }
 
     @Override
@@ -53,4 +55,8 @@ public class CurrentApplication extends Application {
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
+
+    public void setProfileImage(String profileImage) { this.profileImage = profileImage; }
+
+    public String getProfileImage() { return profileImage; }
 }

@@ -43,9 +43,9 @@
                     android:textColor="@color/bamcolor"
                     android:fontFamily="@font/bmjua_ttf"
                     app:scale_height="100"
-                    app:scale_left="130"
+                    app:scale_left="135"
                     app:scale_textsize="30"
-                    app:scale_top="320"
+                    app:scale_top="355"
                     app:scale_width="210" />
 
                 <androidx.appcompat.widget.AppCompatTextView

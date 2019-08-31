@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +35,17 @@ import com.example.cube.Components.Order;
 import com.example.cube.CurrentApplication;
 import com.example.cube.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -46,6 +54,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +71,7 @@ public class MyInformation extends Fragment {
     ImageView profilePicture;
     private Uri mImageCaptureUri;
     private String absolutePath;
+    private String profileImage;
 
     RecyclerView myCurrentOrderView;
     ArrayList<Order> myCurrentOrderList;
@@ -85,14 +95,13 @@ public class MyInformation extends Fragment {
         profilePicture = view.findViewById(R.id.image_profile);
 
         /* 저장된 이미지가 있으면 로드하고 아니면 기본이미지 */
-        SharedPreferences sf = getActivity().getSharedPreferences("profileImage",Context.MODE_PRIVATE);
-        String temp = sf.getString("Image","null");
-        if(temp != "null") {
-            byte[] decodedByteArray = Base64.decode(temp, Base64.NO_WRAP);
+        CurrentApplication ca = (CurrentApplication) (getActivity().getApplicationContext());
+        profileImage = ca.getProfileImage();
+        if( profileImage != null) {
+            byte[] decodedByteArray = Base64.decode(profileImage, Base64.NO_WRAP);
             Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
             profilePicture.setImageBitmap(decodedBitmap);
         }
-
 
         changePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,20 +223,49 @@ public class MyInformation extends Fragment {
     }
 
     private void storeCropImage(Bitmap bitmap, String filePath) {
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/BNU";
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/BNU";
         File directory_BNU = new File(dirPath);
 
-        /* 로컬저장소 염 */
-        SharedPreferences sf = getActivity().getSharedPreferences("profileImage", Context.MODE_PRIVATE);
-        SharedPreferences.Editor et = sf.edit();
-        et.clear(); // 저장전에 한번 클리어함
-
-        /* Bitmap을 String으로 바꿔서 저장 */
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] imageBytes = byteArrayOutputStream.toByteArray();
-        et.putString("Image",Base64.encodeToString(imageBytes, Base64.NO_WRAP));
-        et.commit();
+        String profile = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
+
+
+        final Map<String, Object> post = new HashMap<>();
+        post.put("profile", profile);
+
+        CurrentApplication ca = (CurrentApplication) (getActivity().getApplicationContext());
+        ca.setProfileImage(profile);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("users")
+                .whereEqualTo("username", ca.getNickname()).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot ds : queryDocumentSnapshots.getDocuments()) {
+                            DocumentReference dr = ds.getReference();
+                            dr.set(post, SetOptions.merge());
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+
+        /* 로컬저장소 염 */
+//        SharedPreferences sf = getActivity().getSharedPreferences("profileImage", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor et = sf.edit();
+//        et.clear(); // 저장전에 한번 클리어함
+
+        /* Bitmap을 String으로 바꿔서 저장 */
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+//        et.putString("Image",Base64.encodeToString(imageBytes, Base64.NO_WRAP));
+//        et.commit();
 
         if(!directory_BNU.exists())
             directory_BNU.mkdir();

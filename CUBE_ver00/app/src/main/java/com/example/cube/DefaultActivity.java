@@ -53,6 +53,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
     private String getUserEmail;
     private String getUserNickName;
     private String getUserDocID;
+    private String getUserProfile;
 
     private View nav_header_view;
     private TextView nav_header_id_text;
@@ -134,6 +135,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot dc : task.getResult()) {
                                 getUserNickName = dc.getData().get("username").toString();
+                                getUserProfile = dc.getData().get("profile").toString();
                                 getUserDocID = dc.getId();
                                 if (getUserNickName == null) {
                                     Log.d("nullName", "null");
@@ -144,6 +146,10 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                                     currentUserInfo.setNickname(getUserNickName);
                                     nav_header_id_text.setText(getUserNickName);
                                 }
+                                if(getUserProfile!=null) {
+                                    currentUserInfo.setProfileImage(getUserProfile);
+                                }
+
                                 Object isAdmin = dc.getData().get("isAdmin");
                                 if(isAdmin!=null && (boolean)isAdmin==true) {
                                     currentUserInfo.setAdmin(true);
@@ -249,6 +255,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
         Fragment fragment = null;
         if (id == R.id.nav_home) {
             fragment = new HomeActivity();
@@ -272,6 +279,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
             ft.replace(R.id.content_layout, fragment);
             ft.commit();
         }
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
