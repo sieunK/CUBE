@@ -53,7 +53,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
     private String getUserEmail;
     private String getUserNickName;
     private String getUserDocID;
-    private String getUserProfile;
+    private Object getUserProfile;
 
     private View nav_header_view;
     private TextView nav_header_id_text;
@@ -135,7 +135,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot dc : task.getResult()) {
                                 getUserNickName = dc.getData().get("username").toString();
-                                getUserProfile = dc.getData().get("profile").toString();
+                                getUserProfile = dc.getData().get("profile");
                                 getUserDocID = dc.getId();
                                 if (getUserNickName == null) {
                                     Log.d("nullName", "null");
@@ -147,7 +147,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                                     nav_header_id_text.setText(getUserNickName);
                                 }
                                 if(getUserProfile!=null) {
-                                    currentUserInfo.setProfileImage(getUserProfile);
+                                    currentUserInfo.setProfileImage(getUserProfile.toString());
                                 }
 
                                 Object isAdmin = dc.getData().get("isAdmin");
