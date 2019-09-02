@@ -74,7 +74,7 @@ public class BoardFragment extends Fragment {
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.board_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(false);
 
         currentUserInfo = (CurrentApplication)getActivity().getApplication();
         WriteNotice = view.findViewById(R.id.write_notice);

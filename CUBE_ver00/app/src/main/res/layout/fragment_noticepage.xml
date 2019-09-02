@@ -9,7 +9,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/board_toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:gravity="center"
         android:theme="@style/AppTheme.PopupOverlay">
 
@@ -17,12 +17,12 @@
             android:id="@+id/board_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/orange"
+            android:background="@color/strongorange"
             app:title=" 공지사항"
             app:titleTextAppearance="@style/Toolbar.TitleText"
             android:layout_gravity="center"
             android:gravity="center"
-            app:titleTextColor="@color/bamcolor" />
+            app:titleTextColor="#ffffff" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

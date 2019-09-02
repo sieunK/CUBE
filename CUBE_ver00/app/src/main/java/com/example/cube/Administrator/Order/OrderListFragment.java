@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cube.Administrator.AdminActivity;
+import com.example.cube.BNUDialog;
 import com.example.cube.Components.Order;
 import com.example.cube.DeleteDialogFragment;
 import com.example.cube.R;
@@ -64,7 +65,7 @@ public class OrderListFragment extends Fragment {
 
     private static final String FCM_MESSAGE_URL = "https://fcm.googleapis.com/fcm/send";
     private static final String SERVER_KEY
-            ="AAAAvvzO9hU:APA91bFQcNh5jlRTJkH6Yk3Vy8YG0pEB_2Al1s3qv8hqI0e3GTwa032nJhpmS0Y45TFxgQYN_uWCS6shUe5oLSo6yhtonYlAvylOU3lMGdJ9l-uaYQM2HprfFdR7GoqD3oR-ji48h3LQ";
+            = "AAAAvvzO9hU:APA91bFQcNh5jlRTJkH6Yk3Vy8YG0pEB_2Al1s3qv8hqI0e3GTwa032nJhpmS0Y45TFxgQYN_uWCS6shUe5oLSo6yhtonYlAvylOU3lMGdJ9l-uaYQM2HprfFdR7GoqD3oR-ji48h3LQ";
     private FirebaseFirestore mStore;
     private Query setQuery;
     private CollectionReference collectionRef;
@@ -99,7 +100,12 @@ public class OrderListFragment extends Fragment {
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.order_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        //  setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
+        Menu menu = toolbar.getMenu();
+        MenuInflater menuInflater = getActivity().getMenuInflater();
+        super.onCreateOptionsMenu(menu, menuInflater);
+        menu.clear();
+        menuInflater.inflate(R.menu.order_menu, menu);
 
         selectAll = (CheckBox) view.findViewById(R.id.order_all_checkbox);
         goYesterday = view.findViewById(R.id.order_date_picker_yesterday);
@@ -117,7 +123,7 @@ public class OrderListFragment extends Fragment {
         cal.set(Calendar.MILLISECOND, 0);
 
         datePickerTextView = (TextView) view.findViewById(R.id.order_date_picker_text);
-        datePickerTextView.setOnClickListener(new View.OnClickListener(){
+        datePickerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dateDialog = new DatePickerDialog(getContext(), dateSetListener,
@@ -223,9 +229,10 @@ public class OrderListFragment extends Fragment {
                 .whereLessThan("order_time", tomorrowStart)
                 .orderBy("order_time", Query.Direction.ASCENDING);
 
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setTitle("loading...");
-        progressDialog.show();
+        // 로딩 중..
+        final BNUDialog dialog = BNUDialog.newInstance("로딩 중입니다...");
+        dialog.setCancelable(true);
+        dialog.show(getActivity().getSupportFragmentManager(), BNUDialog.TAG);
 
         mAdapter = new OrderAdapter(setQuery);
         orderRecylcerView.setAdapter(mAdapter);
@@ -250,7 +257,7 @@ public class OrderListFragment extends Fragment {
                                 callOrder(orderChosen, orderId, position);
                             }
                         }));
-        progressDialog.dismiss();
+        dialog.dismiss();
     }
 
     @Override
@@ -275,7 +282,7 @@ public class OrderListFragment extends Fragment {
 
         }
 
-        final String ORDERLIST =orderList_String;
+        final String ORDERLIST = orderList_String;
         final String NICKNAME = order.getUser();
         final int ORDERNUM = order.getOrder_num();
         final String ORDERID = orderId;
@@ -298,7 +305,7 @@ public class OrderListFragment extends Fragment {
                                     String userLoginToken = qs.getDocuments().get(0)
                                             .getString("token");
                                     Log.d("TOKEN get", userLoginToken);
-                                    sendPostToFCM(nickName +"님, 주문하신 음식이 완료되었습니다!\n"+ORDERLIST,
+                                    sendPostToFCM(nickName + "님, 주문하신 음식이 완료되었습니다!\n" + ORDERLIST,
                                             userLoginToken);
 
                                     //--------------------------------------------------------------//
@@ -453,14 +460,6 @@ public class OrderListFragment extends Fragment {
 
     /* 각 ITEM CLICK 이벤트 */
 
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.order_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-        return;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -17,13 +17,11 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/order_toolbar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/strongorange"
             app:title="주문내역"
             app:titleTextAppearance="@style/Toolbar.TitleText"
-            android:layout_gravity="center"
-            android:gravity="center"
             app:titleTextColor="#FFFFFF" />
     </com.google.android.material.appbar.AppBarLayout>
 

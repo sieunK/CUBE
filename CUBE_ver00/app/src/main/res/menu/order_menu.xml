@@ -7,6 +7,7 @@
     <item
         android:id="@+id/sales_status"
         android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+        android:iconTint="#ffffff"
         android:title="현황"
         app:showAsAction="always" />
 
@@ -14,6 +15,7 @@
     <item
         android:id="@+id/order_delete"
         android:icon="@drawable/ic_delete_black_24dp"
+        android:iconTint="#ffffff"
         android:title="삭제"
         app:showAsAction="always" />
 
