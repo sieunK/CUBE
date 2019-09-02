@@ -38,6 +38,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.HashMap;
+import java.util.Stack;
 
 public class DefaultActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     final String TAG = "DefaultActivity";
@@ -49,6 +50,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
     private CurrentApplication currentUserInfo;
     private BackPressCloseHandler backPressCloseHandler;
+    private BNUDialog dialog;
 
     private String getUserEmail;
     private String getUserNickName;
@@ -57,6 +59,8 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
     private View nav_header_view;
     private TextView nav_header_id_text;
+    private NavigationView navigationView;
+    private Stack<Integer> navSelectStack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +120,8 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         /* 세팅된 닉네임 가져와서 드로어 레이아웃 프로필에 적음 */
         //  Intent intent = getIntent();
         //  String nickname = intent.getStringExtra("nickname");
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navSelectStack = new Stack<>();
         nav_header_view= navigationView.getHeaderView(0);
         nav_header_id_text = (TextView) nav_header_view.findViewById(R.id.show_nickname);
 
@@ -125,9 +130,31 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         currentUserInfo = (CurrentApplication) getApplication();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         getUserEmail = mAuth.getCurrentUser().getEmail();
-        final ProgressDialog progressDialog = new ProgressDialog(DefaultActivity.this);
-        progressDialog.setTitle("사용자 확인 중...");
-        progressDialog.show();
+
+        //DBHelper dbHelper = new DBHelper(getApplicationContext(), "NOTICE.db", null, 1);
+
+        /* 초기화면을 HomePage로 설정함 */
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.content_layout, new HomeActivity());
+        fragmentTransaction.commit();
+
+        /* 이건 아마 옆에 드로어 레이아웃 설정 */
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_home);
+
+        /* 앱 실행시 장바구니 초기화 */
+        DBHelper helper = new DBHelper(getApplicationContext(), "BASKET.db", null,1);
+        helper.deleteAll("BASKET");
+
+        dialog = BNUDialog.newInstance("사용자 확인...");
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), BNUDialog.TAG);
         Fdb.collection("users").whereEqualTo("email", getUserEmail).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -177,10 +204,10 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                                             }
                                         });
                             }
-                            progressDialog.dismiss();
+                            dialog.dismiss();
                         } else {
                             Toast.makeText(getApplicationContext(), "사용자를 찾을 수 없습니다", Toast.LENGTH_SHORT).show();
-                            progressDialog.dismiss();
+                            dialog.dismiss();
                         }
                     }
                 });
@@ -189,25 +216,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
 
 
-        //DBHelper dbHelper = new DBHelper(getApplicationContext(), "NOTICE.db", null, 1);
 
-        /* 초기화면을 HomePage로 설정함 */
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.content_layout, new HomeActivity());
-        fragmentTransaction.commit();
-
-        /* 이건 아마 옆에 드로어 레이아웃 설정 */
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-
-        /* 앱 실행시 장바구니 초기화 */
-        DBHelper helper = new DBHelper(getApplicationContext(), "BASKET.db", null,1);
-        helper.deleteAll("BASKET");
     }
 
     @Override
@@ -223,10 +232,12 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
             backPressCloseHandler.onBackPressed();
         }
         else {
+            int beforeItemId = navSelectStack.pop();
+            navigationView.getMenu().findItem(beforeItemId).setChecked(true);
             super.onBackPressed();
         }
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -248,11 +259,12 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        navSelectStack.push(navigationView.getCheckedItem().getItemId());
         int id = item.getItemId();
 
 

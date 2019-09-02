@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cube.Administrator.AdminActivity;
+import com.example.cube.BNUDialog;
 import com.example.cube.BackPressCloseHandler;
 import com.example.cube.DefaultActivity;
 import com.example.cube.R;
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CheckBox checkAutoLogin;
 
     private FirebaseAuth firebaseAuth;
-    private ProgressDialog progressDialog;
+    private BNUDialog dialog;
 
     private BackPressCloseHandler backPressCloseHandler;
 
@@ -69,7 +70,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (firebaseAuth.getCurrentUser() != null && !firebaseAuth.getCurrentUser().isEmailVerified()) {
             firebaseAuth.getCurrentUser().delete();
         }
-        progressDialog = new ProgressDialog(this);
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         BNULogo = (ImageView) findViewById(R.id.imageView);
@@ -135,8 +135,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
             return;
         }
-        progressDialog.setMessage("로그인 중입니다...");
-        progressDialog.show();
+        dialog= BNUDialog.newInstance("로그인 중입니다...");
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), BNUDialog.TAG);
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -164,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.commit();
                             checkAutoLogin.setChecked(false);
                         }
-                        progressDialog.dismiss();
+                        dialog.dismiss();
                     }
                 });
     }
@@ -182,8 +183,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
             return;
         }
-        progressDialog.setMessage("관리자페이지로 로그인 중입니다...");
-        progressDialog.show();
+        dialog = BNUDialog.newInstance("관리자페이지로 로그인 중입니다...");
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), BNUDialog.TAG);
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -196,13 +198,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                                             if (e != null) {
                                                 Toast.makeText(getApplicationContext(), "로그인 실패\n 사용자를 찾을 수 없습니다!", Toast.LENGTH_SHORT).show();
-                                                progressDialog.dismiss();
+                                                dialog.dismiss();
                                             }
                                             for (DocumentSnapshot ds : queryDocumentSnapshots) {
                                                 Object isAdmin = ds.get("isAdmin");
                                                 if (isAdmin == null) {
                                                     Toast.makeText(getApplicationContext(), "관리자가 아닙니다", Toast.LENGTH_SHORT).show();
-                                                    progressDialog.dismiss();;
+                                                    dialog.dismiss();;
                                                 }
                                                 else{
                                                     if (checkAutoLogin.isChecked()) {
@@ -214,7 +216,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                         editor.putBoolean("autoLogin", true);
                                                         editor.commit();
                                                     }
-                                                    progressDialog.dismiss();
+                                                    dialog.dismiss();
                                                     startActivity(new Intent(getApplicationContext(), AdminActivity.class));
                                                     finish();
                                                 }
@@ -231,7 +233,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.commit();
                             checkAutoLogin.setChecked(false);
                         }
-                        progressDialog.dismiss();
+                        dialog.dismiss();
                     }
                 });
 

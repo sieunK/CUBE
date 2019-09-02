@@ -13,15 +13,16 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.cube.R;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
 
 public class MoonChangFragment extends Fragment /*implements MoonChangPayFragment.OnFragmentInteractionListener*/ {
+    private int savedFragmentIndex;
 
     private MoonChangBagFragment fragmentbag;
     private MoonChangPagerAdapter myPagerAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        savedFragmentIndex=0;
     }
 
     @Nullable
@@ -43,8 +44,7 @@ public class MoonChangFragment extends Fragment /*implements MoonChangPayFragmen
         myPagerAdapter = new MoonChangPagerAdapter(getChildFragmentManager(), 4);
         viewPager.setAdapter(myPagerAdapter);
         viewPager.setOffscreenPageLimit(4);
-
-
+        tabs.getTabAt(savedFragmentIndex).select();
 
         tabs.getTabAt(0).setIcon(R.drawable.ic_tab_select_pay);
         tabs.getTabAt(1).setIcon(R.drawable.ic_tab_unselect_menu);
@@ -67,6 +67,7 @@ public class MoonChangFragment extends Fragment /*implements MoonChangPayFragmen
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabs){
             @Override
             public void onPageSelected(int position){
+                savedFragmentIndex = position;
                 tabs.getTabAt(0).setIcon(R.drawable.ic_tab_unselect_pay);
                 tabs.getTabAt(1).setIcon(R.drawable.ic_tab_unselect_menu);
                 tabs.getTabAt(2).setIcon(R.drawable.ic_tab_unselect_rev);

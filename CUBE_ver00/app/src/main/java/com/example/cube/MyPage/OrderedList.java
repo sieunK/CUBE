@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cube.BNUDialog;
 import com.example.cube.Components.Order;
 import com.example.cube.CurrentApplication;
 import com.example.cube.R;
@@ -30,6 +31,7 @@ public class OrderedList extends Fragment {
     private OrderedListAdapter adapter;
     private FirebaseFirestore mStore;
     private RecyclerView recyclerView;
+    private BNUDialog dialog;
 
     public OrderedList() {}
 
@@ -52,6 +54,9 @@ public class OrderedList extends Fragment {
         String UserNickName = currentUserInfo.getNickname();
 
         orderList = new ArrayList<>();
+        dialog = BNUDialog.newInstance("로딩 중입니다...");
+        dialog.setCancelable(false);
+        dialog.show(getActivity().getSupportFragmentManager(), BNUDialog.TAG);
         mStore.collection("foodcourt/moonchang/order").whereEqualTo("user", UserNickName)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -64,9 +69,11 @@ public class OrderedList extends Fragment {
                     FragmentManager fm = getFragmentManager();
                     adapter = new OrderedListAdapter(orderList, fm,getActivity());
                     recyclerView.setAdapter(adapter);
+                    dialog.dismiss();
                 }
                 else{
                     Toast.makeText(getContext(), "불러오기 실패!", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                 }
             }
         });

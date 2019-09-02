@@ -36,6 +36,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.example.cube.BNUDialog;
 import com.example.cube.Components.Comments;
 import com.example.cube.Components.NoticeData;
 import com.example.cube.DeleteDialogFragment;
@@ -147,9 +148,9 @@ public class NoticeReadActivity extends AppCompatActivity {
         super.onStart();
 
         // 로딩 중..
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("loading...");
-        progressDialog.show();
+        final BNUDialog dialog = BNUDialog.newInstance("로딩 중입니다...");
+        dialog.setCancelable(true);
+        dialog.show(getSupportFragmentManager(), BNUDialog.TAG);
 
         // 게시글 가져오기 + FIREBASE STORAGE 에서 현재 게시글에 해당하는 폴더의 이미지 가져오기
         DocumentRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -176,7 +177,7 @@ public class NoticeReadActivity extends AppCompatActivity {
                     Log.d("number of photo is", Integer.toString(photoNum));
 
                     // 이미지 가져오기
-                    if (photoNum == 0) progressDialog.dismiss();
+                    if (photoNum == 0) dialog.dismiss();
                     for (int i = 0; i < photoNum; i++) {
                         final long unit = 1024 * 1024 * 4;
                         final String filename = i + ".png";
@@ -186,14 +187,14 @@ public class NoticeReadActivity extends AppCompatActivity {
                                 Log.e("image search success", "조회 성공 " + filename);
 
                                 addView(bytes);
-                                if (mPictures.getChildCount() == photoNum) progressDialog.dismiss();
+                                if (mPictures.getChildCount() == photoNum) dialog.dismiss();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Log.e("image search fail", "조회 실패" + filename);
                                 Toast.makeText(getApplicationContext(), "이미지 불러오기 실패!", Toast.LENGTH_SHORT).show();
-                                progressDialog.dismiss();
+                                dialog.dismiss();
                                 finish();
                             }
                         });

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.cube.BNUDialog;
 import com.example.cube.Components.Order;
 import com.example.cube.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -110,9 +111,9 @@ public class ShowSalesStatusActivity extends AppCompatActivity implements View.O
         Timestamp tomorrowStart = new Timestamp(tomorrow);
 
         // 로딩 중...
-        final ProgressDialog progressDialog = new ProgressDialog(ShowSalesStatusActivity.this);
-        progressDialog.setTitle("loading...");
-        progressDialog.show();
+        final BNUDialog dialog = BNUDialog.newInstance("로딩 중입니다...");
+        dialog.setCancelable(false);
+        dialog.show(getSupportFragmentManager(), BNUDialog.TAG);
 
 
         // 오늘 날짜에 해당하는 데이터 쿼리
@@ -153,12 +154,12 @@ public class ShowSalesStatusActivity extends AppCompatActivity implements View.O
                             salesListView.setAdapter(mAdapter);
                             salesDay.setText(Long.toString(sellDay));
 
-                            progressDialog.dismiss();
+                            dialog.dismiss();
 
                         } else {
                             Toast.makeText(getApplicationContext(), "불러오기 실패", Toast.LENGTH_SHORT).show();
                             Log.d("ShowSalesStatusActivity", "Error getting documents: ", task.getException());
-                            progressDialog.dismiss();
+                            dialog.dismiss();
 
                         }
                     }

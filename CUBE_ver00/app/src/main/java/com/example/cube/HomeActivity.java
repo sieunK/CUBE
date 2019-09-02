@@ -192,11 +192,22 @@ public class HomeActivity extends Fragment {
                 }
             });
             holder.mTitleTextView.setText(data.getTitle());
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm (E)");
-            holder.mDateTextView.setText(simpleDateFormat.format(data.getDate()));
+            holder.mDateTextView.setText(timeGapCheck(data.getDate()));
             if ((new Date().getTime() - data.getDate().getTime()) / (24 * 60 * 60 * 1000) >= 1)
                 holder.mNewTagView.setVisibility(View.GONE);
 
+        }
+
+        public String timeGapCheck(Date postDate) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY/MM/dd HH:mm (E)");
+            long timeGap = new Date().getTime() - postDate.getTime();
+            long min = timeGap / 60000;  // 분
+            String postStatus;
+            if (min == 0) postStatus = "방금";
+            else if (0 < min && min < 60) postStatus = min + "분 전";
+            else if (60 <= min && min < 60 * 24) postStatus = min / 60 + "시간 전";
+            else postStatus = simpleDateFormat.format(postDate);
+            return postStatus;
         }
 
         @Override

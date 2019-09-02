@@ -117,15 +117,19 @@ public class NoticeAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!validateForm()) return;
+                final int numberOfImages = mImgIds.size();
+
+                uploadedNum = 0;
+
+                progressDialog.setMax(numberOfImages);
+                progressDialog.setCancelable(false);
+                progressDialog.show();
 
                 final String DocId = mStore.collection(collectionPath).document().getId();
-                Date DocDate = new Date();
 
                 final String picFolderName = DocId + "_images/";
                 Log.d("The Number Of Image Is", Integer.toString(mImgIds.size()));
-
-                final int numberOfImages = mImgIds.size();
-                uploadedNum = 0;
+                Date DocDate = new Date();
 
                 Map<String, Object> post = new HashMap<>();
                 post.put("id", DocId);
@@ -140,12 +144,10 @@ public class NoticeAddActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                if (numberOfImages == 0)
+                                if (numberOfImages == 0) {
+                                    progressDialog.dismiss();
                                     finish();
-                                else {
-                                    progressDialog.setMax(numberOfImages);
-                                    progressDialog.show();
-
+                                } else {
                                     for (int i = 0; i < numberOfImages; i++) {
                                         final int imageNumber = i;
                                         final String fileName = imageNumber + ".png";
