@@ -187,7 +187,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
                                 final String putComment = result.getString("comment");
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                                 ReviewParent data = ReviewParents.get(getAdapterPosition());
-                                Log.e("IDDDDDDD", data.getId());
                                 DocumentRef = db.collection("foodcourt/moonchang/review").document(data.getId());
                                 DocumentRef.update("comment", result.getString("comment"))
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -197,7 +196,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
                                                             public void onSuccess(Void aVoid) {
-                                                                Log.d("UPDATE", "COMPLETE");
                                                                 progressDialog.dismiss();
                                                                 return;
                                                             }
@@ -239,10 +237,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
         holder.commentDate.setText(commentTime);
         String reviewImageStr = data.getPhoto();
         /* 관리자가 아니면 코멘트쓰기 버튼 숨김 */
+
         if(!ca.isAdmin()) {
             //Toast.makeText(mContext,"관리자아님",Toast.LENGTH_SHORT).show();
             holder.writeComment.setVisibility(View.INVISIBLE);
         }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 32d295f49936a0668d4101a1f2acab00a918127c
         /* 리뷰사진이 없을때와 있을때 구분 */
         if (reviewImageStr.equals("null")) {
             holder. reviewImage.setVisibility(View.GONE);
@@ -256,7 +259,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
         if(data.getComment().equals("null")) {
             holder. comment_layout.setVisibility(View.GONE);
             holder. commentDate.setVisibility(View.GONE);
-            Toast.makeText(mContext,"null임",Toast.LENGTH_SHORT).show();
         } else {
             holder. comment.setText(data.getComment());
             holder. comment_layout.setVisibility(View.VISIBLE);
@@ -274,6 +276,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
 
 
     }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 32d295f49936a0668d4101a1f2acab00a918127c
 
 
     @Override

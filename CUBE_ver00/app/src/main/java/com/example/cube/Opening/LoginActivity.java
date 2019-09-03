@@ -204,7 +204,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                                 Object isAdmin = ds.get("isAdmin");
                                                 if (isAdmin == null) {
                                                     Toast.makeText(getApplicationContext(), "관리자가 아닙니다", Toast.LENGTH_SHORT).show();
-                                                    dialog.dismiss();;
+                                                    dialog.dismiss();
                                                 }
                                                 else{
                                                     if (checkAutoLogin.isChecked()) {
