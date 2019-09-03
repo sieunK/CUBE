@@ -4,15 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -50,12 +55,15 @@ public class MoonChangBagActivity extends AppCompatActivity {
 
     private CurrentApplication currentUserInfo;
     private String userNickname;
+    private String userEmail;
 
     private long currentOrderNum;
 
     private ArrayList<HashMap<String, Object>> selectedFoodList;
     long pricesum = 0;
 
+    private WebView mainWebView;
+    private final String APP_SCHEME = "iamportkakao://";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,7 +213,14 @@ public class MoonChangBagActivity extends AppCompatActivity {
                     public void onSuccess(DocumentReference documentReference) {
                         Toast.makeText(getApplicationContext(), "주문하였습니다", Toast.LENGTH_SHORT).show();
                         db.execSQL("DELETE FROM BASKET");
-                        finish();
+                        mainWebView = (WebView) findViewById(R.id.mainWebView);
+                        mainWebView.setWebViewClient(new KakaoWebViewClient(MoonChangBagActivity.this));
+                        WebSettings settings = mainWebView.getSettings();
+                        settings.setJavaScriptEnabled(true);
+                        mainWebView.addJavascriptInterface(new WebAppInterface(getApplicationContext()), "Android");
+                        mainWebView.setVisibility(View.VISIBLE);
+                        mainWebView.loadUrl("file:///android_asset/kakaopay.html");
+                        //finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -218,6 +233,64 @@ public class MoonChangBagActivity extends AppCompatActivity {
 
 
         });     //setOnClickListener
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intent intent = getIntent();
+        if ( intent != null ) {
+            Uri intentData = intent.getData();
+
+            if (intentData != null) {
+                //카카오페이 인증 후 복귀했을 때 결제 후속조치
+                String url = intentData.toString();
+
+                if (url.startsWith(APP_SCHEME)) {
+                    String path = url.substring(APP_SCHEME.length());
+                    if ("process".equalsIgnoreCase(path)) {
+                        mainWebView.loadUrl("javascript:IMP.communicate({result:'process'})");
+                    } else {
+                        mainWebView.loadUrl("javascript:IMP.communicate({result:'cancel'})");
+                    }
+                }
+            }
+        }
+
+    }
+
+    public class WebAppInterface {
+        Context mContext;
+
+        WebAppInterface(Context c) {
+            mContext = c;
+        }
+
+        @JavascriptInterface
+        public String getUser() {
+            return userNickname;
+        }
+        @JavascriptInterface
+        public String getFood() {
+            return "문창회관";
+        }
+        @JavascriptInterface
+        public String getAmount() {
+            return Integer.toString((int)pricesum);
+        }
+        @JavascriptInterface
+        public String getEmail() {
+            return userEmail;
+        }
+        @JavascriptInterface
+        public void webViewFinish() {finish();}
     }
 
     // 장바구니 리스트뷰 어댑터

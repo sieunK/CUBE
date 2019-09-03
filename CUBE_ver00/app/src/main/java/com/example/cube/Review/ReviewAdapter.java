@@ -242,7 +242,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
         if(!ca.isAdmin()) {
             //Toast.makeText(mContext,"관리자아님",Toast.LENGTH_SHORT).show();
             holder.writeComment.setVisibility(View.INVISIBLE);
-
+        }
         /* 리뷰사진이 없을때와 있을때 구분 */
         if (reviewImageStr.equals("null")) {
             holder. reviewImage.setVisibility(View.GONE);
@@ -274,7 +274,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
 
 
     }
-}
 
 
     @Override
