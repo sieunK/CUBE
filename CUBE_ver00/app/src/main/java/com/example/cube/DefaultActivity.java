@@ -60,7 +60,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
     private View nav_header_view;
     private TextView nav_header_id_text;
     private NavigationView navigationView;
-    private Stack<Integer> navSelectStack;
+    public Stack<Integer> navSelectStack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +122,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         //  String nickname = intent.getStringExtra("nickname");
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navSelectStack = new Stack<>();
-        nav_header_view= navigationView.getHeaderView(0);
+        nav_header_view = navigationView.getHeaderView(0);
         nav_header_id_text = (TextView) nav_header_view.findViewById(R.id.show_nickname);
 
 
@@ -149,7 +149,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         navigationView.setCheckedItem(R.id.nav_home);
 
         /* 앱 실행시 장바구니 초기화 */
-        DBHelper helper = new DBHelper(getApplicationContext(), "BASKET.db", null,1);
+        DBHelper helper = new DBHelper(getApplicationContext(), "BASKET.db", null, 1);
         helper.deleteAll("BASKET");
 
         dialog = BNUDialog.newInstance("사용자 확인...");
@@ -173,12 +173,12 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                                     currentUserInfo.setNickname(getUserNickName);
                                     nav_header_id_text.setText(getUserNickName);
                                 }
-                                if(getUserProfile!=null) {
+                                if (getUserProfile != null) {
                                     currentUserInfo.setProfileImage(getUserProfile.toString());
                                 }
 
                                 Object isAdmin = dc.getData().get("isAdmin");
-                                if(isAdmin!=null && (boolean)isAdmin==true) {
+                                if (isAdmin != null && (boolean) isAdmin == true) {
                                     currentUserInfo.setAdmin(true);
                                     Toast.makeText(getApplicationContext(), "관리자 확인", Toast.LENGTH_SHORT).show();
 
@@ -213,53 +213,52 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                 });
 
 
-
-
-
-
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        int fragNum = getSupportFragmentManager().getBackStackEntryCount()+1;
+        int fragNum = getSupportFragmentManager().getBackStackEntryCount() + 1;
         Log.d("Number of Frag", Integer.toString(fragNum));
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else if(fragNum == 1){
+        } else if (fragNum == 1) {
             backPressCloseHandler.onBackPressed();
-        }
-        else {
-            int beforeItemId = navSelectStack.pop();
-            navigationView.getMenu().findItem(beforeItemId).setChecked(true);
+        } else {
+            if (!navSelectStack.empty()) {
+                int beforeItemId = navSelectStack.pop();
+                if (beforeItemId != 0)
+                    navigationView.getMenu().findItem(beforeItemId).setChecked(true);
+
+            }
             super.onBackPressed();
         }
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+    /*
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.main, menu);
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
-    }
-*/
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            // Handle action bar item clicks here. The action bar will
+            // automatically handle clicks on the Home/Up button, so long
+            // as you specify a parent activity in AndroidManifest.xml.
+            int id = item.getItemId();
+
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.action_settings) {
+                return true;
+            }
+
+            return super.onOptionsItemSelected(item);
+        }
+    */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -297,4 +296,5 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

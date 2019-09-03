@@ -26,6 +26,7 @@ public class SetCountPopUp extends Activity {
     String foodPhoto;
     Button addToBagLayout;
 
+    int foodNum;
     int foodPrice;
     private DBHelper helper;
     private static SQLiteDatabase db;
@@ -42,6 +43,7 @@ public class SetCountPopUp extends Activity {
         foodName = intent.getStringExtra("name");
         foodPrice = intent.getIntExtra("price",0);
         foodPhoto = intent.getStringExtra("photo");
+        foodNum = 0;
 
         helper = new DBHelper(this, "BASKET.db", null,1);
         db = helper.getWritableDatabase();
@@ -57,14 +59,13 @@ public class SetCountPopUp extends Activity {
         countDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int num=0;
-                num = Integer.parseInt(count.getText().toString());
+                foodNum = Integer.parseInt(count.getText().toString());
 
-                if(num!=0)
-                    --num;
+                if(foodNum!=0)
+                    --foodNum;
 
-                count.setText(String.valueOf(num));
-                returnValue = num;
+                count.setText(String.valueOf(foodNum));
+                returnValue = foodNum;
                 if(returnValue==0)
                     addToBagLayout.setClickable(false);
             }
@@ -72,14 +73,13 @@ public class SetCountPopUp extends Activity {
         countUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int num=0;
-                num = Integer.parseInt(count.getText().toString());
-                ++num;
+                foodNum = Integer.parseInt(count.getText().toString());
+                ++foodNum;
                 if(returnValue==0)
                     addToBagLayout.setClickable(true);
 
-                count.setText(String.valueOf(num));
-                returnValue = num;
+                count.setText(String.valueOf(foodNum));
+                returnValue = foodNum;
 
 
             }
@@ -88,7 +88,9 @@ public class SetCountPopUp extends Activity {
 
     //확인 버튼 클릭
     public void mOnClose(View v){
-
+        returnValue = Integer.parseInt(count.getText().toString());;
+        if(returnValue==0)
+            addToBagLayout.setClickable(false);
         //데이터 전달하기
         Cursor checking = db.rawQuery("SELECT name FROM BASKET WHERE name='"+foodName+"';", null);
         Toast.makeText(v.getContext(), foodName + " 장바구니에 " + returnValue + "개 추가됨.", Toast.LENGTH_SHORT).show();

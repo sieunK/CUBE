@@ -78,7 +78,8 @@ public class MyInformation extends Fragment {
     CurrentOrderAdapter adapter;
     FirebaseFirestore mStore;
 
-    public MyInformation() {}
+    public MyInformation() {
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class MyInformation extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mypage,container, false);
+        View view = inflater.inflate(R.layout.fragment_mypage, container, false);
         changePicture = view.findViewById(R.id.button_changepic);
         transferPoint = view.findViewById(R.id.button_transferpoint);
         chargePoint = view.findViewById(R.id.button_chargepoint);
@@ -97,7 +98,7 @@ public class MyInformation extends Fragment {
         /* 저장된 이미지가 있으면 로드하고 아니면 기본이미지 */
         CurrentApplication ca = (CurrentApplication) (getActivity().getApplicationContext());
         profileImage = ca.getProfileImage();
-        if( profileImage != null) {
+        if (profileImage != null) {
             byte[] decodedByteArray = Base64.decode(profileImage, Base64.NO_WRAP);
             Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
             profilePicture.setImageBitmap(decodedBitmap);
@@ -133,14 +134,15 @@ public class MyInformation extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
         myCurrentOrderView.setLayoutManager(linearLayoutManager);
         myCurrentOrderView.setHasFixedSize(true);
-        myCurrentOrderView.addItemDecoration(new DividerItemDecoration(myCurrentOrderView.getContext(),1));
+        myCurrentOrderView.addItemDecoration(new DividerItemDecoration(myCurrentOrderView.getContext(), 1));
 
 
         myCurrentOrderList = new ArrayList<>();
         FragmentManager fm = getFragmentManager();
 
         mStore = FirebaseFirestore.getInstance();
-        mStore.collection("foodcourt/moonchang/order").whereEqualTo("user", UserNickName).whereEqualTo("standby",true)
+        mStore.collection("foodcourt/moonchang/order")
+                .whereEqualTo("user", UserNickName).whereEqualTo("standby", true)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -169,52 +171,47 @@ public class MyInformation extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode != RESULT_OK)
+        if (resultCode != RESULT_OK)
             return;
 
-        switch(requestCode)
-        {
-            case PICK_FROM_ALBUM:
-            {
+        switch (requestCode) {
+            case PICK_FROM_ALBUM: {
                 mImageCaptureUri = data.getData();
                 Intent intent = new Intent("com.android.camera.action.CROP");
                 intent.setDataAndType(mImageCaptureUri, "image/*");
 
-                intent.putExtra("outputX",200);
-                intent.putExtra("outputY",200);
-                intent.putExtra("aspectX",1);
-                intent.putExtra("aspectY",1);
-                intent.putExtra("scale",true);
-                intent.putExtra("return-data",true);
-                startActivityForResult(intent,CROP_FROM_IMAGE);
+                intent.putExtra("outputX", 200);
+                intent.putExtra("outputY", 200);
+                intent.putExtra("aspectX", 1);
+                intent.putExtra("aspectY", 1);
+                intent.putExtra("scale", true);
+                intent.putExtra("return-data", true);
+                startActivityForResult(intent, CROP_FROM_IMAGE);
                 break;
             }
-            case CROP_FROM_IMAGE:
-            {
-                if(resultCode != RESULT_OK) {
+            case CROP_FROM_IMAGE: {
+                if (resultCode != RESULT_OK) {
                     return;
                 }
 
                 final Bundle extras = data.getExtras();
 
                 String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                        "/BNU/" + System.currentTimeMillis()+".jpg";
+                        "/BNU/" + System.currentTimeMillis() + ".jpg";
 
-                if(extras != null)
-                {
+                if (extras != null) {
                     Bitmap photo = extras.getParcelable("data");
                     profilePicture.setImageBitmap(photo);
 
-                    storeCropImage(photo,filePath);
+                    storeCropImage(photo, filePath);
                     absolutePath = filePath;
                     break;
                 }
 
                 File f = new File(mImageCaptureUri.getPath());
-                if(f.exists())
-                {
+                if (f.exists()) {
                     f.delete();
                 }
             }
@@ -249,11 +246,11 @@ public class MyInformation extends Fragment {
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
-                    }
-                });
+            }
+        });
 
         /* 로컬저장소 염 */
 //        SharedPreferences sf = getActivity().getSharedPreferences("profileImage", Context.MODE_PRIVATE);
@@ -267,7 +264,7 @@ public class MyInformation extends Fragment {
 //        et.putString("Image",Base64.encodeToString(imageBytes, Base64.NO_WRAP));
 //        et.commit();
 
-        if(!directory_BNU.exists())
+        if (!directory_BNU.exists())
             directory_BNU.mkdir();
         File copyFile = new File(filePath);
         BufferedOutputStream out = null;
@@ -275,12 +272,12 @@ public class MyInformation extends Fragment {
         try {
             copyFile.createNewFile();
             out = new BufferedOutputStream(new FileOutputStream(copyFile));
-            bitmap.compress(Bitmap.CompressFormat.PNG,100,out);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
 
             getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile((copyFile))));
             out.flush();
             out.close();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -291,9 +288,9 @@ public class MyInformation extends Fragment {
         private FragmentManager fm;
 
         // adapter에 들어갈 list 입니다.
-        private ArrayList<Order> listData ;
+        private ArrayList<Order> listData;
 
-        public CurrentOrderAdapter(ArrayList<Order> orderList,FragmentManager fragmentManager){
+        public CurrentOrderAdapter(ArrayList<Order> orderList, FragmentManager fragmentManager) {
             listData = orderList;
             fm = fragmentManager;
         }
@@ -318,7 +315,6 @@ public class MyInformation extends Fragment {
             private LinearLayout Item;
             private int pos;
 
-
             ItemViewHolder(View itemView) {
                 super(itemView);
 
@@ -334,26 +330,26 @@ public class MyInformation extends Fragment {
                 pos = position;
 
                 // order collection은 식당별로 있기도하고 일단 문창만 주문을 했을 때 리뷰를 쓰는 것으로 하였음.
-                String orderInfoStr ="";
+                String orderInfoStr = "";
                 orderInfoStr += (data.getOrder_num() + " / 문창 / ");
                 orderInfoStr += simpleDateFormat.format(data.getOrder_time());
 
                 List<Map<String, Object>> orderedList = data.getOrder_list();
                 String orderDetailStr = "";
                 Map<String, Object> _map = orderedList.get(0);
-                orderDetailStr += (_map.get("name") + "X" + _map.get("num") + "외" + (orderedList.size()-1)+"개");
+                orderDetailStr += (_map.get("name") + "X" + _map.get("num") + "외" + (orderedList.size() - 1) + "개");
 
                 curOrderInfo.setText(orderInfoStr);
                 curOrderList.setText(orderDetailStr);
-                if(data.isCalled()){
-                    curOrderState.setBackgroundColor(Color.GREEN);
+                if (data.isCalled()) {
+                    curOrderState.setTextColor((Color.argb(100, 255, 193, 7)));
                     curOrderState.setText("호출됨");
                 }
 
                 Item.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(v.getContext(),"상세보기", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "상세보기", Toast.LENGTH_SHORT).show();
                         Order order = listData.get(pos);
                         OrderDetailDialogFragment oddf
                                 = new OrderDetailDialogFragment(order);

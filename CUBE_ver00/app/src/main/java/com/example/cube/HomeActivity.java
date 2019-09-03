@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -98,9 +99,11 @@ public class HomeActivity extends Fragment {
             public void onClick(View v) {
                 //getActivity().finish();
                 if (fragment != null) {
+                    ((DefaultActivity)getActivity()).navSelectStack.push(0);
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.addToBackStack(null);
                     ft.replace(R.id.content_layout, fragment);
+                    //Toast.makeText(getActivity().getApplicationContext(), "뿜빠야", Toast.LENGTH_SHORT).show();
                     ft.commit();
                 }
                 //DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);

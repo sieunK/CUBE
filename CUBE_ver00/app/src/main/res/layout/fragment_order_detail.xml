@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:minWidth="300dp"
     android:minHeight="300dp"
+    android:orientation="vertical"
     tools:context=".MyPage.OrderedList">
 
     <TextView
@@ -18,9 +19,7 @@
         android:textColor="@color/whitecolor"
         android:textSize="28dp"
         android:fontFamily="@font/font_family"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        />
 
     <TextView
         android:id="@+id/order_date_text"
@@ -28,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
+        android:layout_gravity="center"
         android:text="주문날짜"
         android:fontFamily="@font/font_family"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -35,42 +35,33 @@
         app:layout_constraintTop_toBottomOf="@+id/order_num_text" />
 
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/order_detail_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:minWidth="200dp"
         android:minHeight="120dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/order_date_text"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="30dp"
         android:background="@drawable/border_edittext"
         android:gravity="center_horizontal"
-        >
+        android:paddingTop="10dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/font_family"
+        android:text="주문내용"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/order_detail_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="10dp"
-            android:layout_marginBottom="12dp"
-            android:fontFamily="@font/font_family"
-            android:text="주문내용"
-            android:textSize="20sp" />
-
-    </LinearLayout>
     <TextView
         android:id="@+id/order_sum_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
         android:text="가격"
         android:textSize="18sp"
         android:fontFamily="@font/font_family"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -22,6 +22,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.cube.BNUDialog;
 import com.example.cube.CurrentApplication;
 import com.example.cube.MoonChang.WriteCommentPopUp;
 import com.example.cube.R;
@@ -181,9 +182,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
                         dialog.setDialogResult(new WriteCommentPopUp.OnMyDialogResult() {
                             @Override
                             public void finish(Bundle result) {
-                                final ProgressDialog progressDialog = new ProgressDialog(mContext);
-                                progressDialog.setTitle("loading...");
-                                progressDialog.show();
+                                final BNUDialog dialog = BNUDialog.newInstance("로딩 중입니다...");
+                                dialog.setCancelable(false);
+                                dialog.show(((AppCompatActivity) mContext).getSupportFragmentManager(), BNUDialog.TAG);
                                 final String putComment = result.getString("comment");
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                                 ReviewParent data = ReviewParents.get(getAdapterPosition());
@@ -196,7 +197,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
                                                             public void onSuccess(Void aVoid) {
-                                                                progressDialog.dismiss();
+                                                                dialog.dismiss();
                                                                 return;
                                                             }
                                                         });
@@ -205,7 +206,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Toast.makeText(mContext, "댓글 입력 실패", Toast.LENGTH_SHORT).show();
-                                        progressDialog.dismiss();
+                                        dialog.dismiss();
                                         return;
                                     }
                                 });
@@ -242,10 +243,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
             //Toast.makeText(mContext,"관리자아님",Toast.LENGTH_SHORT).show();
             holder.writeComment.setVisibility(View.INVISIBLE);
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> 32d295f49936a0668d4101a1f2acab00a918127c
         /* 리뷰사진이 없을때와 있을때 구분 */
         if (reviewImageStr.equals("null")) {
             holder. reviewImage.setVisibility(View.GONE);
@@ -276,10 +274,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ItemViewHo
 
 
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 32d295f49936a0668d4101a1f2acab00a918127c
 
 
     @Override

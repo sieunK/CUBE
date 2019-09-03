@@ -188,11 +188,11 @@
             </LinearLayout>
             <com.ssomai.android.scalablelayout.ScalableLayout
                 android:layout_width="370dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                app:scale_base_height="100"
+                app:scale_base_height="750"
                 app:scale_base_width="920"
-                android:background="@drawable/ic_longorangebutton">
+                >
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="109dp"
@@ -200,28 +200,21 @@
                     android:textColor="@color/bamcolor"
                     android:text="진행중인 주문"
                     android:fontFamily="@font/bmjua_ttf"
+                    android:gravity="center"
+                    android:background="@drawable/ic_longorangebutton"
                     app:scale_height="100"
-                    app:scale_left="100"
                     app:scale_textsize="40"
-                    app:scale_top="29"
-                    app:scale_width="360" />
+                    app:scale_width="920" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="382dp"
-                    android:layout_height="wrap_content"
-                    app:scale_height="50"
-                    app:scale_left="100"
-                    app:scale_top="110"
-                    app:scale_width="700"
-                    app:srcCompat="@drawable/line" />
+
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:scale_height="550"
-                    app:scale_left="100"
-                    app:scale_top="160"
-                    app:scale_width="700">
+
+                    app:scale_height="600"
+                    app:scale_top="130"
+                    app:scale_width="920">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_my_order_current"
