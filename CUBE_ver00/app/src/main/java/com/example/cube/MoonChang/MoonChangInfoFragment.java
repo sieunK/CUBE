@@ -6,8 +6,11 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ScrollView;
 
 import com.example.cube.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,6 +25,8 @@ public class MoonChangInfoFragment extends Fragment
         implements OnMapReadyCallback
 {
     private MapView mapView = null;
+    private ScrollView scrollView;
+    private FrameLayout frameLayout;
 
     public MoonChangInfoFragment()
     {
@@ -39,17 +44,40 @@ public class MoonChangInfoFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_info, container, false);
 
+        frameLayout = (FrameLayout)layout.findViewById(R.id.background_map);
+        scrollView = (ScrollView)layout.findViewById(R.id.info_scroll);
         mapView = (MapView)layout.findViewById(R.id.map);
+
+        mapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent ev) {
+                int action = ev.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        scrollView.requestDisallowInterceptTouchEvent(true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        scrollView.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return true;
+            }
+        });
+
         mapView.getMapAsync(this);
 
         return layout;
     }
+
+
 
     @Override
     public void onStart() {
         super.onStart();
         mapView.onStart();
     }
+
+
 
     @Override
     public void onStop() {

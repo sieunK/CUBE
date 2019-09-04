@@ -123,7 +123,6 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
                         @Override
                         public void finish(Bundle result) {
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            SharedPreferences sf = mContext.getSharedPreferences("profileImage", Context.MODE_PRIVATE);
 
                             String username = currentApplication.getNickname();
                             String review = result.getString("review");
@@ -136,10 +135,8 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
                                 photo = "null";
                             }
                             String DocId = db.collection("foodcourt/moonchang/review").document().getId();
-                            String profile = sf.getString("Image","null");
-                            Log.e("?DFJSDJFSDIJ",profile);
+                            String profile = currentApplication.getProfileImage();
 
-                            Log.e("???????????",DocId);
                             Map<String, Object> post = new HashMap<>();
                             post.put("user", username);
                             post.put("review", review);
@@ -149,8 +146,10 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
                             post.put("comment","null");
                             post.put("commentDate",new Date());
                             post.put("id",DocId);
-                            post.put("profile",profile);
 
+                            if(profile!=null) {
+                                post.put("profile", profile);
+                            }
                             db.collection("foodcourt/moonchang/review")
                                     .document(DocId).set(post)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {

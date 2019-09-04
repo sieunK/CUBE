@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     // implementation "gun0912.ted:tedpermission:2.1.0"
     //implementation files('libs/jsoup-1.12.1.jar')
+    implementation "androidx.core:core:1.0.2"
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'org.jsoup:jsoup:1.7.3'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'

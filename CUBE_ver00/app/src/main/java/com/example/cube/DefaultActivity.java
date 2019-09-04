@@ -23,6 +23,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.cube.MoonChang.MoonChangFragment;
+import com.example.cube.MoonChang.MoonChangMenuFragment;
 import com.example.cube.MyPage.MyPageActivity;
 import com.example.cube.Notice.NoticeActivity;
 import com.example.cube.Opening.LoginActivity;
@@ -72,6 +74,18 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
+        /* 알림으로 들어왔을경우 문창메뉴 바로 띄워줌 */
+        String restaurant = getIntent().getStringExtra("식단알림");
+
+//        if(restaurant!=null) {
+//            if(restaurant.equals("문창")) {
+//                Log.e("cnpcnpcnpcnp","받긴받았니");
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.content_layout, new MoonChangMenuFragment());
+//                fragmentTransaction.commit();
+//            }
+//        }
 
         /* DB 작업 */
         Fdb = FirebaseFirestore.getInstance();
@@ -175,6 +189,8 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
                                 }
                                 if (getUserProfile != null) {
                                     currentUserInfo.setProfileImage(getUserProfile.toString());
+                                } else {
+                                    currentUserInfo.setProfileImage("null");
                                 }
 
                                 Object isAdmin = dc.getData().get("isAdmin");

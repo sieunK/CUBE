@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -98,7 +99,7 @@ public class MyInformation extends Fragment {
         /* 저장된 이미지가 있으면 로드하고 아니면 기본이미지 */
         CurrentApplication ca = (CurrentApplication) (getActivity().getApplicationContext());
         profileImage = ca.getProfileImage();
-        if (profileImage != null) {
+        if( profileImage != null && profileImage != "null") {
             byte[] decodedByteArray = Base64.decode(profileImage, Base64.NO_WRAP);
             Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedByteArray, 0, decodedByteArray.length);
             profilePicture.setImageBitmap(decodedBitmap);
@@ -119,11 +120,50 @@ public class MyInformation extends Fragment {
                         dialog.dismiss();
                     }
                 };
+                DialogInterface.OnClickListener defaultListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Drawable drawable = getResources().getDrawable(R.drawable.ic_tab_select_info);
+                        profilePicture.setImageDrawable(drawable);
 
+//                        Bitmap bitmap = getBitmapFromVectorDrawable(getContext(),R.drawable.ic_tab_select_info);
+//                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//                        byte[] imageBytes = byteArrayOutputStream.toByteArray();
+//                        String profile = Base64.encodeToString(imageBytes, Base64.NO_WRAP);
+
+                        final Map<String, Object> post = new HashMap<>();
+                        post.put("profile", "null");
+
+                        CurrentApplication ca = (CurrentApplication) (getActivity().getApplicationContext());
+                        ca.setProfileImage("null");
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("users")
+                                .whereEqualTo("username", ca.getNickname()).get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                        for (DocumentSnapshot ds : queryDocumentSnapshots.getDocuments()) {
+                                            DocumentReference dr = ds.getReference();
+                                            dr.set(post, SetOptions.merge());
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+
+                        dialog.dismiss();
+
+                    }
+                };
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("업로드할 이미지 선택")
                         .setPositiveButton("앨범선택", albumListener)
-                        .setNegativeButton("취소", cancelListener)
+                        .setNegativeButton("기본사진으로 설정", defaultListener)
+                        .setNeutralButton("취소",cancelListener)
                         .show();
             }
         });

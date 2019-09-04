@@ -1,5 +1,7 @@
 package com.example.cube.Setting;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -94,23 +96,40 @@ public class MenuAlarmSettingActivity extends AppCompatActivity {
                 editor.putBoolean("HS_l",HS_lunch.isChecked());
                 editor.putBoolean("HS_d",HS_dinner.isChecked());
 
-                if(geumJeong.isChecked() || moonChang.isChecked() || hakSaeng.isChecked() || saetBul.isChecked()) {
+                if(moonChang.isChecked()) {
+                    if(isServiceRunning()) {
+                        Intent intent = new Intent(getApplicationContext(), MenuAlarmService.class);
+                        stopService(intent);
+                    }
                     Intent intent = new Intent(getApplicationContext(), MenuAlarmService.class);
                     startService(intent);
-                } else {
+
+                } else if(!moonChang.isChecked()){
                     Intent intent = new Intent(getApplicationContext(), MenuAlarmService.class);
                     stopService(intent);
                 }
 
                 editor.commit();
                 Toast.makeText(getApplicationContext(),"현재 정보 저장됨.", Toast.LENGTH_SHORT).show();
-
+                finish();
             }
         });
 
 
-
     }
+
+    public boolean isServiceRunning()
+    {
+        ActivityManager manager = (ActivityManager) getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))
+        {
+            if (com.example.cube.Setting.MenuAlarmService.class.getName().equals(service.service.getClassName()))
+                return true;
+        }
+        return false;
+    }
+
     public void setInitialCheckBox() {
         SharedPreferences sf = getSharedPreferences("menuAlarm",MODE_PRIVATE);
 
