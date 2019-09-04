@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cube.BNUDialog;
 import com.example.cube.Components.Order;
 import com.example.cube.R;
 import com.google.firebase.firestore.DocumentChange;
@@ -32,9 +34,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     protected List<Order> mOrderList = new ArrayList<>();
     protected boolean[] mOrderChecked;
     protected ListenerRegistration listenerRegistration;
+    protected boolean showFinished;
+    FragmentManager fm;
 
-    public OrderAdapter(Query query) {
+
+    public OrderAdapter(Query query, boolean showFinished, FragmentManager fm) {
         listenerRegistration = query.addSnapshotListener(eventListener);
+        this.showFinished = showFinished;
+        this.fm = fm;
     }
 
     private EventListener eventListener = new EventListener<QuerySnapshot>() {
@@ -47,26 +54,33 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
             String orderKey;
             int orderIndex;
             Order order;
-
+            final BNUDialog dialog = BNUDialog.newInstance("로딩 중입니다...");
+            dialog.setCancelable(true);
+            dialog.show(fm, BNUDialog.TAG);
             for (DocumentChange dc : snapshots.getDocumentChanges()) {
                 switch (dc.getType()) {
                     case ADDED:
                         order = dc.getDocument().toObject(Order.class);
                         // Update RecyclerView
-                        mOrderIds.add(0, dc.getDocument().getId());
-                        mOrderList.add(0, order);
-                        notifyItemInserted(0);
-                        Log.d("receive Time", (order.getOrder_time()).toString());
-                        Log.d("Id", mOrderIds.get(0));
-                        Log.d("size", Integer.toString(mOrderIds.size()));
-                        Log.d("standby", Boolean.toString(order.isStandby()));
-                        Log.d("called", Boolean.toString(order.isCalled()));
+
+                        if (order.isStandby() != showFinished) {
+                            mOrderIds.add(0, dc.getDocument().getId());
+                            mOrderList.add(0, order);
+                            notifyItemInserted(0);
+
+                            Log.d("receive Time", (order.getOrder_time()).toString());
+                            Log.d("Id", mOrderIds.get(0));
+                            Log.d("size", Integer.toString(mOrderIds.size()));
+                            Log.d("standby", Boolean.toString(order.isStandby()));
+                            Log.d("called", Boolean.toString(order.isCalled()));
+                        }
                         break;
 
                     case MODIFIED:
                         order = dc.getDocument().toObject(Order.class);
                         orderKey = dc.getDocument().getId();
                         orderIndex = mOrderIds.indexOf(orderKey);
+
                         if (orderIndex > -1) {
                             // Replace with the new data
                             mOrderList.set(orderIndex, order);
@@ -97,6 +111,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
                 }
             }
             mOrderChecked = new boolean[mOrderIds.size()];
+            dialog.dismiss();
         }
     };
 
@@ -113,24 +128,27 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         Order data = mOrderList.get(pos);
 
         // 대 기 / 완 료
-            boolean isWaiting = data.isStandby();
-           if(!isWaiting) holder.itemView.setBackgroundColor(Color.argb(100, 190, 190, 187));
+        boolean isWaiting = data.isStandby();
+
+        if (!isWaiting)
+            holder.itemView.setBackgroundColor(Color.argb(100, 190, 190, 187));
+
         else {
-               // 호 출 여 부
-               boolean calledOrNot = data.isCalled();
-               if (calledOrNot) holder.itemView.setBackgroundColor(Color.argb(100, 21, 158, 26));
-               else holder.itemView.setBackgroundColor(Color.argb(100, 255, 193, 7));
+            // 호 출 여 부
+            boolean calledOrNot = data.isCalled();
+            if (calledOrNot) holder.itemView.setBackgroundColor(Color.argb(100, 21, 158, 26));
+            else holder.itemView.setBackgroundColor(Color.argb(100, 255, 193, 7));
         /*if (calledOrNot) holder.mCalledImageView.setVisibility(View.VISIBLE);
         else holder.mCalledImageView.setVisibility(View.INVISIBLE);
         */
-           }
+        }
 
         // 주 문 번 호
         holder.mNumberTextView.setText(Integer.toString(data.getOrder_num()));
 
-         // 체 크 박 스
+        // 체 크 박 스
         boolean checked = mOrderChecked[pos];
-        if(!checked) holder.mCheckBox.setVisibility(View.INVISIBLE);
+        if (!checked) holder.mCheckBox.setVisibility(View.INVISIBLE);
         else {
             holder.mCheckBox.setVisibility(View.VISIBLE);
             holder.mCheckBox.setChecked(mOrderChecked[pos]);
@@ -152,7 +170,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         holder.mListTextView.setText(orderList_String);
 
 
-
         // 가 격
         //holder.mPriceTextView.setText(Integer.toString(total_Price) + "원");
 
@@ -170,10 +187,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
         listenerRegistration.remove();
     }
 
-    public void resetAll(Query newQuery) {
+    public void resetAll(Query newQuery, boolean finishOrNot) {
         cleanupListener();
         mOrderList.clear();
         mOrderIds.clear();
+        showFinished = finishOrNot;
         listenerRegistration = newQuery.addSnapshotListener(eventListener);
 
     }
@@ -191,7 +209,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
 
     public class OrderViewHolder extends RecyclerView.ViewHolder {
-            private CheckBox mCheckBox;
+        private CheckBox mCheckBox;
         private TextView mNumberTextView;
         private TextView mListTextView;
         //    private TextView mStateTextView;

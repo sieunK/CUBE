@@ -142,7 +142,7 @@ public class MoonChangInfoFragment extends Fragment
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(munchang));
 
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(17));
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
     }
 
 }

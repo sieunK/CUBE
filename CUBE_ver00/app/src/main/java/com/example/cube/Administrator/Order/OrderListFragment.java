@@ -154,11 +154,10 @@ public class OrderListFragment extends Fragment {
                 int Y = cal.get(cal.YEAR);
                 int M = cal.get(cal.MONTH);
                 int yD = cal.get(cal.DAY_OF_MONTH);
-                sendQuery(Y, M, yD);
+                sendQuery(Y, M, yD,false);
 
             }
         });
-
         goTomorrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,39 +165,31 @@ public class OrderListFragment extends Fragment {
                 int Y = cal.get(cal.YEAR);
                 int M = cal.get(cal.MONTH);
                 int tD = cal.get(cal.DAY_OF_MONTH);
-                sendQuery(Y, M, tD);
+                sendQuery(Y, M, tD, false);
             }
         });
         showFinished.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("finishOrNot", Boolean.toString(finishOrNot));
                 if (!finishOrNot) {
-                    Date beginTime = new Date(cal.getTimeInMillis());
-                    Timestamp getDayStart = new Timestamp(beginTime);
-                    cal.add(Calendar.DAY_OF_MONTH, 1);
-                    Date endTime = new Date(cal.getTimeInMillis());
-                    Timestamp getDayLast = new Timestamp(endTime);
-                    cal.add(Calendar.DAY_OF_MONTH, -1);
-                    Query query = collectionRef
-                            .whereEqualTo("standby", false)
-                            .whereGreaterThanOrEqualTo("order_time", getDayStart)
-                            .whereLessThan("order_time", getDayLast)
-                            .orderBy("order_time", Query.Direction.ASCENDING);
-                    mAdapter.resetAll(query);
-                    mAdapter.notifyDataSetChanged();
+                    int Y = cal.get(cal.YEAR);
+                    int M = cal.get(cal.MONTH);
+                    int D = cal.get(cal.DAY_OF_MONTH);
+                    sendQuery(Y, M, D, true);
                     finishOrNot = true;
                 } else return;
             }
         });
-
         showOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("finishOrNot", Boolean.toString(finishOrNot));
                 if (finishOrNot) {
                     int Y = cal.get(cal.YEAR);
                     int M = cal.get(cal.MONTH);
                     int D = cal.get(cal.DAY_OF_MONTH);
-                    sendQuery(Y, M, D);
+                    sendQuery(Y, M, D, false);
                     finishOrNot = false;
                 } else return;
             }
@@ -224,17 +215,14 @@ public class OrderListFragment extends Fragment {
         datePickerTextView.setText(simpleDateFormat.format(today));
 
         setQuery = collectionRef
-                .whereEqualTo("standby", true)
                 .whereGreaterThanOrEqualTo("order_time", todayStart)
                 .whereLessThan("order_time", tomorrowStart)
                 .orderBy("order_time", Query.Direction.ASCENDING);
 
         // 로딩 중..
-        final BNUDialog dialog = BNUDialog.newInstance("로딩 중입니다...");
-        dialog.setCancelable(true);
-        dialog.show(getActivity().getSupportFragmentManager(), BNUDialog.TAG);
 
-        mAdapter = new OrderAdapter(setQuery);
+
+        mAdapter = new OrderAdapter(setQuery,false, getActivity().getSupportFragmentManager());
         orderRecylcerView.setAdapter(mAdapter);
         orderRecylcerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), orderRecylcerView,
@@ -257,7 +245,6 @@ public class OrderListFragment extends Fragment {
                                 callOrder(orderChosen, orderId, position);
                             }
                         }));
-        dialog.dismiss();
     }
 
     @Override
@@ -365,11 +352,11 @@ public class OrderListFragment extends Fragment {
     DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int Y, int M, int D) {
-            sendQuery(Y, M, D);
+            sendQuery(Y, M, D, false);
         }
     };
 
-    private void sendQuery(int Y, int M, int D) {
+    private void sendQuery(int Y, int M, int D, boolean finishOrNot) {
         cal.set(Y, M, D);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
@@ -384,12 +371,11 @@ public class OrderListFragment extends Fragment {
 
         Log.d("send Time", beginTime.toString() + " " + endTime.toString());
         Query query = collectionRef
-                .whereEqualTo("standby", true)
                 .whereGreaterThanOrEqualTo("order_time", getDayStart)
                 .whereLessThan("order_time", getDayLast)
                 .orderBy("order_time", Query.Direction.ASCENDING);
 
-        mAdapter.resetAll(query);
+        mAdapter.resetAll(query, finishOrNot);
         mAdapter.notifyDataSetChanged();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY년 MM월 dd일 (E)");
@@ -491,9 +477,8 @@ public class OrderListFragment extends Fragment {
                         @Override
                         public void DeleteOrNot(int IsDeleted) {
                             if (IsDeleted == 1) {
-                                final ProgressDialog progressDialog = new ProgressDialog(getContext());
-                                progressDialog.setTitle("deleting...");
-                                progressDialog.show();
+                                final BNUDialog dialog = BNUDialog.newInstance("삭제 중입니다...");
+                                dialog.show(getActivity().getSupportFragmentManager(), BNUDialog.TAG);
 
                                 Log.d("orderList", "order delete");
                                 int i;
@@ -512,13 +497,13 @@ public class OrderListFragment extends Fragment {
                                             public void onFailure(@NonNull Exception e) {
                                                 Toast.makeText((AdminActivity) getActivity(),
                                                         "삭제 도중 오류가 발생했습니다", Toast.LENGTH_SHORT).show();
-                                                progressDialog.dismiss();
+                                                dialog.dismiss();
                                                 return;
                                             }
                                         });
                                     }
                                 }
-                                progressDialog.dismiss();
+                                dialog.dismiss();
 
                             } else
                                 Log.d("orderList", "IsDeleted==0");
@@ -538,9 +523,18 @@ public class OrderListFragment extends Fragment {
                     // FMC 메시지 생성 start
                     JSONObject root = new JSONObject();
                     JSONObject notification = new JSONObject();
+                    JSONObject data = new JSONObject();
+
                     notification.put("body", message);
                     notification.put("title", getString(R.string.app_name));
+                    notification.put("icon", "ic_logo");
+
+                    data.put("message", message);
+                    data.put("title", getString(R.string.app_name));
+                    data.put("icon", "ic_logo");
+
                     root.put("notification", notification);
+                    root.put("data",data);
                     root.put("to", userLoginToken);
 
                     // FMC 메시지 생성 end

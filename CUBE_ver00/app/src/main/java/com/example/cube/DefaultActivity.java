@@ -52,7 +52,7 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
 
     private CurrentApplication currentUserInfo;
     private BackPressCloseHandler backPressCloseHandler;
-    private BNUDialog dialog;
+    public BNUDialog dialog;
 
     private String getUserEmail;
     private String getUserNickName;
@@ -281,7 +281,6 @@ public class DefaultActivity extends AppCompatActivity implements NavigationView
         // Handle navigation view item clicks here.
         navSelectStack.push(navigationView.getCheckedItem().getItemId());
         int id = item.getItemId();
-
 
         Fragment fragment = null;
         if (id == R.id.nav_home) {

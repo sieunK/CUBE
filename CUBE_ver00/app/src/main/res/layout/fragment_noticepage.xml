@@ -9,14 +9,15 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/board_toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="50dp"
+        android:background="@color/strongorange"
         android:gravity="center"
         android:theme="@style/AppTheme.PopupOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/board_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="match_parent"
             android:background="@color/strongorange"
             app:title=" 공지사항"
             app:titleTextAppearance="@style/Toolbar.TitleText"

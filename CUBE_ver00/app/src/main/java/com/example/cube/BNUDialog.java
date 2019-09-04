@@ -3,6 +3,7 @@ package com.example.cube;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -23,7 +24,6 @@ public class BNUDialog extends DialogFragment {
             Bundle args =new Bundle();
             args.putString("title", title);
             dialog.setArguments(args);
-
             return dialog;
     }
 
@@ -38,10 +38,10 @@ public class BNUDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.bnu_dialog, null);
         dialogTitleView = view.findViewById(R.id.bnu_dialog_title);
         dialogTitleView.setText(dialogTitle);
+        Log.d("DialogTITLE" , dialogTitle);
         builder.setView(view);
         return builder.create();
     }
-
 
 
 }

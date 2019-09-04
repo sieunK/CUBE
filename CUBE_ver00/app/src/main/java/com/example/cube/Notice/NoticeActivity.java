@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.cube.Components.NoticeData;
 import com.example.cube.CurrentApplication;
 import com.example.cube.R;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.NotNull;
@@ -62,8 +63,8 @@ public class NoticeActivity extends Fragment {
         View view = inflater.inflate(R.layout.fragment_noticepage, container, false);
         final boolean isAdmin  =currentUserInfo.isAdmin();
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.board_toolbar);
-        toolbar.setVisibility(View.GONE);
+        AppBarLayout toolbarLayout = view.findViewById(R.id.board_toolbar_layout);
+        toolbarLayout.setVisibility(View.GONE);
 
         WriteNotice = (FloatingActionButton)view.findViewById(R.id.write_notice);
         WriteNotice.setOnClickListener(new View.OnClickListener() {

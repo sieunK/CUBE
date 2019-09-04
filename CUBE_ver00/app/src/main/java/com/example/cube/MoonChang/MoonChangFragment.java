@@ -1,28 +1,32 @@
 package com.example.cube.MoonChang;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.cube.BNUDialog;
+import com.example.cube.DefaultActivity;
 import com.example.cube.R;
 import com.google.android.material.tabs.TabLayout;
 
 
 public class MoonChangFragment extends Fragment /*implements MoonChangPayFragment.OnFragmentInteractionListener*/ {
     private int savedFragmentIndex;
-
     private MoonChangBagFragment fragmentbag;
     private MoonChangPagerAdapter myPagerAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         savedFragmentIndex=0;
+
     }
 
     @Nullable
@@ -30,6 +34,7 @@ public class MoonChangFragment extends Fragment /*implements MoonChangPayFragmen
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_moonchang, container, false);
        // fragmentbag = new MoonChangBagFragment();
+
 
         //TabLayout
         final TabLayout tabs = (TabLayout) view.findViewById(R.id.tabs);
@@ -41,6 +46,8 @@ public class MoonChangFragment extends Fragment /*implements MoonChangPayFragmen
 
         //어답터설정
         final ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+
+
         myPagerAdapter = new MoonChangPagerAdapter(getChildFragmentManager(), 4);
         viewPager.setAdapter(myPagerAdapter);
         viewPager.setOffscreenPageLimit(4);
@@ -103,7 +110,7 @@ public class MoonChangFragment extends Fragment /*implements MoonChangPayFragmen
     }
 
 
-    /*
+/*
         public void onFragmentChanged(int index){
 
             fragment_bag fragmentBag= new fragment_bag();

@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -54,6 +55,9 @@ public class HomeActivity extends Fragment {
     Fragment fragment;
     ScrollView scrollView;
     String collectionPath;
+
+    FragmentManager fm ;
+
     public HomeActivity() {
     }
 
@@ -103,8 +107,10 @@ public class HomeActivity extends Fragment {
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.addToBackStack(null);
                     ft.replace(R.id.content_layout, fragment);
-                    //Toast.makeText(getActivity().getApplicationContext(), "뿜빠야", Toast.LENGTH_SHORT).show();
                     ft.commit();
+                    getActivity().getSupportFragmentManager().executePendingTransactions();
+
+
                 }
                 //DrawerLayout drawer = getActivity().findViewById(R.id.drawer_layout);
                 //drawer.closeDrawer(GravityCompat.START);

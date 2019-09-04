@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,10 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.fragment.app.Fragment;
 
 
+import com.example.cube.BNUDialog;
 import com.example.cube.CurrentApplication;
 import com.example.cube.R;
 import com.example.cube.Review.ReviewAdapter;
 import com.example.cube.Review.ReviewParent;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -46,17 +49,13 @@ public class MoonChangReviewFragment extends Fragment{
 
     public MoonChangReviewFragment() { }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review, container, false);
-        Toolbar toolbar =  view.findViewById(R.id.review_toolbar);
-        toolbar.setVisibility(View.GONE);
+        AppBarLayout toolbarLayout =  view.findViewById(R.id.review_toolbar_layout);
+        toolbarLayout.setVisibility(View.GONE);
 
         currentUserInfo = (CurrentApplication) (getActivity().getApplication());
         mStore = FirebaseFirestore.getInstance();
@@ -70,6 +69,9 @@ public class MoonChangReviewFragment extends Fragment{
         final Query reviewQuery = mStore.collection(collectionPath).orderBy("date", Query.Direction.ASCENDING);
 
         reviewList = new ArrayList<>();
+        final BNUDialog dialog = BNUDialog.newInstance("로딩 중입니다...");
+        dialog.setCancelable(false);
+        dialog.show(getActivity().getSupportFragmentManager(), BNUDialog.TAG);
         reviewQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot qs, @Nullable FirebaseFirestoreException e) {
@@ -81,6 +83,8 @@ public class MoonChangReviewFragment extends Fragment{
                 adapter = new ReviewAdapter(getActivity(), reviewQuery);
                 adapter.setHasStableIds(true);
                 recyclerView.setAdapter(adapter);
+                dialog.dismiss();
+
             }
         });
 
@@ -100,8 +104,10 @@ public class MoonChangReviewFragment extends Fragment{
 
             }
         });
+        dialog.dismiss();
         return view;
     }
+
 
 
 //    //리스트 초기화 함수

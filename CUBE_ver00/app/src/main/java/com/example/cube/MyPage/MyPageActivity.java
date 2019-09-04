@@ -1,6 +1,7 @@
 package com.example.cube.MyPage;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class MyPageActivity extends Fragment {
 
         //어답터 생성후 연결 - 배열을 인자로 추가해 준다.
         viewPager.setAdapter(new MyPagerAdapter(getChildFragmentManager(),arrFragments));
+
         return view;
     }
 

@@ -17,15 +17,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.example.cube.BNUDialog;
 import com.example.cube.Components.PayMenuData;
 import com.example.cube.DBHelper;
+import com.example.cube.DefaultActivity;
 import com.example.cube.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -71,6 +75,7 @@ public class MoonChangPayFragment extends Fragment {
         db = helper.getWritableDatabase();
         menuData = new ArrayList<>();
 
+
         Cursor c = db.rawQuery("SELECT name, photo, price FROM MC_MENU", null);
         while(c.moveToNext()){
             PayMenuData data = new PayMenuData();
@@ -85,6 +90,7 @@ public class MoonChangPayFragment extends Fragment {
 
 
         recyclerView.setAdapter(adapter);
+
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent motionEvent) {
@@ -142,8 +148,11 @@ public class MoonChangPayFragment extends Fragment {
             }
 
         });
+
         return view;
     }
+
+
 
     //    @Override
 //    public void onAttach(Context context) {
