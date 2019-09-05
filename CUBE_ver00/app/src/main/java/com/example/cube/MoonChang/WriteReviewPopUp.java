@@ -128,8 +128,8 @@ public class WriteReviewPopUp extends DialogFragment {
                         mDialogResult.finish(bundle);
                     }
 
-                    DialogFragment dialogFragment = (DialogFragment) fragment;
-                    dialogFragment.dismiss();
+//                    DialogFragment dialogFragment = (DialogFragment) fragment;
+//                    dialogFragment.dismiss();
                 }
             }
         });

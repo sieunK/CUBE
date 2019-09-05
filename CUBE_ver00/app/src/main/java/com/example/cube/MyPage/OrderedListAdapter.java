@@ -16,9 +16,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cube.BNUDialog;
 import com.example.cube.Components.Order;
 import com.example.cube.CurrentApplication;
 import com.example.cube.MoonChang.WriteReviewPopUp;
@@ -31,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,13 +47,14 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
     CurrentApplication currentApplication;
 
     // adapter에 들어갈 list 입니다.
-    private ArrayList<Order> listData = new ArrayList<>();
+    private ArrayList<Order> listData;
+    private ArrayList<String> idData;
     private Context mContext;
     private FragmentManager fm;
 
-    public OrderedListAdapter(ArrayList<Order> orderList, FragmentManager fragmentManager, Context context){
+    public OrderedListAdapter(ArrayList<Order> orderList, ArrayList<String> orderIDs, Context context) {
         listData = orderList;
-        fm = fragmentManager;
+        idData = orderIDs;
         mContext = context;
     }
 
@@ -77,7 +81,7 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
 
         ItemViewHolder(View itemView) {
             super(itemView);
-            currentApplication = (CurrentApplication)(mContext.getApplicationContext());
+            currentApplication = (CurrentApplication) (mContext.getApplicationContext());
             RestaurantName = itemView.findViewById(R.id.ordered_itemView_title);
             orderDate = itemView.findViewById(R.id.ordered_itemView_date);
             orderDetail = itemView.findViewById(R.id.ordered_itemView_content);
@@ -96,40 +100,49 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
             List<Map<String, Object>> orderedList = data.getOrder_list();
             String orderDetailStr = "";
             Map<String, Object> _map = orderedList.get(0);
-                orderDetailStr += (_map.get("name") + "X" + _map.get("num") + "외" + (orderedList.size()-1)+"개");
+            orderDetailStr += (_map.get("name") + "X" + _map.get("num") + " 외 " + (orderedList.size() - 1) + "개");
 
             orderDetail.setText(orderDetailStr);
 
             Item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(),"상세보기", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "상세보기", Toast.LENGTH_SHORT).show();
                     Order order = listData.get(pos);
                     OrderDetailDialogFragment oddf
                             = new OrderDetailDialogFragment(order);
-                    oddf.show(fm, OrderDetailDialogFragment.TAG);
+                    oddf.show(((AppCompatActivity) mContext).getSupportFragmentManager(), OrderDetailDialogFragment.TAG);
                 }
             });
+            
+            if (data.isWritten()) writeReview.setVisibility(View.GONE);
             writeReview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
                     Bundle args = new Bundle();
                     args.putString("key", "value");
                     //---------------------------------------.//
-                    WriteReviewPopUp dialog = new WriteReviewPopUp();
+                    final WriteReviewPopUp dialog = new WriteReviewPopUp();
                     dialog.setArguments(args);
-                    dialog.show(((AppCompatActivity)mContext).getSupportFragmentManager(),"review");
+                    dialog.show(((AppCompatActivity) mContext).getSupportFragmentManager(), "review");
                     dialog.setDialogResult(new WriteReviewPopUp.OnMyDialogResult() {
                         @Override
                         public void finish(Bundle result) {
+                            final BNUDialog uploadDialog = BNUDialog.newInstance("업로드 중입니다...");
+                            uploadDialog.setCancelable(false);
+                            uploadDialog.show(((AppCompatActivity) mContext).getSupportFragmentManager(), BNUDialog.TAG);
+
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                            String orderID = idData.get(pos);
+                            db.collection("foodcourt/moonchang/order").document(orderID).update("written", true);
 
                             String username = currentApplication.getNickname();
                             String review = result.getString("review");
                             Float rating = result.getFloat("rating");
                             Boolean isImage = result.getBoolean("isImage");
                             String photo;
-                            if(isImage) {
+                            if (isImage) {
                                 photo = Base64.encodeToString(result.getByteArray("image"), Base64.NO_WRAP);
                             } else {
                                 photo = "null";
@@ -141,13 +154,13 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
                             post.put("user", username);
                             post.put("review", review);
                             post.put("rating", rating);
-                            post.put("date",new Date());
-                            post.put("photo",photo);
-                            post.put("comment","null");
-                            post.put("commentDate",new Date());
-                            post.put("id",DocId);
+                            post.put("date", new Date());
+                            post.put("photo", photo);
+                            post.put("comment", "null");
+                            post.put("commentDate", new Date());
+                            post.put("id", DocId);
 
-                            if(profile!=null) {
+                            if (profile != null) {
                                 post.put("profile", profile);
                             }
                             db.collection("foodcourt/moonchang/review")
@@ -155,18 +168,22 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(v.getContext(),"성공적으로 올려짐.",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(v.getContext(), "성공적으로 올려짐.", Toast.LENGTH_SHORT).show();
                                             writeReview.setVisibility(View.INVISIBLE);
+                                            uploadDialog.dismiss();
+                                            dialog.dismiss();
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-
+                                    Toast.makeText(v.getContext(), "업로드 실패.", Toast.LENGTH_SHORT).show();
+                                    uploadDialog.dismiss();
+                                    dialog.dismiss();
                                 }
                             });
                         }
                     });
-                    Toast.makeText(v.getContext(), "리뷰쓰기 버튼 클릭됨.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "리뷰쓰기 버튼 클릭됨.", Toast.LENGTH_SHORT).show();
                 }
             });
         }

@@ -204,7 +204,7 @@ public class MoonChangBagActivity extends AppCompatActivity {
 
                 order.put("order_time", new Date());    // 주문 시간
                 order.put("standby", true);          // 대기 여부
-
+                order.put("written", false);
                 order.put("user", userNickname);        // 사용자
 
                 //주문넣기

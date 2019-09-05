@@ -60,6 +60,11 @@
             android:layout_weight="1.0"/>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BEBBBB" />
+
     <TextView
         android:layout_width="280dp"
         android:layout_height="30dp"
@@ -72,10 +77,6 @@
         android:textSize="20dp"
         android:background="@drawable/ic_orangelongbutton"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#BEBBBB" />
 
     <TextView
         android:id="@+id/call_order_list"

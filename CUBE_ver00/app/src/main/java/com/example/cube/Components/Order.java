@@ -10,16 +10,18 @@ public class Order {
     private Date order_time;
     private boolean standby;
     private boolean called;
+    private boolean written;
     private String user;
 
     public Order(){}
 
-    public Order(int order_num, List<Map<String, Object>> order_list, Date order_time, boolean standby, boolean called, String user) {
+    public Order(int order_num, List<Map<String, Object>> order_list, Date order_time, boolean standby, boolean called, boolean written,String user) {
         this.order_num = order_num;
         this.order_list = order_list;
         this.order_time = order_time;
         this.standby = standby;
         this.called = called;
+        this.written = written;
         this.user = user;
     }
 
@@ -31,8 +33,17 @@ public class Order {
                 ", order_time=" + order_time +
                 ", standby=" + standby +
                 ", called=" + called +
+                ", written=" + written +
                 ", user='" + user + '\'' +
                 '}';
+    }
+
+    public boolean isWritten() {
+        return written;
+    }
+
+    public void setWritten(boolean written) {
+        this.written = written;
     }
 
     public int getOrder_num() {

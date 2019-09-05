@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="110dp"
     android:layout_marginBottom="8dp"
-    android:background="@android:color/white"
+    android:background="@drawable/ic_setting_black_orange"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="8dp">
@@ -15,6 +15,7 @@
         android:layout_height="101dp"
         android:layout_weight="1"
         android:gravity="center_vertical"
+        android:paddingLeft="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -22,8 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:includeFontPadding="false"
+            android:fontFamily="@font/font_family"
+            android:textColor="@color/bamcolor"
             android:text="content"
-            android:textColor="@android:color/darker_gray"
             android:textSize="14sp" />
 
         <TextView
@@ -32,7 +34,8 @@
             android:layout_height="40dp"
             android:includeFontPadding="false"
             android:text="TITLE"
-            android:textColor="@android:color/black"
+            android:fontFamily="@font/font_family"
+            android:textColor="@color/bamcolor"
             android:textSize="24sp"
             android:textStyle="normal" />
 
@@ -42,18 +45,22 @@
             android:layout_height="20dp"
             android:includeFontPadding="false"
             android:text="content"
-            android:textColor="@android:color/darker_gray"
+            android:fontFamily="@font/font_family"
+            android:textColor="@color/bamcolor"
             android:textSize="14sp" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/button_write_review"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
         android:layout_weight="1"
         android:singleLine="true"
         android:text="리뷰쓰기"
+        android:fontFamily="@font/font_family"
+        android:textColor="@color/cardview_dark_background"
+        android:background="@drawable/ic_setting_black_orange"
         android:textSize="18sp" />
 
 </LinearLayout>

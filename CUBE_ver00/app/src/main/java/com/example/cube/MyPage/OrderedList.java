@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 
 public class OrderedList extends Fragment {
     private ArrayList<Order> orderList;
+    private ArrayList<String> orderIds;
     private OrderedListAdapter adapter;
     private FirebaseFirestore mStore;
     private RecyclerView recyclerView;
@@ -55,6 +57,7 @@ public class OrderedList extends Fragment {
         String UserNickName = currentUserInfo.getNickname();
 
         orderList = new ArrayList<>();
+        orderIds = new ArrayList<>();
         dialog = BNUDialog.newInstance("로딩 중입니다...");
         dialog.setCancelable(false);
         dialog.show(getActivity().getSupportFragmentManager(), BNUDialog.TAG);
@@ -66,9 +69,9 @@ public class OrderedList extends Fragment {
                     for(QueryDocumentSnapshot ds : task.getResult()){
                         Order order = ds.toObject(Order.class);
                         orderList.add(order);
+                        orderIds.add(ds.getId());
                     }
-                    FragmentManager fm = getFragmentManager();
-                    adapter = new OrderedListAdapter(orderList, fm,getActivity());
+                    adapter = new OrderedListAdapter(orderList ,orderIds, getActivity());
                     recyclerView.setAdapter(adapter);
                     dialog.dismiss();
                 }
