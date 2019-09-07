@@ -58,7 +58,7 @@
             android:layout_alignTop="@id/item_photo"
             android:layout_alignRight="@id/item_photo"
             android:layout_alignBottom="@id/item_photo"
-            android:layout_margin="40dp"
+            android:layout_margin="35dp"
             android:background="@color/strongorange"
             android:gravity="center"
             android:fontFamily="@font/font_family"

@@ -43,7 +43,7 @@ import java.util.Map;
 
 public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.ItemViewHolder> {
 
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY년 MM월 dd일 HH:mm");
     CurrentApplication currentApplication;
 
     // adapter에 들어갈 list 입니다.
@@ -114,7 +114,7 @@ public class OrderedListAdapter extends RecyclerView.Adapter<OrderedListAdapter.
                     oddf.show(((AppCompatActivity) mContext).getSupportFragmentManager(), OrderDetailDialogFragment.TAG);
                 }
             });
-            
+
             if (data.isWritten()) writeReview.setVisibility(View.GONE);
             writeReview.setOnClickListener(new View.OnClickListener() {
                 @Override

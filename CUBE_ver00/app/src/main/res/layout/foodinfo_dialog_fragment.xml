@@ -58,7 +58,6 @@
             <TextView
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
                 android:text="음식명"
                 android:textColor="@color/strongorange"
                 android:fontFamily="@font/font_family"
@@ -66,14 +65,16 @@
 
             <EditText
                 android:id="@+id/edit_item_name"
-                android:layout_width="@android:dimen/thumbnail_width"
-                android:layout_height="wrap_content"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
+                android:background="@color/orange"
                 android:padding="5dp"
                 android:textColor="@color/bamcolor"
                 android:fontFamily="@font/font_family"
+                android:maxLines="1"
                 android:hint="내용을 입력해주세요"
-                android:textSize="21dp"
+                android:textSize="16sp"
                 android:inputType="text" />
         </LinearLayout>
 
@@ -93,7 +94,6 @@
             <TextView
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
                 android:text="가격"
                 android:textColor="@color/strongorange"
                 android:fontFamily="@font/font_family"
@@ -101,14 +101,16 @@
 
             <EditText
                 android:id="@+id/edit_item_price"
-                android:layout_width="@android:dimen/thumbnail_width"
-                android:layout_height="wrap_content"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
+                android:background="@color/orange"
+                android:maxLines="1"
                 android:padding="5dp"
                 android:textColor="@color/bamcolor"
                 android:fontFamily="@font/font_family"
                 android:hint="내용을 입력해주세요"
-                android:textSize="21dp"
+                android:textSize="16sp"
                 android:inputType="text" />
         </LinearLayout>
         <LinearLayout
@@ -126,7 +128,6 @@
             <TextView
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
                 android:text="기타"
                 android:textColor="@color/strongorange"
                 android:fontFamily="@font/font_family"
@@ -140,20 +141,20 @@
 
                 <EditText
                     android:id="@+id/edit_item_info"
-                    android:layout_width="@android:dimen/thumbnail_width"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/border_edittext"
+                    android:background="@color/orange"
                     android:maxHeight="120dp"
                     android:overScrollMode="always"
                     android:padding="5dp"
                     android:fontFamily="@font/font_family"
-
+                    android:maxLines="1"
                     android:textColor="@color/bamcolor"
                     android:hint="내용을 입력해주세요"
                     android:scrollbarStyle="insideInset"
                     android:scrollbars="vertical"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
             </androidx.core.widget.NestedScrollView>
 
         </LinearLayout>
@@ -172,7 +173,6 @@
             <TextView
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
                 android:text="품절"
                 android:textColor="@color/strongorange"
                 android:fontFamily="@font/font_family"
@@ -182,12 +182,12 @@
                 android:id="@+id/edit_soldout_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:switchMinWidth="20dp"
+                android:gravity="center"
                 android:thumb="@drawable/switch_btn_seletor"
                 android:track="@drawable/switch_track_selector"
                 android:scaleX="0.7"
                 android:scaleY="0.7"
-                android:padding="10dp" />
+                 />
         </LinearLayout>
 
 

@@ -22,6 +22,7 @@ public class CallOrderDialogFragment extends DialogFragment implements View.OnCl
 
     private TextView callNum;
     private TextView callWho;
+    private TextView callTime;
     private TextView callText;
     private TextView callState;
     private TextView callPrice;
@@ -59,6 +60,7 @@ public class CallOrderDialogFragment extends DialogFragment implements View.OnCl
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.call_order_dialog_fragment,container);
         callNum = v.findViewById(R.id.call_order_num);
+        callTime = v.findViewById(R.id.call_order_time);
         callText =  v.findViewById(R.id.call_order_list);
         callWho = v.findViewById(R.id.call_order_who);
         callState = v.findViewById(R.id.call_order_state);
@@ -68,7 +70,7 @@ public class CallOrderDialogFragment extends DialogFragment implements View.OnCl
         callNum.setText(Integer.toString(order_Num));
         callText.setText(msg);
         callWho.setText(nick_name);
-        callText.setText(order_time);
+        callTime.setText(order_time);
 
         if(!order_standby) callState.setText("완료");
         else if(order_called) callState.setText("호출됨");

@@ -12,10 +12,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -144,6 +146,9 @@ public class MenuInfoDialogFragment
     @Override
     public void onResume() {
         super.onResume();
+        Window window = getDialog().getWindow();
+        window.setLayout(1000, 2000);
+        window.setGravity(Gravity.CENTER);
         mStore.collection("foodcourt/moonchang/menu").document(DocId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot ds, @Nullable FirebaseFirestoreException e) {

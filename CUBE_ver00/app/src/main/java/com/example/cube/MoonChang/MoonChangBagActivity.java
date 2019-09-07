@@ -211,7 +211,7 @@ public class MoonChangBagActivity extends AppCompatActivity {
                 mStore.collection("foodcourt/moonchang/order").add(order).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getApplicationContext(), "주문하였습니다", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getApplicationContext(), "주문하였습니다", Toast.LENGTH_SHORT).show();
                         db.execSQL("DELETE FROM BASKET");
                         mainWebView = (WebView) findViewById(R.id.mainWebView);
                         mainWebView.setWebViewClient(new KakaoWebViewClient(MoonChangBagActivity.this));
@@ -252,7 +252,6 @@ public class MoonChangBagActivity extends AppCompatActivity {
             if (intentData != null) {
                 //카카오페이 인증 후 복귀했을 때 결제 후속조치
                 String url = intentData.toString();
-
                 if (url.startsWith(APP_SCHEME)) {
                     String path = url.substring(APP_SCHEME.length());
                     if ("process".equalsIgnoreCase(path)) {

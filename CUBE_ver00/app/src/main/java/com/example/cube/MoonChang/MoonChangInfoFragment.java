@@ -129,7 +129,7 @@ public class MoonChangInfoFragment extends Fragment
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng munchang = new LatLng(35.234089, 129.082011);
+        LatLng munchang = new LatLng(35.234102, 129.082083);
 
         MarkerOptions markerOptions = new MarkerOptions();
 
@@ -140,9 +140,9 @@ public class MoonChangInfoFragment extends Fragment
 
         googleMap.addMarker(markerOptions);
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(munchang));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(munchang,17));
 
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(10));
+      //  googleMap.animateCamera(CameraUpdateFactory.zoomTo(12));
     }
 
 }

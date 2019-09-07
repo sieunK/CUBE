@@ -167,6 +167,7 @@ public class MenuAddActivity extends AppCompatActivity {
                     foodPhotoView.setImageBitmap(resizedBmp);
 
                 }
+                cursor.close();
             }catch (Exception e){
                 e.printStackTrace();
             }

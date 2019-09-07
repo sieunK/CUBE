@@ -536,8 +536,8 @@ public class OrderListFragment extends Fragment {
                     root.put("notification", notification);
                     root.put("data",data);
                     root.put("to", userLoginToken);
+                    root.put("click_action", "OPEN_ACTIVITY");
 
-                    // FMC 메시지 생성 end
 
                     URL Url = new URL(FCM_MESSAGE_URL);
                     HttpURLConnection conn = (HttpURLConnection) Url.openConnection();

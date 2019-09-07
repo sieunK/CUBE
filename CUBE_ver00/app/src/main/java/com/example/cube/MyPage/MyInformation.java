@@ -324,7 +324,7 @@ public class MyInformation extends Fragment {
 
     public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapter.ItemViewHolder> {
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY년 MM월 dd일 HH:mm");
         private FragmentManager fm;
 
         // adapter에 들어갈 list 입니다.
